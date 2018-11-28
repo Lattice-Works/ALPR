@@ -1,0 +1,309 @@
+#"select boss3data_july2018.*, hits.\"hts_Hotlist\", hits.\"hts_Timestamp\" from boss3data_july2018 left join hits on \"red_id\"=hits.\"hts_red_ID\" where hits.\"hts_red_ID\" is not null limit 5000"
+
+#vehicle at location
+
+entityDefinitions:
+  vehicles:
+    fqn: "ol.vehicle"
+    entitySetName: "NCRICVehicles"
+    propertyDefinitions:
+      ol.id:
+        type: "ol.id"
+        column: "red_vrm"
+      vehicle.licensenumber:
+        type: "vehicle.licensenumber"
+        column: "red_vrm"
+    name: "vehicles"
+    currentSync: true
+
+  vehiclerecords:
+    fqn: "ol.vehicle"
+    entitySetName: "NCRICVehicleRecords"
+    propertyDefinitions:
+      ol.id:
+        type:  "ol.id" 
+        column: "red_id"
+      # vehicle.licensenumber:
+      #   type: "vehicle.licensenumber"
+      #   column: "red_vrm"
+      # ol.licenseplateimage:
+      #   type: "ol.licenseplateimage"
+      #   column: "red_patch"
+      # ol.vehicleimage:
+      #   type: "ol.vehicleimage"
+      #   column: "red_overview"
+      # ol.datelogged:
+      #   type: "ol.datelogged"
+      #   column: "date"
+      #   transforms:
+      #   - !<transforms.DateTimeTransform>
+      #     pattern: ["yyyy-MM-dd HH:mm:ss.S","yyyy-MM-dd HH:mm:ss.SS","yyyy-MM-dd HH:mm:ss.SSS"]
+      # ol.locationcoordinates:
+      #   type: "ol.locationcoordinates"
+      #   transforms:
+      #   - !<transforms.GeographyPointTransform>
+      #     latTransforms:
+      #     - !<transforms.ColumnTransform>
+      #       column: "Latitude"
+      #     lonTransforms:
+      #     - !<transforms.ColumnTransform>
+      #       column: "Longitude"
+      # publicsafety.agencyname:
+      #   type: "publicsafety.agencyname"
+      #   column: "siteid"
+      # ol.resourceid:
+      #   type: "ol.resourceid"
+      #   column: "sourceid"
+      ol.description:
+        type: "ol.description"
+        column: "hts_Hotlist"
+    name: "vehiclerecords"
+    currentSync: true
+
+  imagesources:
+    fqn: "ol.imagesource"
+    entitySetName: "NCRICImageSources"
+    propertyDefinitions:
+      ol.id:
+        type:  "ol.id" 
+        column: "sourceid"
+      ol.name:
+        type: "ol.name"
+        column: "sourcename"
+      ol.description:
+        type: "ol.description"
+        column: "srcdescr"
+      ol.fixedlocation:
+        type: "ol.fixedlocation"
+        column: "fixedmobile"
+        transforms:
+        - !<transforms.ReplaceTransform>
+          target: ["t", "f"]
+          goal: [true, false]
+          ignoreCase: true
+    name: "imagesources"
+    currentSync: true
+
+  locations:
+    fqn: "ol.location"
+    entitySetName: "NCRICLocations"
+    propertyDefinitions:
+      general.id: 
+        type: "general.id"
+        transforms:
+        - !<transforms.ConcatTransform>
+          columns: ["Latitude","Longitude"] 
+      ol.locationcoordinates:
+        type: "ol.locationcoordinates"
+        transforms:
+        - !<transforms.GeographyPointTransform>
+          latTransforms:
+          - !<transforms.ColumnTransform>
+            column: "Latitude"
+          lonTransforms:
+          - !<transforms.ColumnTransform>
+            column: "Longitude"
+    name: "locations"
+    currentSync: true
+
+  agencies:
+    fqn: "ol.agency"
+    entitySetName: "NCRICAgencies"
+    propertyDefinitions:
+      ol.id: 
+        type: "ol.id"
+        column: "siteid" 
+      ol.name:
+        type: "ol.name"
+        column: "sitename"
+      ol.description:
+        type: "ol.description"
+        column: "sitedescr"
+    name: "agencies"
+    currentSync: true
+
+  confidencemetrics:
+    fqn: "ol.confidencemetrics"
+    entitySetName: "NCRICConfidenceMetrics"
+    propertyDefinitions:
+      ol.id: 
+        type: "ol.id"
+        column: "red_id" 
+      ol.misclassified:
+        type: "ol.misclassified"
+        column: "red_misread"
+        transforms:
+        - !<transforms.ReplaceTransform>
+          target: ["t", "f"]
+          goal: [true, false]
+      ol.manuallyclassified:
+        type: "ol.manuallyclassified"
+        column: "red_manualentry"
+        transforms:
+        - !<transforms.ReplaceTransform>
+          target: ["t", "f"]
+          goal: [true, false]      
+    name: "confidencemetrics"
+    currentSync: true
+
+  hits:
+    fqn: "ol.notification"
+    entitySetName: "NCRICHits"
+    propertyDefinitions:
+      ol.id: 
+        type: "ol.id"
+        column: "hts_Hotlist"
+    conditions:
+    - !<conditions.BooleanRegexCondition>
+      column: "hts_Hotlist"
+      pattern: "STOLEN VEHICLES DOJ"
+      reverse: false
+    name: "hits"
+    currentSync: true 
+
+associationDefinitions:
+  has:
+    fqn: "ol.has"
+    entitySetName: "NCRICHas"
+    src: "vehicles"
+    dst: "vehiclerecords"
+    propertyDefinitions:
+      ol.id:
+        type: "ol.id"
+        column: "red_vrm"
+
+  recordedby1:
+    fqn: "ol.recordedby"
+    entitySetName: "NCRICRecordedBy"
+    src: "vehiclerecords"
+    dst: "imagesources"
+    propertyDefinitions:
+      ol.datelogged:
+        type: "ol.datelogged"
+        column: "date"
+        transforms:
+        - !<transforms.DateTimeTransform>
+          pattern: ["yyyy-MM-dd HH:mm:ss.S","yyyy-MM-dd HH:mm:ss.SS","yyyy-MM-dd HH:mm:ss.SSS"]
+      general.stringid:
+        type: "general.stringid"
+        transforms:
+        - !<transforms.ConcatTransform>
+          columns: ["red_id","sourceid"] 
+    name: "recordedby1"
+    currentSync: true
+
+  recordedby2:
+    fqn: "ol.recordedby"
+    entitySetName: "NCRICRecordedBy"
+    src: "vehiclerecords"
+    dst: "agencies"
+    propertyDefinitions:
+      ol.datelogged:
+        type: "ol.datelogged"
+        column: "date"
+        transforms:
+        - !<transforms.DateTimeTransform>
+          pattern: ["yyyy-MM-dd HH:mm:ss.S","yyyy-MM-dd HH:mm:ss.SS","yyyy-MM-dd HH:mm:ss.SSS"]
+      general.stringid:
+        type: "general.stringid"
+        transforms:
+        - !<transforms.ConcatTransform>
+          columns: ["red_id","siteid"]
+    name: "recordedby2"
+    currentSync: true
+
+  includes1:
+    fqn: "ol.includes"
+    entitySetName: "NCRICIncludes"
+    src: "vehiclerecords"
+    dst: "confidencemetrics"
+    propertyDefinitions:
+      general.id:
+        type: "general.id"
+        column: "red_id"
+    name: "includes1"
+    currentSync: true
+
+  includes2:
+    fqn: "ol.includes"
+    entitySetName: "NCRICIncludes"
+    src: "imagesources"
+    dst: "confidencemetrics"
+    propertyDefinitions:
+      general.id:
+        type: "general.id"
+        column: "sourceid"
+    name: "includes2"
+    currentSync: true
+
+  locatedat1:
+    fqn: "ol.locatedat"
+    entitySetName: "NCRICLocatedAt"
+    src: "imagesources"
+    dst: "locations"
+    propertyDefinitions:
+      general.id:
+        type: "general.id"
+        column: "sourceid"
+    name: "locatedat1"
+    currentSync: true
+
+  locatedat2:
+    fqn: "ol.locatedat"
+    entitySetName: "NCRICLocatedAt"
+    src: "vehiclerecords"
+    dst: "locations"
+    propertyDefinitions:
+      general.id:
+        type: "general.id"
+        column: "red_id"
+    name: "locatedat2"
+    currentSync: true
+
+  locatedat3:
+    fqn: "ol.locatedat"
+    entitySetName: "NCRICLocatedAt"
+    src: "vehicles"
+    dst: "locations"
+    propertyDefinitions:
+      general.id:
+        type: "general.id"
+        column: "red_vrm"
+    name: "locatedat3"
+    currentSync: true
+
+  collectedby:
+    fqn: "ol.collectedby"
+    entitySetName: "NCRICCollectedBy"
+    src: "imagesources"
+    dst: "agencies"
+    propertyDefinitions:
+      general.id:
+        type: "general.id"
+        column: "sourceid"
+    name: "collectedby"
+    currentSync: true
+
+  resultsin1:
+    fqn: "ol.resultsin"
+    entitySetName: "NCRICResultsIn"
+    src: "vehiclerecords"
+    dst: "hits"
+    propertyDefinitions:
+      ol.id:
+        type: "ol.id"
+        column: "red_id"
+    name: "resultsin1"
+    currentSync: true
+
+  resultsin2:
+    fqn: "ol.resultsin"
+    entitySetName: "NCRICResultsIn"
+    src: "vehicles"
+    dst: "hits"
+    propertyDefinitions:
+      ol.id:
+        type: "ol.id"
+        column: "red_vrm"
+    name: "resultsin2"
+    currentSync: true
