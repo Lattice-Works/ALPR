@@ -1,0 +1,209 @@
+#sql query in psql: select * from v5alpr;
+#sql query in intellij: "select * from v5plates"
+
+entityDefinitions:
+  vehiclerecords:
+    fqn: "ol.vehicle"
+    entitySetName: "NCRICVehicleRecords"
+    propertyDefinitions:
+      ol.id:
+        type:  "ol.id" 
+        column: "id"
+      vehicle.licensenumber:
+        type: "vehicle.licensenumber"
+        column: "lpr"
+      vehicle.licensestate:
+        type: "vehicle.licensestate"
+        column: "lpState"
+      ol.licenseplateimage:
+        type: "ol.licenseplateimage"
+        column: "lprPicture"
+    name: "vehiclerecords"
+    currentSync: true
+
+  imagesources:
+    fqn: "ol.imagesource"
+    entitySetName: "NCRICImageSources"
+    propertyDefinitions:
+      ol.id:
+        type:  "ol.id" 
+        column: "unitId"
+      ol.name:
+        type: "ol.name"
+        column: "unitLabel"
+    name: "imagesources"
+    currentSync: true
+
+  locations:
+    fqn: "ol.location"
+    entitySetName: "NCRICLocations"
+    propertyDefinitions:
+      general.id: 
+        type: "general.id"
+        transforms:
+        - !<transforms.ConcatTransform>
+          columns: ["gpsLat","gpsLng"]
+      ol.locationcoordinates:
+        type: "ol.locationcoordinates"
+        transforms:
+        - !<transforms.GeographyPointTransform>
+          latTransforms:
+          - !<transforms.ColumnTransform>
+            column: "gpsLat"
+          lonTransforms:
+          - !<transforms.ColumnTransform>
+            column: "gpsLng" 
+    name: "locations"
+    currentSync: true
+
+  agencies:
+    fqn: "ol.agency"
+    entitySetName: "NCRICAgencies"
+    propertyDefinitions:
+      ol.id: 
+        type: "ol.id"
+        column: "lprSourceId" 
+    name: "agencies"
+    currentSync: true
+
+  confidencemetrics:
+    fqn: "ol.confidencemetrics"
+    entitySetName: "NCRICConfidenceMetrics"
+    propertyDefinitions:
+      ol.id: 
+        type: "ol.id"
+        column: "red_id" 
+      ol.confidence:
+        type: "ol.confidence"
+        column: "confidence"      
+    name: "confidencemetrics"
+    currentSync: true
+
+  v5alerts:
+    fqn: "ol.notification"
+    entitySetName: "NCRICV5Alerts"
+    propertyDefinitions:
+      ol.id: 
+        type: "ol.id"
+        column: "v5alertId" 
+      general.datetime:
+        type: "general.datetime"
+        column: "v5created"
+        transforms:
+        - !<transforms.DateTimeTransform>
+          pattern: ["yyyy-MM-dd HH:mm:ss.SSS +00:00"]      
+    name: "v5alerts"
+    currentSync: true     
+
+associationDefinitions:
+  recordedby1:
+    fqn: "ol.recordedby"
+    entitySetName: "NCRICRecordedBy"
+    src: "vehiclerecords"
+    dst: "imagesources"
+    propertyDefinitions:
+      ol.datelogged:
+        type: "ol.datelogged"
+        column: "lprTimeStamp"
+        transforms:
+        - !<transforms.DateTimeTransform>
+          pattern: ["yyyy-MM-dd HH:mm:ss.SSS +00:00"]
+      general.stringid:
+        type: "general.stringid"
+        transforms:
+        - !<transforms.ConcatTransform>
+          columns: ["id","unitId"] 
+    name: "recordedby1"
+    currentSync: true
+
+  recordedby2:
+    fqn: "ol.recordedby"
+    entitySetName: "NCRICRecordedBy"
+    src: "vehiclerecords"
+    dst: "agencies"
+    propertyDefinitions:
+      ol.datelogged:
+        type: "ol.datelogged"
+        column: "lprTimeStamp"
+        transforms:
+        - !<transforms.DateTimeTransform>
+          pattern: ["yyyy-MM-dd HH:mm:ss.SSS +00:00"]
+      general.stringid:
+        type: "general.stringid"
+        transforms:
+        - !<transforms.ConcatTransform>
+          columns: ["id","lprSourceId"]
+    name: "recordedby2"
+    currentSync: true
+
+  includes1:
+    fqn: "ol.includes"
+    entitySetName: "NCRICIncludes"
+    src: "vehiclerecords"
+    dst: "confidencemetrics"
+    propertyDefinitions:
+      general.id:
+        type: "general.id"
+        column: "id"
+    name: "includes1"
+    currentSync: true
+
+  includes2:
+    fqn: "ol.includes"
+    entitySetName: "NCRICIncludes"
+    src: "imagesources"
+    dst: "confidencemetrics"
+    propertyDefinitions:
+      general.id:
+        type: "general.id"
+        column: "unitId"
+    name: "includes2"
+    currentSync: true
+
+  locatedat1:
+    fqn: "ol.locatedat"
+    entitySetName: "NCRICLocatedAt"
+    src: "imagesources"
+    dst: "locations"
+    propertyDefinitions:
+      general.id:
+        type: "general.id"
+        column: "unitId"
+    name: "locatedat1"
+    currentSync: true
+
+  locatedat2:
+    fqn: "ol.locatedat"
+    entitySetName: "NCRICLocatedAt"
+    src: "vehiclerecords"
+    dst: "locations"
+    propertyDefinitions:
+      general.id:
+        type: "general.id"
+        column: "id"
+    name: "locatedat2"
+    currentSync: true
+
+  collectedby:
+    fqn: "ol.collectedby"
+    entitySetName: "NCRICCollectedBy"
+    src: "imagesources"
+    dst: "agencies"
+    propertyDefinitions:
+      general.id:
+        type: "general.id"
+        column: "unitId"
+    name: "collectedby"
+    currentSync: 
+
+  resultsin:
+    fqn: "ol.resultsin"
+    entitySetName: "NCRICResultsIn"
+    src: "vehiclerecords"
+    dst: "v5alerts"
+    propertyDefinitions:
+      ol.id:
+        type: "ol.id"
+        column: "id"
+    name: "resultsin"
+    currentSync: true
