@@ -1,0 +1,6 @@
+hikariConfigs:
+  ncric:
+    jdbcUrl: jdbc:postgresql://atlas.openlattice.com:30001/ncric?ssl=true&sslmode=require
+    username: ncric
+    password: q8azSTWbELguaXOHWJq0
+    maximumPoolSize: 100

@@ -23,37 +23,37 @@ entityDefinitions:
       ol.id:
         type:  "ol.id" 
         column: "red_id"
-      # vehicle.licensenumber:
-      #   type: "vehicle.licensenumber"
-      #   column: "red_vrm"
-      # ol.licenseplateimage:
-      #   type: "ol.licenseplateimage"
-      #   column: "red_patch"
-      # ol.vehicleimage:
-      #   type: "ol.vehicleimage"
-      #   column: "red_overview"
-      # ol.datelogged:
-      #   type: "ol.datelogged"
-      #   column: "date"
-      #   transforms:
-      #   - !<transforms.DateTimeTransform>
-      #     pattern: ["yyyy-MM-dd HH:mm:ss.S","yyyy-MM-dd HH:mm:ss.SS","yyyy-MM-dd HH:mm:ss.SSS"]
-      # ol.locationcoordinates:
-      #   type: "ol.locationcoordinates"
-      #   transforms:
-      #   - !<transforms.GeographyPointTransform>
-      #     latTransforms:
-      #     - !<transforms.ColumnTransform>
-      #       column: "Latitude"
-      #     lonTransforms:
-      #     - !<transforms.ColumnTransform>
-      #       column: "Longitude"
-      # publicsafety.agencyname:
-      #   type: "publicsafety.agencyname"
-      #   column: "siteid"
-      # ol.resourceid:
-      #   type: "ol.resourceid"
-      #   column: "sourceid"
+      vehicle.licensenumber:
+        type: "vehicle.licensenumber"
+        column: "red_vrm"
+      ol.licenseplateimage:
+        type: "ol.licenseplateimage"
+        column: "red_patch"
+      ol.vehicleimage:
+        type: "ol.vehicleimage"
+        column: "red_overview"
+      ol.datelogged:
+        type: "ol.datelogged"
+        column: "date"
+        transforms:
+        - !<transforms.DateTimeTransform>
+          pattern: ["yyyy-MM-dd HH:mm:ss.S","yyyy-MM-dd HH:mm:ss.SS","yyyy-MM-dd HH:mm:ss.SSS"]
+      ol.locationcoordinates:
+        type: "ol.locationcoordinates"
+        transforms:
+        - !<transforms.GeographyPointTransform>
+          latTransforms:
+          - !<transforms.ColumnTransform>
+            column: "Latitude"
+          lonTransforms:
+          - !<transforms.ColumnTransform>
+            column: "Longitude"
+      publicsafety.agencyname:
+        type: "publicsafety.agencyname"
+        column: "siteid"
+      ol.resourceid:
+        type: "ol.resourceid"
+        column: "sourceid"
       ol.description:
         type: "ol.description"
         column: "hts_Hotlist"
@@ -148,7 +148,7 @@ entityDefinitions:
 
   hits:
     fqn: "ol.notification"
-    entitySetName: "NCRICHits"
+    entitySetName: "NCRICNotifications"
     propertyDefinitions:
       ol.id: 
         type: "ol.id"
@@ -170,7 +170,11 @@ associationDefinitions:
     propertyDefinitions:
       ol.id:
         type: "ol.id"
-        column: "red_vrm"
+        transforms:
+        - !<transforms.ConcatTransform>
+          columns: ["Plate", "red_id"]
+          separator: "_"
+    currentSync: true
 
   recordedby1:
     fqn: "ol.recordedby"

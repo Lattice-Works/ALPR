@@ -1,0 +1,47 @@
+// Spillman
+digraph {
+	node [color="#3399ff" fontname=Helvetica fontsize=7 shape=box style="filled,rounded"]
+	vehicles [label=<<TABLE BORDER="0.5" CELLBORDER="0.2" CELLSPACING="1" CELLPADDING="0.2">     <TR><TD><B><u><font color="#ffffff">vehicles (NCRICVehicles)</font></u></B></TD></TR>     <TR><TD><b><font color="#ffffff">ol.id</font></b></TD></TR><TR><TD><font color="#e6e6e6">from: lpr</font></TD></TR><TR><TD><b><font color="#ffffff">vehicle.licensenumber</font></b></TD></TR><TR><TD><font color="#e6e6e6">from: lpr</font></TD></TR><TR><TD><b><font color="#ffffff">name</font></b></TD></TR><TR><TD><font color="#e6e6e6">from: </font></TD></TR><TR><TD><b><font color="#ffffff">currentSync</font></b></TD></TR><TR><TD><font color="#e6e6e6">from: </font></TD></TR> </TABLE>>]
+	vehiclerecords [label=<<TABLE BORDER="0.5" CELLBORDER="0.2" CELLSPACING="1" CELLPADDING="0.2">     <TR><TD><B><u><font color="#ffffff">vehiclerecords (NCRICVehicleRecords)</font></u></B></TD></TR>     <TR><TD><b><font color="#ffffff">ol.id</font></b></TD></TR><TR><TD><font color="#e6e6e6">from: id</font></TD></TR><TR><TD><b><font color="#ffffff">vehicle.licensenumber</font></b></TD></TR><TR><TD><font color="#e6e6e6">from: lpr</font></TD></TR><TR><TD><b><font color="#ffffff">vehicle.licensestate</font></b></TD></TR><TR><TD><font color="#e6e6e6">from: lpState</font></TD></TR><TR><TD><b><font color="#ffffff">ol.licenseplateimage</font></b></TD></TR><TR><TD><font color="#e6e6e6">from: lprPicture</font></TD></TR> </TABLE>>]
+	imagesources [label=<<TABLE BORDER="0.5" CELLBORDER="0.2" CELLSPACING="1" CELLPADDING="0.2">     <TR><TD><B><u><font color="#ffffff">imagesources (NCRICImageSources)</font></u></B></TD></TR>     <TR><TD><b><font color="#ffffff">ol.id</font></b></TD></TR><TR><TD><font color="#e6e6e6">from: unitId</font></TD></TR><TR><TD><b><font color="#ffffff">ol.name</font></b></TD></TR><TR><TD><font color="#e6e6e6">from: unitLabel</font></TD></TR> </TABLE>>]
+	locations [label=<<TABLE BORDER="0.5" CELLBORDER="0.2" CELLSPACING="1" CELLPADDING="0.2">     <TR><TD><B><u><font color="#ffffff">locations (NCRICLocations)</font></u></B></TD></TR>     <TR><TD><b><font color="#ffffff">general.id</font></b></TD></TR><TR><TD><font color="#e6e6e6">from: </font></TD></TR><TR><TD><b><font color="#ffffff">ol.locationcoordinates</font></b></TD></TR><TR><TD><font color="#e6e6e6">from: gpsLat, gpsLng</font></TD></TR> </TABLE>>]
+	agencies [label=<<TABLE BORDER="0.5" CELLBORDER="0.2" CELLSPACING="1" CELLPADDING="0.2">     <TR><TD><B><u><font color="#ffffff">agencies (NCRICAgencies)</font></u></B></TD></TR>     <TR><TD><b><font color="#ffffff">ol.id</font></b></TD></TR><TR><TD><font color="#e6e6e6">from: lprSourceId</font></TD></TR> </TABLE>>]
+	confidencemetrics [label=<<TABLE BORDER="0.5" CELLBORDER="0.2" CELLSPACING="1" CELLPADDING="0.2">     <TR><TD><B><u><font color="#ffffff">confidencemetrics (NCRICConfidenceMetrics)</font></u></B></TD></TR>     <TR><TD><b><font color="#ffffff">ol.id</font></b></TD></TR><TR><TD><font color="#e6e6e6">from: red_id</font></TD></TR><TR><TD><b><font color="#ffffff">ol.confidence</font></b></TD></TR><TR><TD><font color="#e6e6e6">from: confidence</font></TD></TR> </TABLE>>]
+	v5alerts [label=<<TABLE BORDER="0.5" CELLBORDER="0.2" CELLSPACING="1" CELLPADDING="0.2">     <TR><TD><B><u><font color="#ffffff">v5alerts (NCRICNotifications)</font></u></B></TD></TR>     <TR><TD><b><font color="#ffffff">ol.id</font></b></TD></TR><TR><TD><font color="#e6e6e6">from: v5alertId</font></TD></TR><TR><TD><b><font color="#ffffff">general.datetime</font></b></TD></TR><TR><TD><font color="#e6e6e6">from: v5created</font></TD></TR> </TABLE>>]
+	node [color="#3399ff" fontname=Helvetica fontsize=7 shape=box style=square]
+	has [label=<<TABLE BORDER="0.5" CELLBORDER="0.2" CELLSPACING="1" CELLPADDING="0.2">     <TR><TD><B><u><font color="#595F72">has (NCRICHas)</font></u></B></TD></TR>     <TR><TD><b><font color="#595F72">ol.id</font></b></TD></TR><TR><TD><font color="#404040">from: </font></TD></TR> </TABLE>>]
+	recordedby1 [label=<<TABLE BORDER="0.5" CELLBORDER="0.2" CELLSPACING="1" CELLPADDING="0.2">     <TR><TD><B><u><font color="#595F72">recordedby1 (NCRICRecordedBy)</font></u></B></TD></TR>     <TR><TD><b><font color="#595F72">ol.datelogged</font></b></TD></TR><TR><TD><font color="#404040">from: lprTimeStamp</font></TD></TR><TR><TD><b><font color="#595F72">general.stringid</font></b></TD></TR><TR><TD><font color="#404040">from: </font></TD></TR> </TABLE>>]
+	recordedby2 [label=<<TABLE BORDER="0.5" CELLBORDER="0.2" CELLSPACING="1" CELLPADDING="0.2">     <TR><TD><B><u><font color="#595F72">recordedby2 (NCRICRecordedBy)</font></u></B></TD></TR>     <TR><TD><b><font color="#595F72">ol.datelogged</font></b></TD></TR><TR><TD><font color="#404040">from: lprTimeStamp</font></TD></TR><TR><TD><b><font color="#595F72">general.stringid</font></b></TD></TR><TR><TD><font color="#404040">from: </font></TD></TR> </TABLE>>]
+	includes1 [label=<<TABLE BORDER="0.5" CELLBORDER="0.2" CELLSPACING="1" CELLPADDING="0.2">     <TR><TD><B><u><font color="#595F72">includes1 (NCRICIncludes)</font></u></B></TD></TR>     <TR><TD><b><font color="#595F72">general.id</font></b></TD></TR><TR><TD><font color="#404040">from: id</font></TD></TR> </TABLE>>]
+	includes2 [label=<<TABLE BORDER="0.5" CELLBORDER="0.2" CELLSPACING="1" CELLPADDING="0.2">     <TR><TD><B><u><font color="#595F72">includes2 (NCRICIncludes)</font></u></B></TD></TR>     <TR><TD><b><font color="#595F72">general.id</font></b></TD></TR><TR><TD><font color="#404040">from: unitId</font></TD></TR> </TABLE>>]
+	locatedat1 [label=<<TABLE BORDER="0.5" CELLBORDER="0.2" CELLSPACING="1" CELLPADDING="0.2">     <TR><TD><B><u><font color="#595F72">locatedat1 (NCRICLocatedAt)</font></u></B></TD></TR>     <TR><TD><b><font color="#595F72">general.id</font></b></TD></TR><TR><TD><font color="#404040">from: unitId</font></TD></TR> </TABLE>>]
+	locatedat2 [label=<<TABLE BORDER="0.5" CELLBORDER="0.2" CELLSPACING="1" CELLPADDING="0.2">     <TR><TD><B><u><font color="#595F72">locatedat2 (NCRICLocatedAt)</font></u></B></TD></TR>     <TR><TD><b><font color="#595F72">general.id</font></b></TD></TR><TR><TD><font color="#404040">from: id</font></TD></TR> </TABLE>>]
+	located3 [label=<<TABLE BORDER="0.5" CELLBORDER="0.2" CELLSPACING="1" CELLPADDING="0.2">     <TR><TD><B><u><font color="#595F72">located3 (NCRICLocatedAt)</font></u></B></TD></TR>     <TR><TD><b><font color="#595F72">general.id</font></b></TD></TR><TR><TD><font color="#404040">from: lpr</font></TD></TR> </TABLE>>]
+	collectedby [label=<<TABLE BORDER="0.5" CELLBORDER="0.2" CELLSPACING="1" CELLPADDING="0.2">     <TR><TD><B><u><font color="#595F72">collectedby (NCRICCollectedBy)</font></u></B></TD></TR>     <TR><TD><b><font color="#595F72">general.id</font></b></TD></TR><TR><TD><font color="#404040">from: unitId</font></TD></TR> </TABLE>>]
+	resultsin1 [label=<<TABLE BORDER="0.5" CELLBORDER="0.2" CELLSPACING="1" CELLPADDING="0.2">     <TR><TD><B><u><font color="#595F72">resultsin1 (NCRICResultsIn)</font></u></B></TD></TR>     <TR><TD><b><font color="#595F72">ol.id</font></b></TD></TR><TR><TD><font color="#404040">from: id</font></TD></TR> </TABLE>>]
+	resultsin2 [label=<<TABLE BORDER="0.5" CELLBORDER="0.2" CELLSPACING="1" CELLPADDING="0.2">     <TR><TD><B><u><font color="#595F72">resultsin2 (NCRICResultsIn)</font></u></B></TD></TR>     <TR><TD><b><font color="#595F72">ol.id</font></b></TD></TR><TR><TD><font color="#404040">from: id</font></TD></TR> </TABLE>>]
+	edge [arrowsize=0 color="#3399ff"]
+	vehicles -> has
+	vehiclerecords -> recordedby1
+	vehiclerecords -> recordedby2
+	vehiclerecords -> includes1
+	imagesources -> includes2
+	imagesources -> locatedat1
+	vehiclerecords -> locatedat2
+	vehicles -> located3
+	imagesources -> collectedby
+	vehiclerecords -> resultsin1
+	vehicles -> resultsin2
+	edge [arrowsize=1 color="#3399ff"]
+	has -> vehiclerecords
+	recordedby1 -> imagesources
+	recordedby2 -> agencies
+	includes1 -> confidencemetrics
+	includes2 -> confidencemetrics
+	locatedat1 -> locations
+	locatedat2 -> locations
+	located3 -> locations
+	collectedby -> agencies
+	resultsin1 -> v5alerts
+	resultsin2 -> v5alerts
+}

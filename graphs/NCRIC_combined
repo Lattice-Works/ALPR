@@ -1,0 +1,37 @@
+// Spillman
+digraph {
+	node [color="#3399ff" fontname=Helvetica fontsize=7 shape=box style="filled,rounded"]
+	NCRICVehicles [label=<<TABLE BORDER="0.5" CELLBORDER="0.2" CELLSPACING="1" CELLPADDING="0.2">     <TR><TD><B><u><font color="#ffffff">NCRICVehicles</font></u></B></TD></TR>      </TABLE>>]
+	NCRICVehicleRecords [label=<<TABLE BORDER="0.5" CELLBORDER="0.2" CELLSPACING="1" CELLPADDING="0.2">     <TR><TD><B><u><font color="#ffffff">NCRICVehicleRecords</font></u></B></TD></TR>      </TABLE>>]
+	NCRICImageSources [label=<<TABLE BORDER="0.5" CELLBORDER="0.2" CELLSPACING="1" CELLPADDING="0.2">     <TR><TD><B><u><font color="#ffffff">NCRICImageSources</font></u></B></TD></TR>      </TABLE>>]
+	NCRICLocations [label=<<TABLE BORDER="0.5" CELLBORDER="0.2" CELLSPACING="1" CELLPADDING="0.2">     <TR><TD><B><u><font color="#ffffff">NCRICLocations</font></u></B></TD></TR>      </TABLE>>]
+	NCRICAgencies [label=<<TABLE BORDER="0.5" CELLBORDER="0.2" CELLSPACING="1" CELLPADDING="0.2">     <TR><TD><B><u><font color="#ffffff">NCRICAgencies</font></u></B></TD></TR>      </TABLE>>]
+	NCRICConfidenceMetrics [label=<<TABLE BORDER="0.5" CELLBORDER="0.2" CELLSPACING="1" CELLPADDING="0.2">     <TR><TD><B><u><font color="#ffffff">NCRICConfidenceMetrics</font></u></B></TD></TR>      </TABLE>>]
+	NCRICNotifications [label=<<TABLE BORDER="0.5" CELLBORDER="0.2" CELLSPACING="1" CELLPADDING="0.2">     <TR><TD><B><u><font color="#ffffff">NCRICNotifications</font></u></B></TD></TR>      </TABLE>>]
+	node [color="#3399ff" fontname=Helvetica fontsize=7 shape=box style=square]
+	NCRICHas [label=<<TABLE BORDER="0.5" CELLBORDER="0.2" CELLSPACING="1" CELLPADDING="0.2">     <TR><TD><B><u><font color="#595F72">NCRICHas</font></u></B></TD></TR>      </TABLE>>]
+	NCRICRecordedBy [label=<<TABLE BORDER="0.5" CELLBORDER="0.2" CELLSPACING="1" CELLPADDING="0.2">     <TR><TD><B><u><font color="#595F72">NCRICRecordedBy</font></u></B></TD></TR>      </TABLE>>]
+	NCRICIncludes [label=<<TABLE BORDER="0.5" CELLBORDER="0.2" CELLSPACING="1" CELLPADDING="0.2">     <TR><TD><B><u><font color="#595F72">NCRICIncludes</font></u></B></TD></TR>      </TABLE>>]
+	NCRICLocatedAt [label=<<TABLE BORDER="0.5" CELLBORDER="0.2" CELLSPACING="1" CELLPADDING="0.2">     <TR><TD><B><u><font color="#595F72">NCRICLocatedAt</font></u></B></TD></TR>      </TABLE>>]
+	NCRICCollectedBy [label=<<TABLE BORDER="0.5" CELLBORDER="0.2" CELLSPACING="1" CELLPADDING="0.2">     <TR><TD><B><u><font color="#595F72">NCRICCollectedBy</font></u></B></TD></TR>      </TABLE>>]
+	NCRICResultsIn [label=<<TABLE BORDER="0.5" CELLBORDER="0.2" CELLSPACING="1" CELLPADDING="0.2">     <TR><TD><B><u><font color="#595F72">NCRICResultsIn</font></u></B></TD></TR>      </TABLE>>]
+	edge [arrowsize=0 color="#3399ff"]
+	NCRICVehicles -> NCRICHas
+	NCRICVehicleRecords -> NCRICRecordedBy
+	NCRICVehicleRecords -> NCRICIncludes
+	NCRICImageSources -> NCRICIncludes
+	NCRICImageSources -> NCRICLocatedAt
+	NCRICVehicleRecords -> NCRICLocatedAt
+	NCRICVehicles -> NCRICLocatedAt
+	NCRICImageSources -> NCRICCollectedBy
+	NCRICVehicleRecords -> NCRICResultsIn
+	NCRICVehicles -> NCRICResultsIn
+	edge [arrowsize=1 color="#3399ff"]
+	NCRICHas -> NCRICVehicleRecords
+	NCRICRecordedBy -> NCRICImageSources
+	NCRICRecordedBy -> NCRICAgencies
+	NCRICIncludes -> NCRICConfidenceMetrics
+	NCRICLocatedAt -> NCRICLocations
+	NCRICCollectedBy -> NCRICAgencies
+	NCRICResultsIn -> NCRICNotifications
+}

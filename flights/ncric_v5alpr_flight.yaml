@@ -2,6 +2,19 @@
 #sql query in intellij: "select * from v5plates"
 
 entityDefinitions:
+  vehicles: 
+    fqn: "ol.vehicle"
+    entitySetName: "NCRICVehicles"
+    propertyDefinitions:
+      ol.id:
+        type: "ol.id"
+        column: "lpr"
+      vehicle.licensenumber: 
+        type: "vehicle.licensenumber"
+        column: "lpr"
+      name: "vehicles"
+      currentSync: true
+
   vehiclerecords:
     fqn: "ol.vehicle"
     entitySetName: "NCRICVehicleRecords"
@@ -81,7 +94,7 @@ entityDefinitions:
 
   v5alerts:
     fqn: "ol.notification"
-    entitySetName: "NCRICV5Alerts"
+    entitySetName: "NCRICNotifications"
     propertyDefinitions:
       ol.id: 
         type: "ol.id"
@@ -96,6 +109,20 @@ entityDefinitions:
     currentSync: true     
 
 associationDefinitions:
+  has:
+    fqn: ol.has
+    entitySetName: NCRICHas
+    src: vehicles
+    dst: vehiclerecords
+    propertyDefinitions:
+      ol.id:
+        type: "ol.id"
+        transforms:
+        - !<transforms.ConcatTransform>
+          columns: ["lpr", "id"]
+          separator: "_"
+    currentSync: true
+
   recordedby1:
     fqn: "ol.recordedby"
     entitySetName: "NCRICRecordedBy"
@@ -184,6 +211,18 @@ associationDefinitions:
     name: "locatedat2"
     currentSync: true
 
+  located3:
+    fqn: "ol.locatedat"
+    entitySetName: "NCRICLocatedAt"
+    src: "vehicles"
+    dst: "locations"
+    propertyDefinitions:
+      general.id:
+        type: "general.id"
+        column: "lpr"
+    name: "locatedat3"
+    currentSync: true
+
   collectedby:
     fqn: "ol.collectedby"
     entitySetName: "NCRICCollectedBy"
@@ -194,9 +233,9 @@ associationDefinitions:
         type: "general.id"
         column: "unitId"
     name: "collectedby"
-    currentSync: 
+    currentSync: true
 
-  resultsin:
+  resultsin1:
     fqn: "ol.resultsin"
     entitySetName: "NCRICResultsIn"
     src: "vehiclerecords"
@@ -205,5 +244,17 @@ associationDefinitions:
       ol.id:
         type: "ol.id"
         column: "id"
-    name: "resultsin"
+    name: "resultsin1"
+    currentSync: true
+
+  resultsin2:
+    fqn: "ol.resultsin"
+    entitySetName: "NCRICResultsIn"
+    src: "vehicles"
+    dst: "v5alerts"
+    propertyDefinitions:
+      ol.id:
+        type: "ol.id"
+        column: "id"
+    name: "resultsin2"
     currentSync: true

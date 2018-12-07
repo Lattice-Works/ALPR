@@ -1,0 +1,57 @@
+# SELECT * FROM boss3data21_aug2018_2wks as "b" LEFT JOIN boss3_21_descriptors as "d" ON ("b"."red_vrm"="d"."Plate") AND ("b"."date"="d"."TimeStamp") WHERE "d"."TimeStamp" >= '2018-08-01' AND "d"."TimeStamp" <='2018-08-15' limit 5000;
+
+#not using confidencemetrics (LabelConfidence in Descriptors view dataset) so then 2 entities and 1 association.
+
+entityDefinitions:
+  vehicles:
+    fqn: "ol.vehicle"
+    entitySetName: "NCRICVehicles"
+    propertyDefinitions:
+      ol.id:
+        type: "ol.id"
+        column: "Plate"
+      vehicle.licensenumber:
+        type: "vehicle.licensenumber"
+        column: "Plate"
+    name: "vehicles"
+    currentSync: true
+
+  vehiclerecords:
+    fqn: "ol.vehicle"
+    entitySetName: "NCRICVehicleRecords"
+    propertyDefinitions:
+      ol.id:
+        type: "ol.id" 
+        # changed from Plate to red_id to match BOSS3 flight code. 
+        column: "red_id"
+      vehicle.licensenumber:
+        type: "vehicle.licensenumber"
+        column: "Plate"
+      ol.datelogged:
+        type: "ol.datelogged"
+        column: "TimeStamp"
+        transforms:
+        - !<transforms.DateTimeTransform>
+          pattern: ["yyyy-MM-dd HH:mm:ss.S","yyyy-MM-dd HH:mm:ss.SS","yyyy-MM-dd HH:mm:ss.SSS"]
+      # checked ol.vehicle entitytype for correct label propertytype
+      ol.label:
+        type: "ol.label"
+        column: "LabelName"
+    name: "vehiclerecords"
+    currentSync: true
+
+
+associationDefinitions:
+  has:
+    fqn: "ol.has"
+    entitySetName: "NCRICHas"
+    src: "vehicles"
+    dst: "vehiclerecords"
+    propertyDefinitions:
+      ol.id:
+        type: "ol.id"
+        transforms:
+        - !<transforms.ConcatTransform>
+          columns: ["Plate", "red_id"]
+          separator: "_"
+    currentSync: true

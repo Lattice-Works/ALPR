@@ -1,0 +1,12 @@
+// Spillman
+digraph {
+	node [color="#3399ff" fontname=Helvetica fontsize=7 shape=box style="filled,rounded"]
+	vehicles [label=<<TABLE BORDER="0.5" CELLBORDER="0.2" CELLSPACING="1" CELLPADDING="0.2">     <TR><TD><B><u><font color="#ffffff">vehicles (NCRICVehicles)</font></u></B></TD></TR>     <TR><TD><b><font color="#ffffff">ol.id</font></b></TD></TR><TR><TD><font color="#e6e6e6">from: Plate</font></TD></TR><TR><TD><b><font color="#ffffff">vehicle.licensenumber</font></b></TD></TR><TR><TD><font color="#e6e6e6">from: Plate</font></TD></TR> </TABLE>>]
+	vehiclerecords [label=<<TABLE BORDER="0.5" CELLBORDER="0.2" CELLSPACING="1" CELLPADDING="0.2">     <TR><TD><B><u><font color="#ffffff">vehiclerecords (NCRICVehicleRecords)</font></u></B></TD></TR>     <TR><TD><b><font color="#ffffff">ol.id</font></b></TD></TR><TR><TD><font color="#e6e6e6">from: red_id</font></TD></TR><TR><TD><b><font color="#ffffff">vehicle.licensenumber</font></b></TD></TR><TR><TD><font color="#e6e6e6">from: Plate</font></TD></TR><TR><TD><b><font color="#ffffff">ol.datelogged</font></b></TD></TR><TR><TD><font color="#e6e6e6">from: TimeStamp</font></TD></TR><TR><TD><b><font color="#ffffff">ol.label</font></b></TD></TR><TR><TD><font color="#e6e6e6">from: LabelName</font></TD></TR> </TABLE>>]
+	node [color="#3399ff" fontname=Helvetica fontsize=7 shape=box style=square]
+	has [label=<<TABLE BORDER="0.5" CELLBORDER="0.2" CELLSPACING="1" CELLPADDING="0.2">     <TR><TD><B><u><font color="#595F72">has (NCRICHas)</font></u></B></TD></TR>     <TR><TD><b><font color="#595F72">ol.id</font></b></TD></TR><TR><TD><font color="#404040">from: </font></TD></TR> </TABLE>>]
+	edge [arrowsize=0 color="#3399ff"]
+	vehicles -> has
+	edge [arrowsize=1 color="#3399ff"]
+	has -> vehiclerecords
+}
