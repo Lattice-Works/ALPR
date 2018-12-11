@@ -85,7 +85,7 @@ entityDefinitions:
     propertyDefinitions:
       ol.id: 
         type: "ol.id"
-        column: "red_id" 
+        column: "incidentId" 
       ol.confidence:
         type: "ol.confidence"
         column: "confidence"      
@@ -255,6 +255,6 @@ associationDefinitions:
     propertyDefinitions:
       ol.id:
         type: "ol.id"
-        column: "id"
+        column: "lpr"
     name: "resultsin2"
     currentSync: true
