@@ -1,5 +1,5 @@
-#sql query in psql: select * from v5alpr;
-#sql query in intellij: "select * from v5plates"
+#sql query in psql: select * from v5plates where "lprTimeStamp" >= '2018-08-01' AND "lprTimeStamp" <= '2018-09-01' limit 10000 ;
+#sql query in intellij: "select * from v5plates where \"lprTimeStamp\" >= '2018-08-01' AND \"lprTimeStamp\" <= '2018-09-01' limit 10000"
 
 entityDefinitions:
   vehicles: 
@@ -12,8 +12,8 @@ entityDefinitions:
       vehicle.licensenumber: 
         type: "vehicle.licensenumber"
         column: "lpr"
-      name: "vehicles"
-      currentSync: true
+    name: "vehicles"
+    currentSync: true
 
   vehiclerecords:
     fqn: "ol.vehicle"

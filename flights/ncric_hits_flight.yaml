@@ -1,0 +1,91 @@
+#separated because otherwise hits are not existing in the boss3 vehicles with 
+#psql select * from hits_21;
+#intellij "select * from hits_21"
+
+entityDefinitions:
+  vehicles:
+    fqn: "ol.vehicle"
+    entitySetName: "NCRICVehicles"
+    propertyDefinitions:
+      ol.id:
+        type: "ol.id"
+        column: "hts_VRM"
+      vehicle.licensenumber:
+        type: "vehicle.licensenumber"
+        column: "hts_VRM"
+    name: "vehicles"
+
+  vehiclerecords:
+    fqn: "ol.vehicle"
+    entitySetName: "NCRICVehicleRecords"
+    propertyDefinitions:
+      ol.id:
+        type: "ol.id"
+        column: "hts_red_ID"
+      vehicle.licensenumber:
+        type: "vehicle.licensenumber"
+        column: "hts_VRM"
+    name: "vehiclerecords"
+
+  hits:
+    fqn: "ol.notification"
+    entitySetName: "NCRICNotifications"
+    propertyDefinitions:
+      ol.id: 
+        type: "ol.id"
+        column: hts_VRM
+      ol.type:
+        type: ol.type
+        column: "hts_Hotlist"
+      general.datetime:
+        type: general.datetime
+        column: "hts_Timestamp"
+        transforms:
+        - !<transforms.DateTimeTransform>
+          pattern: ["yyyy-MM-dd HH:mm:ss.S","yyyy-MM-dd HH:mm:ss.SS","yyyy-MM-dd HH:mm:ss.SSS"]
+    conditions:
+    - !<conditions.BooleanRegexCondition>
+      column: "hts_Hotlist"
+      pattern: "STOLEN VEHICLES DOJ"
+      reverse: false
+    name: "hits"
+    currentSync: true 
+
+associationDefinitions: 
+  has:
+    fqn: "ol.has"
+    entitySetName: "NCRICHas"
+    src: "vehicles"
+    dst: "vehiclerecords"
+    propertyDefinitions:
+      ol.id:
+        type: "ol.id"
+        transforms:
+        - !<transforms.ConcatTransform>
+          columns: ["hts_VRM", "hts_red_ID"]
+          separator: "_"
+    currentSync: true
+
+  resultsin1:
+    fqn: "ol.resultsin"
+    entitySetName: "NCRICResultsIn"
+    src: "vehiclerecords"
+    dst: "hits"
+    propertyDefinitions:
+      ol.id:
+        type: "ol.id"
+        column: "hts_red_ID"
+    name: "resultsin1"
+    currentSync: true
+
+  resultsin2:
+    fqn: "ol.resultsin"
+    entitySetName: "NCRICResultsIn"
+    src: "vehicles"
+    dst: "hits"
+    propertyDefinitions:
+      ol.id:
+        type: "ol.id"
+        column: "hts_VRM"
+    name: "resultsin2"
+    currentSync: true

@@ -1,0 +1,19 @@
+// Spillman
+digraph {
+	node [color="#3399ff" fontname=Helvetica fontsize=7 shape=box style="filled,rounded"]
+	vehicles [label=<<TABLE BORDER="0.5" CELLBORDER="0.2" CELLSPACING="1" CELLPADDING="0.2">     <TR><TD><B><u><font color="#ffffff">vehicles (NCRICVehicles)</font></u></B></TD></TR>     <TR><TD><b><font color="#ffffff">ol.id</font></b></TD></TR><TR><TD><font color="#e6e6e6">from: hts_VRM</font></TD></TR><TR><TD><b><font color="#ffffff">vehicle.licensenumber</font></b></TD></TR><TR><TD><font color="#e6e6e6">from: hts_VRM</font></TD></TR> </TABLE>>]
+	vehiclerecords [label=<<TABLE BORDER="0.5" CELLBORDER="0.2" CELLSPACING="1" CELLPADDING="0.2">     <TR><TD><B><u><font color="#ffffff">vehiclerecords (NCRICVehicleRecords)</font></u></B></TD></TR>     <TR><TD><b><font color="#ffffff">ol.id</font></b></TD></TR><TR><TD><font color="#e6e6e6">from: hts_red_ID</font></TD></TR><TR><TD><b><font color="#ffffff">vehicle.licensenumber</font></b></TD></TR><TR><TD><font color="#e6e6e6">from: hts_VRM</font></TD></TR> </TABLE>>]
+	hits [label=<<TABLE BORDER="0.5" CELLBORDER="0.2" CELLSPACING="1" CELLPADDING="0.2">     <TR><TD><B><u><font color="#ffffff">hits (NCRICNotifications)</font></u></B></TD></TR>     <TR><TD><b><font color="#ffffff">ol.id</font></b></TD></TR><TR><TD><font color="#e6e6e6">from: hts_VRM</font></TD></TR><TR><TD><b><font color="#ffffff">ol.type</font></b></TD></TR><TR><TD><font color="#e6e6e6">from: hts_Hotlist</font></TD></TR><TR><TD><b><font color="#ffffff">general.datetime</font></b></TD></TR><TR><TD><font color="#e6e6e6">from: hts_Timestamp</font></TD></TR><TR><TD bgcolor="#e2e2e2"><font color="#000000">conditional on: hts_Hotlist</font></TD></TR><TR><TD bgcolor="#e2e2e2"><font color="#000000">conditions: RegexCondition</font></TD></TR> </TABLE>>]
+	node [color="#3399ff" fontname=Helvetica fontsize=7 shape=box style=square]
+	has [label=<<TABLE BORDER="0.5" CELLBORDER="0.2" CELLSPACING="1" CELLPADDING="0.2">     <TR><TD><B><u><font color="#595F72">has (NCRICHas)</font></u></B></TD></TR>     <TR><TD><b><font color="#595F72">ol.id</font></b></TD></TR><TR><TD><font color="#404040">from: </font></TD></TR> </TABLE>>]
+	resultsin1 [label=<<TABLE BORDER="0.5" CELLBORDER="0.2" CELLSPACING="1" CELLPADDING="0.2">     <TR><TD><B><u><font color="#595F72">resultsin1 (NCRICResultsIn)</font></u></B></TD></TR>     <TR><TD><b><font color="#595F72">ol.id</font></b></TD></TR><TR><TD><font color="#404040">from: hts_red_ID</font></TD></TR> </TABLE>>]
+	resultsin2 [label=<<TABLE BORDER="0.5" CELLBORDER="0.2" CELLSPACING="1" CELLPADDING="0.2">     <TR><TD><B><u><font color="#595F72">resultsin2 (NCRICResultsIn)</font></u></B></TD></TR>     <TR><TD><b><font color="#595F72">ol.id</font></b></TD></TR><TR><TD><font color="#404040">from: hts_VRM</font></TD></TR> </TABLE>>]
+	edge [arrowsize=0 color="#3399ff"]
+	vehicles -> has
+	vehiclerecords -> resultsin1
+	vehicles -> resultsin2
+	edge [arrowsize=1 color="#3399ff"]
+	has -> vehiclerecords
+	resultsin1 -> hits
+	resultsin2 -> hits
+}

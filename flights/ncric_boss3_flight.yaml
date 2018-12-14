@@ -1,6 +1,6 @@
-#"select boss3data_july2018.*, hits.\"hts_Hotlist\", hits.\"hts_Timestamp\" from boss3data_july2018 left join hits on \"red_id\"=hits.\"hts_red_ID\" where hits.\"hts_red_ID\" is not null limit 5000"
+#intellij: "select * from boss3data21_aug2018_top200k limit 10000"
+#psql: select * from boss3data21_aug2018_top200k limit 10000;
 
-#vehicle at location
 
 entityDefinitions:
   vehicles:
@@ -14,7 +14,7 @@ entityDefinitions:
         type: "vehicle.licensenumber"
         column: "red_vrm"
     name: "vehicles"
-    currentSync: true
+    # currentSync: true
 
   vehiclerecords:
     fqn: "ol.vehicle"
@@ -54,9 +54,9 @@ entityDefinitions:
       ol.resourceid:
         type: "ol.resourceid"
         column: "sourceid"
-      ol.description:
-        type: "ol.description"
-        column: "hts_Hotlist"
+      # ol.description:
+      #   type: "ol.description"
+      #   column: "hts_Hotlist"
     name: "vehiclerecords"
     currentSync: true
 
@@ -146,20 +146,20 @@ entityDefinitions:
     name: "confidencemetrics"
     currentSync: true
 
-  hits:
-    fqn: "ol.notification"
-    entitySetName: "NCRICNotifications"
-    propertyDefinitions:
-      ol.id: 
-        type: "ol.id"
-        column: "hts_Hotlist"
-    conditions:
-    - !<conditions.BooleanRegexCondition>
-      column: "hts_Hotlist"
-      pattern: "STOLEN VEHICLES DOJ"
-      reverse: false
-    name: "hits"
-    currentSync: true 
+  # hits:
+  #   fqn: "ol.notification"
+  #   entitySetName: "NCRICNotifications"
+  #   propertyDefinitions:
+  #     ol.id: 
+  #       type: "ol.id"
+  #       column: "hts_Hotlist"
+  #   conditions:
+  #   - !<conditions.BooleanRegexCondition>
+  #     column: "hts_Hotlist"
+  #     pattern: "STOLEN VEHICLES DOJ"
+  #     reverse: false
+  #   name: "hits"
+  #   currentSync: true 
 
 associationDefinitions:
   has:
@@ -288,26 +288,26 @@ associationDefinitions:
     name: "collectedby"
     currentSync: true
 
-  resultsin1:
-    fqn: "ol.resultsin"
-    entitySetName: "NCRICResultsIn"
-    src: "vehiclerecords"
-    dst: "hits"
-    propertyDefinitions:
-      ol.id:
-        type: "ol.id"
-        column: "red_id"
-    name: "resultsin1"
-    currentSync: true
+  # resultsin1:
+  #   fqn: "ol.resultsin"
+  #   entitySetName: "NCRICResultsIn"
+  #   src: "vehiclerecords"
+  #   dst: "hits"
+  #   propertyDefinitions:
+  #     ol.id:
+  #       type: "ol.id"
+  #       column: "red_id"
+  #   name: "resultsin1"
+  #   currentSync: true
 
-  resultsin2:
-    fqn: "ol.resultsin"
-    entitySetName: "NCRICResultsIn"
-    src: "vehicles"
-    dst: "hits"
-    propertyDefinitions:
-      ol.id:
-        type: "ol.id"
-        column: "red_vrm"
-    name: "resultsin2"
-    currentSync: true
+  # resultsin2:
+  #   fqn: "ol.resultsin"
+  #   entitySetName: "NCRICResultsIn"
+  #   src: "vehicles"
+  #   dst: "hits"
+  #   propertyDefinitions:
+  #     ol.id:
+  #       type: "ol.id"
+  #       column: "red_vrm"
+  #   name: "resultsin2"
+  #   currentSync: true
