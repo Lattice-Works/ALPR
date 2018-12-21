@@ -1,5 +1,5 @@
-#sql query in psql: select * from v5plates where "lprTimeStamp" >= '2018-08-01' AND "lprTimeStamp" <= '2018-09-01' limit 10000 ;
-#sql query in intellij: "select * from v5plates where \"lprTimeStamp\" >= '2018-08-01' AND \"lprTimeStamp\" <= '2018-09-01' limit 10000"
+#sql query in psql: select * from v5plates where "lprTimeStamp" >= '2018-08-01' AND "lprTimeStamp" <= '2018-09-01' limit 20000 ;
+#sql query in intellij: "select * from v5plates where \"lprTimeStamp\" >= '2018-08-01' AND \"lprTimeStamp\" <= '2018-09-01' limit 20000"
 
 entityDefinitions:
   vehicles: 

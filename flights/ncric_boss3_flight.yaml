@@ -1,5 +1,5 @@
-#intellij: "select * from boss3data21_aug2018_top200k limit 10000"
-#psql: select * from boss3data21_aug2018_top200k limit 10000;
+#intellij: "select * from boss3data21_aug2018_top200k limit 20000"
+#psql: select * from boss3data21_aug2018_top200k limit 20000;
 
 
 entityDefinitions:
@@ -172,7 +172,7 @@ associationDefinitions:
         type: "ol.id"
         transforms:
         - !<transforms.ConcatTransform>
-          columns: ["Plate", "red_id"]
+          columns: ["red_vrm", "red_id"]
           separator: "_"
     currentSync: true
 
