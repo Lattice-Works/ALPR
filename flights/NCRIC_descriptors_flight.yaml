@@ -16,7 +16,6 @@ entityDefinitions:
         type: "vehicle.licensenumber"
         column: "Plate"
     name: "vehicles"
-    currentSync: true
 
   vehiclerecords:
     fqn: "ol.vehicle"
@@ -40,7 +39,7 @@ entityDefinitions:
         transforms:
         - !<transforms.BooleanRegexTransform>
           column: "LabelName"
-          pattern: "(?i)(acura|audi|bmw|buick|cadillac|chevy|chrysler| dodge|fiat|ford|gmc|honda|hyundai|infinity|jeep|kia|lexus| lincoln|mazda|mercedes|mercury|mini|mitsubishi|nissan|pontiac|scion|subaru|suzuki|tesla|toyota|volvo|vw)"
+          pattern: "(?i)(acura|audi|bmw|buick|cadillac|chevy|chrysler|dodge|fiat|ford|gmc|honda|hyundai|infinity|jeep|kia|lexus|lincoln|mazda|mercedes|mercury|mini|mitsubishi|nissan|pontiac|scion|subaru|suzuki|tesla|toyota|volvo|vw)"
           transformsIfTrue:
           - !<transforms.ColumnTransform>
             column: "LabelName"
@@ -52,9 +51,18 @@ entityDefinitions:
         - !<transforms.BooleanRegexTransform>
           column: "LabelName"
           pattern: "(?i)(ford-mustang-gt|ford-mustang)" 
-          transformsIfTrue:
-          - !<transforms.ColumnTransform>
+          transformsIfTrue:      ## we only want the mustang gt words, and not the "ford".
+          - !<transforms.ConcatCombineTransform>
+            separator: "-"
+          - !<transforms.SplitTransform>
             column: "LabelName"
+            separator: "-"
+            index: 1
+          - !<transforms.SplitTransform>
+            column: "LabelName"
+            separator: "-"
+            index: 2
+            ifMoreThan: 2
           # transformsIfFalse:
           #   value: null
       vehicle.color:
@@ -102,7 +110,6 @@ entityDefinitions:
           # transformsIfFalse:
           #   value: null
     name: "vehiclerecords"
-    currentSync: true
 
 
 associationDefinitions:
@@ -119,4 +126,3 @@ associationDefinitions:
         - !<transforms.ConcatTransform>
           columns: ["Plate", "red_id"]
           separator: "_"
-    currentSync: true
