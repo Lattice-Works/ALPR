@@ -35,19 +35,72 @@ entityDefinitions:
         transforms:
         - !<transforms.DateTimeTransform>
           pattern: ["yyyy-MM-dd HH:mm:ss.S","yyyy-MM-dd HH:mm:ss.SS","yyyy-MM-dd HH:mm:ss.SSS"]
-      # checked ol.vehicle entitytype for correct label propertytype
+      vehicle.make:
+        type: "vehicle.make"
+        transforms:
+        - !<transforms.BooleanRegexTransform>
+          column: "LabelName"
+          pattern: "(?i)(acura|audi|bmw|buick|cadillac|chevy|chrysler| dodge|fiat|ford|gmc|honda|hyundai|infinity|jeep|kia|lexus| lincoln|mazda|mercedes|mercury|mini|mitsubishi|nissan|pontiac|scion|subaru|suzuki|tesla|toyota|volvo|vw)"
+          transformsIfTrue:
+          - !<transforms.ColumnTransform>
+            column: "LabelName"
+          # transformsIfFalse:
+          #   value: null
+      vehicle.model:
+        type: "vehicle.model"
+        transforms:
+        - !<transforms.BooleanRegexTransform>
+          column: "LabelName"
+          pattern: "(?i)(ford-mustang-gt|ford-mustang)" 
+          transformsIfTrue:
+          - !<transforms.ColumnTransform>
+            column: "LabelName"
+          # transformsIfFalse:
+          #   value: null
+      vehicle.color:
+        type: "vehicle.color"
+        transforms:
+        - !<transforms.BooleanRegexTransform>
+          column: "LabelName"
+          pattern: "(?i)(blue|dark|green|light|red|white|yellow)"
+          transformsIfTrue:
+          - !<transforms.ColumnTransform>
+            column: "LabelName"
+          # transformsIfFalse:
+          #   value: null
+      ol.accessories:
+        type: "ol.accessories"
+        transforms:
+        - !<transforms.BooleanRegexTransform>
+          column: "LabelName"
+          pattern: "(?i)(spare tire|paper-plate|pedestal-spoiler|ca-clean-air-vehicle-sticker|rectangular-sticker|uber-sticker|roof-rack|pickup-ladder-rack|racing-strip)"
+          transformsIfTrue:
+          - !<transforms.ColumnTransform>
+            column: "LabelName"
+          # transformsIfFalse:
+          #   value: null
+      vehicle.style:
+        type: "vehicle.style"
+        transforms:
+        - !<transforms.BooleanRegexTransform>
+          column: "LabelName"
+          pattern: "(?i)(box-truck|full-size-van|other-truck|car|pickup|minivan|hatchback|sedan|SUV)"
+          transformsIfTrue:
+          - !<transforms.ColumnTransform>
+            column: "LabelName"
+          # transformsIfFalse:
+          #   value: null
       ol.label:
         type: "ol.label"
-        column: "LabelName"
-      # ol.label2:
-      #   type: "ol.label"
-      #   column: "LabelName"
-      # ol.label3:
-      #   type: "ol.label"
-      #   column: "LabelName"
-      # ol.label4:
-      #   type: "ol.label"
-      #   column: "LabelName"
+        transforms:
+        - !<transforms.BooleanRegexTransform>
+          column: "LabelName"
+          pattern: "(?i)(night|day)"
+          transformsIfTrue:
+          - !<transforms.ColumnTransform>
+            column: "LabelName"
+          # transformsIfFalse:
+          #   value: null
     name: "vehiclerecords"
     currentSync: true
 
