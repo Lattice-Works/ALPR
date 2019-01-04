@@ -31,6 +31,28 @@ entityDefinitions:
       ol.licenseplateimage:
         type: "ol.licenseplateimage"
         column: "lprPicture"
+      ol.datelogged:
+        type: "ol.datelogged"
+        column: "lprTimeStamp"
+        transforms:
+        - !<transforms.DateTimeTransform>
+          pattern: ["yyyy-MM-dd HH:mm:ss.SSS +00:00"]
+      ol.locationcoordinates:
+        type: "ol.locationcoordinates"
+        transforms:
+        - !<transforms.GeographyPointTransform>
+          latTransforms:
+          - !<transforms.ColumnTransform>
+            column: "gpsLat"
+          lonTransforms:
+          - !<transforms.ColumnTransform>
+            column: "gpsLng"
+      publicsafety.agencyname:
+        type: "publicsafety.agencyname"
+        column: "lprSourceId"
+      ol.resourceid:
+        type: "ol.resourceid"
+        column: "unitId"
     name: "vehiclerecords"
     currentSync: true
 

@@ -54,15 +54,16 @@ entityDefinitions:
           transformsIfTrue:      ## we only want the mustang gt words, and not the "ford".
           - !<transforms.ConcatCombineTransform>
             separator: "-"
-          - !<transforms.SplitTransform>
-            column: "LabelName"
-            separator: "-"
-            index: 1
-          - !<transforms.SplitTransform>
-            column: "LabelName"
-            separator: "-"
-            index: 2
-            ifMoreThan: 2
+            transforms:
+            - !<transforms.SplitTransform>
+              column: "LabelName"
+              separator: "-"
+              index: 1
+            - !<transforms.SplitTransform>
+              column: "LabelName"
+              separator: "-"
+              index: 2
+              ifMoreThan: 2
           # transformsIfFalse:
           #   value: null
       vehicle.color:
