@@ -1,5 +1,6 @@
-#intellij: "select * from boss3data21_aug2018_top200k limit 20000"
-#psql: select * from boss3data21_aug2018_top200k limit 20000;
+#intellij: "select * from boss3data21_aug2018_top200k limit 5000"
+#piper's july/demo dataset: intellij: "select boss3data_july2018.*, hits.\"hts_Hotlist\", hits.\"hts_Timestamp\" from boss3data_july2018 left join hits on \"red_id\"=hits.\"hts_red_ID\" where hits.\"hts_red_ID\" is not null limit 5000"
+#psql: select * from boss3data21_aug2018_top200k limit 5000;
 
 
 entityDefinitions:
@@ -146,9 +147,26 @@ entityDefinitions:
     name: "confidencemetrics"
     currentSync: true
 
+  #this is being separately integrated in own flight. 
   # hits:
   #   fqn: "ol.notification"
   #   entitySetName: "NCRICNotifications"
+  #   propertyDefinitions:
+  #     ol.id: 
+  #       type: "ol.id"
+  #       column: "hts_Hotlist"
+  #   conditions:
+  #   - !<conditions.BooleanRegexCondition>
+  #     column: "hts_Hotlist"
+  #     pattern: "STOLEN VEHICLES DOJ"
+  #     reverse: false
+  #   name: "hits"
+  #   currentSync: true 
+
+  # for Pipers july/demo dataset integration (used Hits instead of Notifcations previously)
+  # hits:
+  #   fqn: "ol.notification"
+  #   entitySetName: "NCRICHits"
   #   propertyDefinitions:
   #     ol.id: 
   #       type: "ol.id"
@@ -288,6 +306,7 @@ associationDefinitions:
     name: "collectedby"
     currentSync: true
 
+#this was commented out as hits was separated in its own flight. 
   # resultsin1:
   #   fqn: "ol.resultsin"
   #   entitySetName: "NCRICResultsIn"

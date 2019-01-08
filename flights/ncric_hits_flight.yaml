@@ -1,6 +1,6 @@
 #separated because otherwise hits are not existing in the boss3 vehicles with 
-#psql select * from hits_21;
-#intellij "select * from hits_21"
+#psql select * from hits_21 limit 5000;
+#intellij "select * from hits_21 limit 5000"
 
 entityDefinitions:
   vehicles:

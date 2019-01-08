@@ -1,4 +1,5 @@
-# "SELECT \"d\".*, \"b\".\"red_vrm\" as \"red_vrm\", \"b\".\"red_id\" as \"red_id\" FROM boss3_21_descriptors as \"d\" LEFT JOIN boss3data21_aug2018_top200k as \"b\" ON (\"b\".\"red_vrm\"=\"d\".\"Plate\") AND (\"TimeStamp\"=\"date\") WHERE \"TimeStamp\" >= '2018-08-01' AND \"TimeStamp\" <='2018-09-01' AND \"red_id\" is not null AND \"red_vrm\"<>'CAUTION'"
+# "SELECT \"d\".*, \"b\".\"red_vrm\" as \"red_vrm\", \"b\".\"red_id\" as \"red_id\" FROM boss3_21_descriptors as \"d\" LEFT JOIN boss3data21_aug2018_top200k as \"b\" ON (\"b\".\"red_vrm\"=\"d\".\"Plate\") AND (\"TimeStamp\"=\"date\") WHERE \"TimeStamp\" >= '2018-08-01' AND \"TimeStamp\" <='2018-09-01' AND \"red_id\" is not null AND \"red_vrm\"<>'CAUTION'" 
+#no limit put on sample set so could see max # of labels. 
 
 
 
@@ -39,10 +40,15 @@ entityDefinitions:
         transforms:
         - !<transforms.BooleanRegexTransform>
           column: "LabelName"
-          pattern: "(?i)(acura|audi|bmw|buick|cadillac|chevy|chrysler|dodge|fiat|ford|gmc|honda|hyundai|infinity|jeep|kia|lexus|lincoln|mazda|mercedes|mercury|mini|mitsubishi|nissan|pontiac|scion|subaru|suzuki|tesla|toyota|volvo|vw)"
+          pattern: "(?i)(acura|audi|bmw|buick|cadillac|chevy|chrysler|dodge|fiat|ford|gmc|honda|hyundai|infinity|jeep|kia|lexus|lincoln|mazda|mercedes|mercury|(\\bmini\\b)|mitsubishi|nissan|pontiac|scion|subaru|suzuki|tesla|toyota|volvo|vw)"
           transformsIfTrue:
-          - !<transforms.ColumnTransform>
-            column: "LabelName"
+          - !<transforms.ConcatCombineTransform>
+            separator: "-"
+            transforms:
+            - !<transforms.SplitTransform>
+              column: "LabelName"
+              separator: "-"
+              index: 0
           # transformsIfFalse:
           #   value: null
       vehicle.model:
