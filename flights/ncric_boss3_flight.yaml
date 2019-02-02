@@ -15,7 +15,6 @@ entityDefinitions:
         type: "vehicle.licensenumber"
         column: "red_vrm"
     name: "vehicles"
-    # currentSync: true
 
   vehiclerecords:
     fqn: "ol.vehicle"
@@ -59,7 +58,6 @@ entityDefinitions:
       #   type: "ol.description"
       #   column: "hts_Hotlist"
     name: "vehiclerecords"
-    currentSync: true
 
   imagesources:
     fqn: "ol.imagesource"
@@ -83,7 +81,6 @@ entityDefinitions:
           goal: [true, false]
           ignoreCase: true
     name: "imagesources"
-    currentSync: true
 
   locations:
     fqn: "ol.location"
@@ -105,7 +102,6 @@ entityDefinitions:
           - !<transforms.ColumnTransform>
             column: "Longitude"
     name: "locations"
-    currentSync: true
 
   agencies:
     fqn: "ol.agency"
@@ -121,7 +117,6 @@ entityDefinitions:
         type: "ol.description"
         column: "sitedescr"
     name: "agencies"
-    currentSync: true
 
   confidencemetrics:
     fqn: "ol.confidencemetrics"
@@ -145,7 +140,6 @@ entityDefinitions:
           target: ["t", "f"]
           goal: [true, false]      
     name: "confidencemetrics"
-    currentSync: true
 
   #this is being separately integrated in own flight. 
   # hits:
@@ -192,7 +186,6 @@ associationDefinitions:
         - !<transforms.ConcatTransform>
           columns: ["red_vrm", "red_id"]
           separator: "_"
-    currentSync: true
 
   recordedby1:
     fqn: "ol.recordedby"
@@ -212,7 +205,6 @@ associationDefinitions:
         - !<transforms.ConcatTransform>
           columns: ["red_id","sourceid"] 
     name: "recordedby1"
-    currentSync: true
 
   recordedby2:
     fqn: "ol.recordedby"
@@ -232,7 +224,6 @@ associationDefinitions:
         - !<transforms.ConcatTransform>
           columns: ["red_id","siteid"]
     name: "recordedby2"
-    currentSync: true
 
   includes1:
     fqn: "ol.includes"
@@ -244,7 +235,6 @@ associationDefinitions:
         type: "general.id"
         column: "red_id"
     name: "includes1"
-    currentSync: true
 
   includes2:
     fqn: "ol.includes"
@@ -256,7 +246,6 @@ associationDefinitions:
         type: "general.id"
         column: "sourceid"
     name: "includes2"
-    currentSync: true
 
   locatedat1:
     fqn: "ol.locatedat"
@@ -268,7 +257,6 @@ associationDefinitions:
         type: "general.id"
         column: "sourceid"
     name: "locatedat1"
-    currentSync: true
 
   locatedat2:
     fqn: "ol.locatedat"
@@ -280,7 +268,6 @@ associationDefinitions:
         type: "general.id"
         column: "red_id"
     name: "locatedat2"
-    currentSync: true
 
   locatedat3:
     fqn: "ol.locatedat"
@@ -292,7 +279,6 @@ associationDefinitions:
         type: "general.id"
         column: "red_vrm"
     name: "locatedat3"
-    currentSync: true
 
   collectedby:
     fqn: "ol.collectedby"
@@ -304,7 +290,6 @@ associationDefinitions:
         type: "general.id"
         column: "sourceid"
     name: "collectedby"
-    currentSync: true
 
 #this was commented out as hits was separated in its own flight. 
   # resultsin1:
