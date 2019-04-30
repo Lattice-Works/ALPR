@@ -1,7 +1,5 @@
-# "SELECT \"d\".*, \"b\".\"red_vrm\" as \"red_vrm\", \"b\".\"red_id\" as \"red_id\" FROM boss3_21_descriptors as \"d\" LEFT JOIN boss3data21_aug2018_top200k as \"b\" ON (\"b\".\"red_vrm\"=\"d\".\"Plate\") AND (\"TimeStamp\"=\"date\") WHERE \"TimeStamp\" >= '2018-08-01' AND \"TimeStamp\" <='2018-09-01' AND \"red_id\" is not null AND \"red_vrm\"<>'CAUTION'" 
-#no limit put on sample set so could see max # of labels. 
-
-
+# Query for data from vpn: "SELECT d.*, boss3.red_vrm as red_vrm, boss3.red_id as red_id FROM dbo.BrianMantisLabels as d LEFT JOIN (SELECT si.ste_ID AS siteid, si.ste_Name AS sitename, si.ste_Description AS sitedescr, so.src_ID AS sourceid, so.src_Name AS sourcename, so.src_Fixed AS fixedmobile, so.src_Description AS srcdescr, r.red_ID AS red_id, r.red_VRM AS red_vrm, r.red_TimeStamp AS date, r.red_Misread AS red_misread, r.red_ManualEntry AS red_manualentry, ms.msp_usr_ID AS msp_userid,  r.red_src_ID AS red_sourceid FROM dbo.Reads AS r INNER JOIN dbo.Sources AS so ON so.src_ID = r.red_src_ID INNER JOIN dbo.Sites AS si ON si.ste_ID = so.src_ste_ID LEFT OUTER JOIN dbo.MobileSpatial AS ms ON r.red_ID = ms.msp_red_ID) as boss3 on boss3.red_vrm= d.Plate AND boss3.date=d.TimeStamp;"
+# Query for sample dataset from atlas: "SELECT \"d\".*, \"b\".\"red_vrm\" as \"red_vrm\", \"b\".\"red_id\" as \"red_id\" FROM boss3_21_descriptors as \"d\" LEFT JOIN boss3data21_aug2018_top200k as \"b\" ON (\"b\".\"red_vrm\"=\"d\".\"Plate\") AND (\"TimeStamp\"=\"date\") WHERE \"TimeStamp\" >= '2018-08-01' AND \"TimeStamp\" <='2018-09-01' AND \"red_id\" is not null AND \"red_vrm\"<>'CAUTION'" 
 
 #not using confidencemetrics (LabelConfidence in Descriptors view dataset) so then 2 entities and 1 association.
 
@@ -18,7 +16,8 @@ entityDefinitions:
         column: "Plate"
     name: "vehicles"
 
-  vehiclerecords:
+#record that merges with the rest of the data from a particular "read".
+  vehiclerecords1:
     fqn: "ol.vehicle"
     entitySetName: "NCRICVehicleRecords"
     propertyDefinitions:
@@ -49,8 +48,6 @@ entityDefinitions:
               column: "LabelName"
               separator: "-"
               index: 0
-          # transformsIfFalse:
-          #   value: null
       vehicle.model:
         type: "vehicle.model"
         transforms:
@@ -70,8 +67,6 @@ entityDefinitions:
               separator: "-"
               index: 2
               ifMoreThan: 2
-          # transformsIfFalse:
-          #   value: null
       vehicle.color:
         type: "vehicle.color"
         transforms:
@@ -81,8 +76,6 @@ entityDefinitions:
           transformsIfTrue:
           - !<transforms.ColumnTransform>
             column: "LabelName"
-          # transformsIfFalse:
-          #   value: null
       ol.accessories:
         type: "ol.accessories"
         transforms:
@@ -92,8 +85,6 @@ entityDefinitions:
           transformsIfTrue:
           - !<transforms.ColumnTransform>
             column: "LabelName"
-          # transformsIfFalse:
-          #   value: null
       vehicle.style:
         type: "vehicle.style"
         transforms:
@@ -103,8 +94,6 @@ entityDefinitions:
           transformsIfTrue:
           - !<transforms.ColumnTransform>
             column: "LabelName"
-          # transformsIfFalse:
-          #   value: null
       ol.label:
         type: "ol.label"
         transforms:
@@ -114,22 +103,133 @@ entityDefinitions:
           transformsIfTrue:
           - !<transforms.ColumnTransform>
             column: "LabelName"
-          # transformsIfFalse:
-          #   value: null
-    name: "vehiclerecords"
+    name: "vehiclerecords1"
+
+#record that is separate from the rest of the data from a particular "read". Different pk. Repeat info.
+  vehiclerecords2:
+    fqn: "ol.vehicle"
+    entitySetName: "NCRICVehicleRecords"
+    propertyDefinitions:
+      ol.id:
+        type: "ol.id" 
+        # added "_labels" suffix to red_id. 
+        transforms:
+        - !<transforms.ConcatCombineTransform>
+        separator: "-"
+          transforms:
+          - !<transforms.ColumnTransform>
+            column: "red_id"
+          - !<transforms.ValueTransform>
+            value: "labels"
+      vehicle.licensenumber:
+        type: "vehicle.licensenumber"
+        column: "Plate"
+      ol.datelogged:
+        type: "ol.datelogged"
+        column: "TimeStamp"
+        transforms:
+        - !<transforms.DateTimeTransform>
+          pattern: ["yyyy-MM-dd HH:mm:ss.S","yyyy-MM-dd HH:mm:ss.SS","yyyy-MM-dd HH:mm:ss.SSS"]
+      vehicle.make:
+        type: "vehicle.make"
+        transforms:
+        - !<transforms.BooleanRegexTransform>
+          column: "LabelName"
+          pattern: "(?i)(acura|audi|bmw|buick|cadillac|chevy|chrysler|dodge|fiat|ford|gmc|honda|hyundai|infinity|jeep|kia|lexus|lincoln|mazda|mercedes|mercury|(\\bmini\\b)|mitsubishi|nissan|pontiac|scion|subaru|suzuki|tesla|toyota|volvo|vw)"
+          transformsIfTrue:
+          - !<transforms.ConcatCombineTransform>
+            separator: "-"
+            transforms:
+            - !<transforms.SplitTransform>
+              column: "LabelName"
+              separator: "-"
+              index: 0
+      vehicle.model:
+        type: "vehicle.model"
+        transforms:
+        - !<transforms.BooleanRegexTransform>
+          column: "LabelName"
+          pattern: "(?i)(ford-mustang-gt|ford-mustang)" 
+          transformsIfTrue:      ## we only want the mustang gt words, and not the "ford".
+          - !<transforms.ConcatCombineTransform>
+            separator: "-"
+            transforms:
+            - !<transforms.SplitTransform>
+              column: "LabelName"
+              separator: "-"
+              index: 1
+            - !<transforms.SplitTransform>
+              column: "LabelName"
+              separator: "-"
+              index: 2
+              ifMoreThan: 2
+      vehicle.color:
+        type: "vehicle.color"
+        transforms:
+        - !<transforms.BooleanRegexTransform>
+          column: "LabelName"
+          pattern: "(?i)(blue|dark|green|light|red|white|yellow)"
+          transformsIfTrue:
+          - !<transforms.ColumnTransform>
+            column: "LabelName"
+      ol.accessories:
+        type: "ol.accessories"
+        transforms:
+        - !<transforms.BooleanRegexTransform>
+          column: "LabelName"
+          pattern: "(?i)(spare tire|paper-plate|pedestal-spoiler|ca-clean-air-vehicle-sticker|rectangular-sticker|uber-sticker|roof-rack|pickup-ladder-rack|racing-strip)"
+          transformsIfTrue:
+          - !<transforms.ColumnTransform>
+            column: "LabelName"
+      vehicle.style:
+        type: "vehicle.style"
+        transforms:
+        - !<transforms.BooleanRegexTransform>
+          column: "LabelName"
+          pattern: "(?i)(box-truck|full-size-van|other-truck|car|pickup|minivan|hatchback|sedan|SUV)"
+          transformsIfTrue:
+          - !<transforms.ColumnTransform>
+            column: "LabelName"
+      ol.label:
+        type: "ol.label"
+        transforms:
+        - !<transforms.BooleanRegexTransform>
+          column: "LabelName"
+          pattern: "(?i)(night|day)"
+          transformsIfTrue:
+          - !<transforms.ColumnTransform>
+            column: "LabelName"
+    name: "vehiclerecords2"
 
 
 associationDefinitions:
-  has:
+  has1:
     fqn: "ol.has"
     entitySetName: "NCRICHas"
     src: "vehicles"
-    dst: "vehiclerecords"
+    dst: "vehiclerecords1"
     propertyDefinitions:
       ol.id:
         type: "ol.id"
-        # column: "Plate"
         transforms:
         - !<transforms.ConcatTransform>
           columns: ["Plate", "red_id"]
           separator: "_"
+  has2:
+    fqn: "ol.has"
+    entitySetName: "NCRICHas"
+    src: "vehicles"
+    dst: "vehiclerecords2"
+    propertyDefinitions:
+      ol.id:
+        type: "ol.id"
+        transforms:
+        - !<transforms.ConcatCombineTransform>
+          separator: "-"
+          transforms:
+          - !<transforms.ColumnTransform>
+            column: "Plate"
+          - !<transforms.ColumnTransform>
+            column: "red_id"
+          - !<transforms.ValueTransform>
+            value: "labels"
