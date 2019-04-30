@@ -115,7 +115,7 @@ entityDefinitions:
         # added "_labels" suffix to red_id. 
         transforms:
         - !<transforms.ConcatCombineTransform>
-        separator: "-"
+          separator: "-"
           transforms:
           - !<transforms.ColumnTransform>
             column: "red_id"
