@@ -49,7 +49,6 @@ entityDefinitions:
       pattern: "STOLEN VEHICLES DOJ"
       reverse: false
     name: "hits"
-    currentSync: true 
 
 associationDefinitions: 
   has:
@@ -64,7 +63,6 @@ associationDefinitions:
         - !<transforms.ConcatTransform>
           columns: ["hts_VRM", "hts_red_ID"]
           separator: "_"
-    currentSync: true
 
   resultsin1:
     fqn: "ol.resultsin"
@@ -76,7 +74,6 @@ associationDefinitions:
         type: "ol.id"
         column: "hts_red_ID"
     name: "resultsin1"
-    currentSync: true
 
   resultsin2:
     fqn: "ol.resultsin"
@@ -88,4 +85,3 @@ associationDefinitions:
         type: "ol.id"
         column: "hts_VRM"
     name: "resultsin2"
-    currentSync: true
