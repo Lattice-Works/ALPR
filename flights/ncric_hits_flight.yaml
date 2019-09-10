@@ -1,6 +1,7 @@
 #separated because otherwise hits are not existing in the boss3 vehicles with 
 #psql select * from hits_21 limit 5000;
-#intellij "select * from hits_21 limit 5000"
+#intellij sample test: "select * from hits_21 limit 5000"
+#final recurring integration: "select * from boss3_21_hits_10minutes;"
 
 entityDefinitions:
   vehicles:
@@ -43,6 +44,7 @@ entityDefinitions:
         transforms:
         - !<transforms.DateTimeTransform>
           pattern: ["yyyy-MM-dd HH:mm:ss.S","yyyy-MM-dd HH:mm:ss.SS","yyyy-MM-dd HH:mm:ss.SSS"]
+          timezone: "America/Los Angeles"
     conditions:
     - !<conditions.BooleanRegexCondition>
       column: "hts_Hotlist"
@@ -63,6 +65,7 @@ associationDefinitions:
         - !<transforms.ConcatTransform>
           columns: ["hts_VRM", "hts_red_ID"]
           separator: "_"
+    name: "has"
 
   resultsin1:
     fqn: "ol.resultsin"

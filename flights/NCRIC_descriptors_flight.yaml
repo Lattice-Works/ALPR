@@ -34,6 +34,7 @@ entityDefinitions:
         transforms:
         - !<transforms.DateTimeTransform>
           pattern: ["yyyy-MM-dd HH:mm:ss.S","yyyy-MM-dd HH:mm:ss.SS","yyyy-MM-dd HH:mm:ss.SSS"]
+          timezone: "America/Los Angeles"
       vehicle.make:
         type: "vehicle.make"
         transforms:
@@ -130,6 +131,7 @@ entityDefinitions:
         transforms:
         - !<transforms.DateTimeTransform>
           pattern: ["yyyy-MM-dd HH:mm:ss.S","yyyy-MM-dd HH:mm:ss.SS","yyyy-MM-dd HH:mm:ss.SSS"]
+          timezone: "America/Los Angeles"
       vehicle.make:
         type: "vehicle.make"
         transforms:
@@ -215,6 +217,7 @@ associationDefinitions:
         - !<transforms.ConcatTransform>
           columns: ["Plate", "red_id"]
           separator: "_"
+    name: "has1"
   has2:
     fqn: "ol.has"
     entitySetName: "NCRICHas"
@@ -233,3 +236,4 @@ associationDefinitions:
             column: "red_id"
           - !<transforms.ValueTransform>
             value: "labels"
+    name: "has2"
