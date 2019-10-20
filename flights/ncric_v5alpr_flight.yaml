@@ -13,7 +13,6 @@ entityDefinitions:
         type: "vehicle.licensenumber"
         column: "lpr"
     name: "vehicles"
-    currentSync: true
 
   vehiclerecords:
     fqn: "ol.vehicle"
@@ -32,7 +31,6 @@ entityDefinitions:
         type: "ol.licenseplateimage"
         column: "lprPicture"
     name: "vehiclerecords"
-    currentSync: true
 
   imagesources:
     fqn: "ol.imagesource"
@@ -45,7 +43,6 @@ entityDefinitions:
         type: "ol.name"
         column: "unitLabel"
     name: "imagesources"
-    currentSync: true
 
   locations:
     fqn: "ol.location"
@@ -67,7 +64,6 @@ entityDefinitions:
           - !<transforms.ColumnTransform>
             column: "gpsLng" 
     name: "locations"
-    currentSync: true
 
   agencies:
     fqn: "ol.agency"
@@ -76,8 +72,10 @@ entityDefinitions:
       ol.id: 
         type: "ol.id"
         column: "lprSourceId" 
+      ol.name:
+        type: "ol.name"
+        column: "lprSourceId"
     name: "agencies"
-    currentSync: true
 
   confidencemetrics:
     fqn: "ol.confidencemetrics"
@@ -90,7 +88,6 @@ entityDefinitions:
         type: "ol.confidence"
         column: "confidence"      
     name: "confidencemetrics"
-    currentSync: true
 
   v5alerts:
     fqn: "ol.notification"
@@ -105,8 +102,7 @@ entityDefinitions:
         transforms:
         - !<transforms.DateTimeTransform>
           pattern: ["yyyy-MM-dd HH:mm:ss.SSS +00:00"]      
-    name: "v5alerts"
-    currentSync: true     
+    name: "v5alerts"  
 
 associationDefinitions:
   has:
@@ -114,6 +110,7 @@ associationDefinitions:
     entitySetName: NCRICHas
     src: vehicles
     dst: vehiclerecords
+    name: "has"
     propertyDefinitions:
       ol.id:
         type: "ol.id"
@@ -121,7 +118,6 @@ associationDefinitions:
         - !<transforms.ConcatTransform>
           columns: ["lpr", "id"]
           separator: "_"
-    currentSync: true
 
   recordedby1:
     fqn: "ol.recordedby"
@@ -141,7 +137,6 @@ associationDefinitions:
         - !<transforms.ConcatTransform>
           columns: ["id","unitId"] 
     name: "recordedby1"
-    currentSync: true
 
   recordedby2:
     fqn: "ol.recordedby"
@@ -161,7 +156,6 @@ associationDefinitions:
         - !<transforms.ConcatTransform>
           columns: ["id","lprSourceId"]
     name: "recordedby2"
-    currentSync: true
 
   includes1:
     fqn: "ol.includes"
@@ -173,7 +167,6 @@ associationDefinitions:
         type: "general.id"
         column: "id"
     name: "includes1"
-    currentSync: true
 
   includes2:
     fqn: "ol.includes"
@@ -185,7 +178,6 @@ associationDefinitions:
         type: "general.id"
         column: "unitId"
     name: "includes2"
-    currentSync: true
 
   locatedat1:
     fqn: "ol.locatedat"
@@ -197,7 +189,6 @@ associationDefinitions:
         type: "general.id"
         column: "unitId"
     name: "locatedat1"
-    currentSync: true
 
   locatedat2:
     fqn: "ol.locatedat"
@@ -209,7 +200,6 @@ associationDefinitions:
         type: "general.id"
         column: "id"
     name: "locatedat2"
-    currentSync: true
 
   located3:
     fqn: "ol.locatedat"
@@ -221,7 +211,6 @@ associationDefinitions:
         type: "general.id"
         column: "lpr"
     name: "locatedat3"
-    currentSync: true
 
   collectedby:
     fqn: "ol.collectedby"
@@ -233,7 +222,6 @@ associationDefinitions:
         type: "general.id"
         column: "unitId"
     name: "collectedby"
-    currentSync: true
 
   resultsin1:
     fqn: "ol.resultsin"
@@ -245,7 +233,6 @@ associationDefinitions:
         type: "ol.id"
         column: "id"
     name: "resultsin1"
-    currentSync: true
 
   resultsin2:
     fqn: "ol.resultsin"
@@ -257,4 +244,3 @@ associationDefinitions:
         type: "ol.id"
         column: "lpr"
     name: "resultsin2"
-    currentSync: true
