@@ -1,11 +1,6 @@
-#final recurring:
-#intellij sample: "select * from boss3data21_aug2018_top200k limit 5000"
-#piper's july/demo dataset: intellij: "select boss3data_july2018.*, hits.\"hts_Hotlist\", hits.\"hts_Timestamp\" from boss3data_july2018 left join hits on \"red_id\"=hits.\"hts_red_ID\" where hits.\"hts_red_ID\" is not null limit 5000"
-#psql: select * from boss3data21_aug2018_top200k limit 5000;
+# [red_id, sourceid, siteid] will get a suffix added to prevent name collisions from BOSS3 and V5
 
-# In Boss3 [red_id, sourceid, siteid] will remain as it is. In all other DBs, they will get a suffix added. 
-# This will correctly merge existing vehicle records with new integrations, in case we reintegrate a record that was already integrated.
-  # (hard to be precise with tombstoning)
+
 
 entityDefinitions:
   vehicles:
@@ -22,7 +17,7 @@ entityDefinitions:
         type: "ol.datasource"
         transforms:
         - !<transforms.ValueTransform>
-          value: "BOSS3"
+          value: "SCSO"
     name: "vehicles"
 
   vehiclerecords:
@@ -31,7 +26,14 @@ entityDefinitions:
     propertyDefinitions:
       ol.id:
         type:  "ol.id" 
-        column: "red_id"
+        transforms:
+        - !<transforms.ConcatCombineTransform>
+          separator: "_"
+          transforms:
+          - !<transforms.ColumnTransform>
+            column: "red_id"
+          - !<transforms.ValueTransform>
+            value: "SCSO"
       vehicle.licensenumber:
         type: "vehicle.licensenumber"
         column: "red_vrm"
@@ -60,18 +62,15 @@ entityDefinitions:
             column: "Longitude"
       publicsafety.agencyname:
         type: "publicsafety.agencyname"
-        column: "siteid"
+        column: "siteid"                 
       ol.resourceid:
         type: "ol.resourceid"
         column: "sourceid"
-      # ol.description:
-      #   type: "ol.description"
-      #   column: "hts_Hotlist"
       ol.datasource:
         type: "ol.datasource"
         transforms:
         - !<transforms.ValueTransform>
-          value: "BOSS3"
+          value: "SCSO"
     name: "vehiclerecords"
 
   imagesources:
@@ -80,7 +79,14 @@ entityDefinitions:
     propertyDefinitions:
       ol.id:
         type:  "ol.id" 
-        column: "sourceid"
+        transforms:
+        - !<transforms.ConcatCombineTransform>
+          separator: "_"
+          transforms:
+          - !<transforms.ColumnTransform>
+            column: "sourceid"
+          - !<transforms.ValueTransform>
+            value: "SCSO"
       ol.name:
         type: "ol.name"
         column: "sourcename"
@@ -99,7 +105,7 @@ entityDefinitions:
         type: "ol.datasource"
         transforms:
         - !<transforms.ValueTransform>
-          value: "BOSS3"
+          value: "SCSO"
     name: "imagesources"
 
   locations:
@@ -129,19 +135,26 @@ entityDefinitions:
     propertyDefinitions:
       ol.id: 
         type: "ol.id"
-        column: "siteid" 
+        transforms:
+        - !<transforms.ConcatCombineTransform>
+          separator: "_"
+          transforms:
+          - !<transforms.ColumnTransform>
+            column: "siteid"
+          - !<transforms.ValueTransform>
+            value: "SCSO"  
       ol.name:
         type: "ol.name"
-        column: "sitedescr"    #used to be sitename
+        column: "sitedescr" #used to be sitename
       ## this is actually a more fleshed-out name field
-      # ol.description:             
+      # ol.description:
       #   type: "ol.description"
       #   column: "sitedescr"
       ol.datasource:
         type: "ol.datasource"
         transforms:
         - !<transforms.ValueTransform>
-          value: "BOSS3"
+          value: "SCSO"
     name: "agencies"
 
   confidencemetrics:
@@ -150,7 +163,14 @@ entityDefinitions:
     propertyDefinitions:
       ol.id: 
         type: "ol.id"
-        column: "red_id" 
+        transforms:
+        - !<transforms.ConcatCombineTransform>
+          separator: "_"
+          transforms:
+          - !<transforms.ColumnTransform>
+            column: "red_id"
+          - !<transforms.ValueTransform>
+            value: "SCSO"
       ol.misclassified:
         type: "ol.misclassified"
         column: "red_misread"
@@ -169,7 +189,7 @@ entityDefinitions:
         type: "ol.datasource"
         transforms:
         - !<transforms.ValueTransform>
-          value: "BOSS3"     
+          value: "SCSO"   
     name: "confidencemetrics"
 
   
@@ -184,9 +204,15 @@ associationDefinitions:
       ol.id:
         type: "ol.id"
         transforms:
-        - !<transforms.ConcatTransform>
-          columns: ["red_vrm", "red_id"]
+        - !<transforms.ConcatCombineTransform>
           separator: "_"
+          transforms:
+          - !<transforms.ColumnTransform>
+            column: "red_vrm"
+          - !<transforms.ColumnTransform>
+            column: "red_id"
+          - !<transforms.ValueTransform>
+            value: "SCSO"
     name: "has"
 
   recordedby1:
@@ -205,8 +231,15 @@ associationDefinitions:
       general.stringid:
         type: "general.stringid"
         transforms:
-        - !<transforms.ConcatTransform>
-          columns: ["red_id","sourceid"] 
+        - !<transforms.ConcatCombineTransform>
+          separator: "_"
+          transforms:
+          - !<transforms.ColumnTransform>
+            column: "red_id"
+          - !<transforms.ColumnTransform>
+            column: "sourceid"
+          - !<transforms.ValueTransform>
+            value: "SCSO" 
     name: "recordedby1"
 
   recordedby2:
@@ -225,8 +258,15 @@ associationDefinitions:
       general.stringid:
         type: "general.stringid"
         transforms:
-        - !<transforms.ConcatTransform>
-          columns: ["red_id","siteid"]
+        - !<transforms.ConcatCombineTransform>
+          separator: "_"
+          transforms:
+          - !<transforms.ColumnTransform>
+            column: "red_id"
+          - !<transforms.ColumnTransform>
+            column: "siteid"
+          - !<transforms.ValueTransform>
+            value: "SCSO"
     name: "recordedby2"
 
   includes1:
@@ -238,9 +278,15 @@ associationDefinitions:
       general.id:
         type: "general.id"
         transforms:
-        - !<transforms.ConcatTransform>
-          columns: ["red_id", "date"]
+        - !<transforms.ConcatCombineTransform>
           separator: "_"
+          transforms:          
+          - !<transforms.ColumnTransform>
+            column: "red_id"
+          - !<transforms.ColumnTransform>
+            column: "date"
+          - !<transforms.ValueTransform>
+            value: "SCSO"
       date.completeddatetime:
         type: "date.completeddatetime"
         column: "date"
@@ -259,9 +305,15 @@ associationDefinitions:
       general.id:
         type: "general.id"
         transforms:
-        - !<transforms.ConcatTransform>
-          columns: ["sourceid", "date"]
+        - !<transforms.ConcatCombineTransform>
           separator: "_"
+          transforms:
+          - !<transforms.ColumnTransform>
+            column: "sourceid"
+          - !<transforms.ColumnTransform>
+            column: "date"
+          - !<transforms.ValueTransform>
+            value: "SCSO"
       date.completeddatetime:
         type: "date.completeddatetime"
         column: "date"
@@ -280,9 +332,17 @@ associationDefinitions:
       general.id:
         type: "general.id"
         transforms:
-        - !<transforms.ConcatTransform>
-          columns: ["sourceid","Latitude","Longitude"] 
+        - !<transforms.ConcatCombineTransform>
           separator: "_"
+          transforms:
+          - !<transforms.ColumnTransform>
+            column: "sourceid"
+          - !<transforms.ValueTransform>
+            value: "SCSO"
+          - !<transforms.ColumnTransform>
+            column: "Latitude"
+          - !<transforms.ColumnTransform>
+            column: "Longitude"
     name: "locatedat1"
 
   locatedat2:
@@ -294,9 +354,17 @@ associationDefinitions:
       general.id:
         type: "general.id"
         transforms:
-        - !<transforms.ConcatTransform>
-          columns: ["red_id","Latitude","Longitude"] 
+        - !<transforms.ConcatCombineTransform>
           separator: "_"
+          transforms:
+          - !<transforms.ColumnTransform>
+            column: "red_id"
+          - !<transforms.ValueTransform>
+            value: "scso"
+          - !<transforms.ColumnTransform>
+            column: "Latitude"
+          - !<transforms.ColumnTransform>
+            column: "Longitude"
     name: "locatedat2"
 
   locatedat3:
@@ -309,7 +377,7 @@ associationDefinitions:
         type: "general.id"
         transforms:
         - !<transforms.ConcatTransform>
-          columns: ["red_vrm","Latitude","Longitude"] 
+          columns: ["red_vrm","Latitude","Longitude"]
           separator: "_"
     name: "locatedat3"
 
@@ -322,8 +390,14 @@ associationDefinitions:
       general.id:
         type: "general.id"
         transforms:
-        - !<transforms.ConcatTransform>
-          columns: ["sourceid", "siteid"]
+        - !<transforms.ConcatCombineTransform>
           separator: "_"
+          transforms:
+          - !<transforms.ColumnTransform>
+            column: "sourceid"
+          - !<transforms.ColumnTransform>
+            column: "siteid"
+          - !<transforms.ValueTransform>
+            value: "SCSO"
     name: "collectedby"
 

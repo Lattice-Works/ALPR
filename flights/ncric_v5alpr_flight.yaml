@@ -1,5 +1,10 @@
-#sql query in psql: select * from v5plates where "lprTimeStamp" >= '2018-08-01' AND "lprTimeStamp" <= '2018-09-01' limit 5000 ;
-#sql query in intellij: "select * from v5plates where \"lprTimeStamp\" >= '2018-08-01' AND \"lprTimeStamp\" <= '2018-09-01' limit 5000"
+# sql query in psql: select * from v5plates where "lprTimeStamp" >= '2018-08-01' AND "lprTimeStamp" <= '2018-09-01' limit 5000 ;
+# sql query for sample in intellij: "select * from v5plates where \"lprTimeStamp\" >= '2018-08-01' AND \"lprTimeStamp\" <= '2018-09-01' limit 5000"
+# historical sql query in intellij: "select * from v5plates_all where \"lprTimeStamp\" <= current_timestamp order by \"id\";" 
+
+# [red_id, sourceid, siteid] will get a suffix added to prevent name collisions from BOSS3 and SCSO
+
+# taking out alerts, there's no info in them but an ID, so every read would have one. Meaningless. Also v5alertId is not unique.
 
 entityDefinitions:
   vehicles: 
@@ -12,6 +17,11 @@ entityDefinitions:
       vehicle.licensenumber: 
         type: "vehicle.licensenumber"
         column: "lpr"
+      ol.datasource:            
+        type: "ol.datasource"
+        transforms:
+        - !<transforms.ValueTransform>
+          value: "V5"
     name: "vehicles"
 
   vehiclerecords:
@@ -19,8 +29,15 @@ entityDefinitions:
     entitySetName: "NCRICVehicleRecords"
     propertyDefinitions:
       ol.id:
-        type:  "ol.id" 
-        column: "id"
+        type:  "ol.id"
+        transforms:
+        - !<transforms.ConcatCombineTransform>
+          separator: "_"
+          transforms:
+          - !<transforms.ColumnTransform>
+            column: "id"
+          - !<transforms.ValueTransform>
+            value: "V5"
       vehicle.licensenumber:
         type: "vehicle.licensenumber"
         column: "lpr"
@@ -36,6 +53,7 @@ entityDefinitions:
         transforms:
         - !<transforms.DateTimeTransform>
           pattern: ["yyyy-MM-dd HH:mm:ss.SSS +00:00"]
+          timezone: "America/Los Angeles"
       ol.locationcoordinates:
         type: "ol.locationcoordinates"
         transforms:
@@ -52,6 +70,11 @@ entityDefinitions:
       ol.resourceid:
         type: "ol.resourceid"
         column: "unitId"
+      ol.datasource:
+        type: "ol.datasource"
+        transforms:
+        - !<transforms.ValueTransform>
+          value: "V5"
     name: "vehiclerecords"
 
   imagesources:
@@ -60,10 +83,22 @@ entityDefinitions:
     propertyDefinitions:
       ol.id:
         type:  "ol.id" 
-        column: "unitId"
+        transforms:
+        - !<transforms.ConcatCombineTransform>
+          separator: "_"
+          transforms:
+          - !<transforms.ColumnTransform>
+            column: "unitId"
+          - !<transforms.ValueTransform>
+            value: "V5"
       ol.name:
         type: "ol.name"
         column: "unitLabel"
+      ol.datasource:
+        type: "ol.datasource"
+        transforms:
+        - !<transforms.ValueTransform>
+          value: "V5"
     name: "imagesources"
 
   locations:
@@ -97,6 +132,11 @@ entityDefinitions:
       ol.name:
         type: "ol.name"
         column: "lprSourceId"
+      ol.datasource:
+        type: "ol.datasource"
+        transforms:
+        - !<transforms.ValueTransform>
+          value: "V5"
     name: "agencies"
 
   confidencemetrics:
@@ -105,26 +145,45 @@ entityDefinitions:
     propertyDefinitions:
       ol.id: 
         type: "ol.id"
-        column: "incidentId" 
+        transforms:
+        - !<transforms.ConcatCombineTransform>
+          separator: "_"
+          transforms:
+          - !<transforms.ColumnTransform>
+            column: "incidentId" 
+          - !<transforms.ValueTransform>
+            value: "V5"
       ol.confidence:
         type: "ol.confidence"
-        column: "confidence"      
+        column: "confidence"  
+      ol.datasource:
+        type: "ol.datasource"
+        transforms:
+        - !<transforms.ValueTransform>
+          value: "V5"    
     name: "confidencemetrics"
 
-  v5alerts:
-    fqn: "ol.notification"
-    entitySetName: "NCRICNotifications"
-    propertyDefinitions:
-      ol.id: 
-        type: "ol.id"
-        column: "v5alertId" 
-      general.datetime:
-        type: "general.datetime"
-        column: "v5created"
-        transforms:
-        - !<transforms.DateTimeTransform>
-          pattern: ["yyyy-MM-dd HH:mm:ss.SSS +00:00"]      
-    name: "v5alerts"  
+  # v5alerts:
+  #   fqn: "ol.notification"
+  #   entitySetName: "NCRICNotifications"
+  #   propertyDefinitions:
+  #     ol.id: 
+  #       type: "ol.id"
+  #       column: "v5alertId"   # NOT unique
+  #     general.datetime:
+  #       type: "general.datetime"
+  #       column: "v5created"
+  #       transforms:
+  #       - !<transforms.DateTimeTransform>
+  #         pattern: ["yyyy-MM-dd HH:mm:ss.SSS +00:00"]
+  #         timezone: "America/Los Angeles"
+  #     ol.datasource:
+  #       type: "ol.datasource"
+  #       transforms:
+  #       - !<transforms.ValueTransform>
+  #         value: "V5"   
+  #   name: "v5alerts"
+
 
 associationDefinitions:
   has:
@@ -137,9 +196,16 @@ associationDefinitions:
       ol.id:
         type: "ol.id"
         transforms:
-        - !<transforms.ConcatTransform>
-          columns: ["lpr", "id"]
+        - !<transforms.ConcatCombineTransform>
           separator: "_"
+          transforms:
+          - !<transforms.ColumnTransform>
+            column: "lpr"
+          - !<transforms.ColumnTransform>
+            column: "id"
+          - !<transforms.ValueTransform>
+            value: "V5"
+    name: "has"
 
   recordedby1:
     fqn: "ol.recordedby"
@@ -153,11 +219,19 @@ associationDefinitions:
         transforms:
         - !<transforms.DateTimeTransform>
           pattern: ["yyyy-MM-dd HH:mm:ss.SSS +00:00"]
+          timezone: "America/Los Angeles"
       general.stringid:
         type: "general.stringid"
         transforms:
-        - !<transforms.ConcatTransform>
-          columns: ["id","unitId"] 
+        - !<transforms.ConcatCombineTransform>
+          separator: "_"
+          transforms:
+          - !<transforms.ColumnTransform>
+            column: "id"
+          - !<transforms.ColumnTransform>
+            column: "unitId"
+          - !<transforms.ValueTransform>
+            value: "V5"
     name: "recordedby1"
 
   recordedby2:
@@ -172,11 +246,19 @@ associationDefinitions:
         transforms:
         - !<transforms.DateTimeTransform>
           pattern: ["yyyy-MM-dd HH:mm:ss.SSS +00:00"]
+          timezone: "America/Los Angeles"
       general.stringid:
         type: "general.stringid"
         transforms:
-        - !<transforms.ConcatTransform>
-          columns: ["id","lprSourceId"]
+        - !<transforms.ConcatCombineTransform>
+          separator: "_"
+          transforms:
+          - !<transforms.ColumnTransform>
+            column: "id"
+          - !<transforms.ColumnTransform>
+            column: "lprSourceId"
+          - !<transforms.ValueTransform>
+            value: "V5"
     name: "recordedby2"
 
   includes1:
@@ -187,7 +269,23 @@ associationDefinitions:
     propertyDefinitions:
       general.id:
         type: "general.id"
-        column: "id"
+        transforms:
+        - !<transforms.ConcatCombineTransform>
+          separator: "_"
+          transforms:          
+          - !<transforms.ColumnTransform>
+            column: "id"
+          - !<transforms.ColumnTransform>
+            column: "lprTimeStamp"
+          - !<transforms.ValueTransform>
+            value: "V5"
+      date.completeddatetime:
+        type: "date.completeddatetime"
+        column: "lprTimeStamp"
+        transforms:
+        - !<transforms.DateTimeTransform>
+          pattern: ["yyyy-MM-dd HH:mm:ss.SSS +00:00"]
+          timezone: "America/Los Angeles"
     name: "includes1"
 
   includes2:
@@ -198,7 +296,23 @@ associationDefinitions:
     propertyDefinitions:
       general.id:
         type: "general.id"
-        column: "unitId"
+        transforms:
+        - !<transforms.ConcatCombineTransform>
+          separator: "_"
+          transforms:          
+          - !<transforms.ColumnTransform>
+            column: "unitId"
+          - !<transforms.ColumnTransform>
+            column: "lprTimeStamp"
+          - !<transforms.ValueTransform>
+            value: "V5"
+      date.completeddatetime:
+        type: "date.completeddatetime"
+        column: "lprTimeStamp"
+        transforms:
+        - !<transforms.DateTimeTransform>
+          pattern: ["yyyy-MM-dd HH:mm:ss.SSS +00:00"]
+          timezone: "America/Los Angeles"
     name: "includes2"
 
   locatedat1:
@@ -209,7 +323,18 @@ associationDefinitions:
     propertyDefinitions:
       general.id:
         type: "general.id"
-        column: "unitId"
+        transforms:
+        - !<transforms.ConcatCombineTransform>
+          separator: "_"
+          transforms:          
+          - !<transforms.ColumnTransform>
+            column: "unitId"
+          - !<transforms.ColumnTransform>
+            column: "gpsLat"
+          - !<transforms.ColumnTransform>
+            column: "gpsLng"
+          - !<transforms.ValueTransform>
+            value: "V5"
     name: "locatedat1"
 
   locatedat2:
@@ -220,7 +345,18 @@ associationDefinitions:
     propertyDefinitions:
       general.id:
         type: "general.id"
-        column: "id"
+        transforms:
+        - !<transforms.ConcatCombineTransform>
+          separator: "_"
+          transforms:          
+          - !<transforms.ColumnTransform>
+            column: "id"
+          - !<transforms.ColumnTransform>
+            column: "gpsLat"
+          - !<transforms.ColumnTransform>
+            column: "gpsLng"
+          - !<transforms.ValueTransform>
+            value: "V5"
     name: "locatedat2"
 
   located3:
@@ -231,7 +367,10 @@ associationDefinitions:
     propertyDefinitions:
       general.id:
         type: "general.id"
-        column: "lpr"
+        transforms:
+        - !<transforms.ConcatTransform>
+          columns: ["lpr", "gpsLat", "gpsLng"]
+          separator: "_"
     name: "locatedat3"
 
   collectedby:
@@ -242,27 +381,46 @@ associationDefinitions:
     propertyDefinitions:
       general.id:
         type: "general.id"
-        column: "unitId"
+        transforms:
+        - !<transforms.ConcatCombineTransform>
+          separator: "_"
+          transforms:          
+          - !<transforms.ColumnTransform>
+            column: "unitId"
+          - !<transforms.ValueTransform>
+            value: "V5"
     name: "collectedby"
 
-  resultsin1:
-    fqn: "ol.resultsin"
-    entitySetName: "NCRICResultsIn"
-    src: "vehiclerecords"
-    dst: "v5alerts"
-    propertyDefinitions:
-      ol.id:
-        type: "ol.id"
-        column: "id"
-    name: "resultsin1"
+  # resultsin1:
+  #   fqn: "ol.resultsin"
+  #   entitySetName: "NCRICResultsIn"
+  #   src: "vehiclerecords"
+  #   dst: "v5alerts"
+  #   propertyDefinitions:
+  #     ol.id:
+  #       type: "ol.id"
+  #       transforms:
+  #       - !<transforms.ConcatCombineTransform>
+  #         separator: "_"
+  #         transforms:          
+  #         - !<transforms.ColumnTransform>
+  #           column: "id"
+  #         - !<transforms.ValueTransform>
+  #           value: "V5"
+  #         - !<transforms.ColumnTransform>
+  #           column: "v5alertId"
+  #         - !<transforms.ColumnTransform>
+  #           column: "lprTimeStamp"
+  #   name: "resultsin1"
 
-  resultsin2:
-    fqn: "ol.resultsin"
-    entitySetName: "NCRICResultsIn"
-    src: "vehicles"
-    dst: "v5alerts"
-    propertyDefinitions:
-      ol.id:
-        type: "ol.id"
-        column: "lpr"
-    name: "resultsin2"
+  # resultsin2:
+  #   fqn: "ol.resultsin"
+  #   entitySetName: "NCRICResultsIn"
+  #   src: "vehicles"
+  #   dst: "v5alerts"
+  #   propertyDefinitions:
+  #     ol.id:
+  #       type: "ol.id"
+  #       column: "lpr"
+  #   name: "resultsin2"
+
