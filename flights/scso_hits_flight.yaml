@@ -1,7 +1,7 @@
 #separated because otherwise hits are not existing in the boss3 vehicles with 
 #psql select * from hits_21 limit 5000;
-#intellij sample test: "select * from hits_21 limit 5000"
-#final recurring integration: "select * from boss3_21_hits_10minutes;"
+#intellij historical run: "select * from scso_hits_historical"
+#final recurring integration: 
 
 entityDefinitions:
   vehicles:
@@ -22,7 +22,14 @@ entityDefinitions:
     propertyDefinitions:
       ol.id:
         type: "ol.id"
-        column: "hts_red_ID"
+        transforms:
+        - !<transforms.ConcatCombineTransform>
+          separator: "_"
+          transforms:
+          - !<transforms.ColumnTransform>
+            column: "hts_red_ID"
+          - !<transforms.ValueTransform>
+            value: "SCSO"
       vehicle.licensenumber:
         type: "vehicle.licensenumber"
         column: "hts_VRM"
@@ -30,7 +37,7 @@ entityDefinitions:
         type: "ol.datasource"
         transforms:
         - !<transforms.ValueTransform>
-          value: "BOSS3"
+          value: "SCSO"
     name: "vehiclerecords"
 
   hits:
@@ -39,7 +46,14 @@ entityDefinitions:
     propertyDefinitions:
       ol.id: 
         type: "ol.id"
-        column: hts_VRM
+        transforms:
+        - !<transforms.ConcatCombineTransform>
+          separator: "_"
+          transforms:
+          - !<transforms.ColumnTransform>
+            column: "hts_VRM"
+          - !<transforms.ValueTransform>
+            value: "SCSO"
       ol.type:
         type: ol.type
         column: "hts_Hotlist"
@@ -54,11 +68,11 @@ entityDefinitions:
         type: "ol.datasource"
         transforms:
         - !<transforms.ValueTransform>
-          value: "BOSS3"
+          value: "SCSO"
     conditions:
     - !<conditions.BooleanRegexCondition>
       column: "hts_Hotlist"
-      pattern: "STOLEN VEHICLES DOJ"
+      pattern: "STOLEN VEHICLE"
       reverse: false
     name: "hits"
 
@@ -72,9 +86,15 @@ associationDefinitions:
       ol.id:
         type: "ol.id"
         transforms:
-        - !<transforms.ConcatTransform>
-          columns: ["hts_VRM", "hts_red_ID"]
+        - !<transforms.ConcatCombineTransform>
           separator: "_"
+          transforms:
+          - !<transforms.ColumnTransform>
+            column: "hts_VRM"
+          - !<transforms.ColumnTransform>
+            column: "hts_red_ID"
+          - !<transforms.ValueTransform>
+            value: "SCSO"
     name: "has"
 
   resultsin1:
@@ -85,7 +105,21 @@ associationDefinitions:
     propertyDefinitions:
       ol.id:
         type: "ol.id"
-        column: "hts_red_ID"
+        transforms:
+        - !<transforms.ConcatCombineTransform>
+          separator: "_"
+          transforms:
+          - !<transforms.ColumnTransform>
+            column: "hts_red_ID"
+          - !<transforms.ValueTransform>
+            value: "SCSO"
+      general.datetime:
+        type: "general.datetime"
+        column: "hts_Timestamp"
+        transforms:
+        - !<transforms.DateTimeTransform>
+          pattern: ["yyyy-MM-dd HH:mm:ss.S","yyyy-MM-dd HH:mm:ss.SS","yyyy-MM-dd HH:mm:ss.SSS"]
+          timezone: "America/Los Angeles"
     name: "resultsin1"
 
   resultsin2:
@@ -97,4 +131,11 @@ associationDefinitions:
       ol.id:
         type: "ol.id"
         column: "hts_VRM"
+      general.datetime:
+        type: "general.datetime"
+        column: "hts_Timestamp"
+        transforms:
+        - !<transforms.DateTimeTransform>
+          pattern: ["yyyy-MM-dd HH:mm:ss.S","yyyy-MM-dd HH:mm:ss.SS","yyyy-MM-dd HH:mm:ss.SSS"]
+          timezone: "America/Los Angeles"
     name: "resultsin2"
