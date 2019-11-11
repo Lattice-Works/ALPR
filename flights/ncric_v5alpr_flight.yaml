@@ -184,12 +184,14 @@ entityDefinitions:
   #         value: "V5"   
   #   name: "v5alerts"
 
+
 associationDefinitions:
   has:
     fqn: ol.has
     entitySetName: NCRICHas
     src: vehicles
     dst: vehiclerecords
+    name: "has"
     propertyDefinitions:
       ol.id:
         type: "ol.id"
@@ -421,3 +423,4 @@ associationDefinitions:
   #       type: "ol.id"
   #       column: "lpr"
   #   name: "resultsin2"
+
