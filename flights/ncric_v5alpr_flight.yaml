@@ -1,6 +1,6 @@
 # sql query in psql: select * from v5plates where "lprTimeStamp" >= '2018-08-01' AND "lprTimeStamp" <= '2018-09-01' limit 5000 ;
 # sql query for sample in intellij: "select * from v5plates where \"lprTimeStamp\" >= '2018-08-01' AND \"lprTimeStamp\" <= '2018-09-01' limit 5000"
-# historical sql query in intellij: "select * from v5plates_all where \"lprTimeStamp\" <= current_timestamp order by \"lpr\";" 
+# historical sql query in intellij: "select * from v5plates_all where \"lprTimeStamp\" <= current_timestamp order by \"id\";" 
 
 # [red_id, sourceid, siteid] will get a suffix added to prevent name collisions from BOSS3 and SCSO
 
