@@ -63,7 +63,7 @@ entityDefinitions:
         transforms:
         - !<transforms.DateTimeTransform>
           pattern: ["yyyy-MM-dd HH:mm:ss.S","yyyy-MM-dd HH:mm:ss.SS","yyyy-MM-dd HH:mm:ss.SSS"]
-          timezone: "America/Los Angeles"
+          timezone: "America/Los_Angeles"
       ol.datasource:
         type: "ol.datasource"
         transforms:
@@ -119,7 +119,7 @@ associationDefinitions:
         transforms:
         - !<transforms.DateTimeTransform>
           pattern: ["yyyy-MM-dd HH:mm:ss.S","yyyy-MM-dd HH:mm:ss.SS","yyyy-MM-dd HH:mm:ss.SSS"]
-          timezone: "America/Los Angeles"
+          timezone: "America/Los_Angeles"
     name: "resultsin1"
 
   resultsin2:
@@ -137,5 +137,5 @@ associationDefinitions:
         transforms:
         - !<transforms.DateTimeTransform>
           pattern: ["yyyy-MM-dd HH:mm:ss.S","yyyy-MM-dd HH:mm:ss.SS","yyyy-MM-dd HH:mm:ss.SSS"]
-          timezone: "America/Los Angeles"
+          timezone: "America/Los_Angeles"
     name: "resultsin2"
