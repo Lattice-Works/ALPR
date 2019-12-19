@@ -27,6 +27,7 @@ entityDefinitions:
   vehiclerecords:
     fqn: "ol.vehicle"
     entitySetName: "NCRICVehicleRecords"
+    updateType: "PartialReplace"
     propertyDefinitions:
       ol.id:
         type:  "ol.id"
@@ -44,26 +45,26 @@ entityDefinitions:
       vehicle.licensestate:
         type: "vehicle.licensestate"
         column: "lpState"
-      ol.licenseplateimage:
-        type: "ol.licenseplateimage"
-        column: "lprPicture"
+      # ol.licenseplateimage:
+      #   type: "ol.licenseplateimage"
+      #   column: "lprPicture"
       ol.datelogged:
         type: "ol.datelogged"
         column: "lprTimeStamp"
         transforms:
         - !<transforms.DateTimeTransform>
           pattern: ["yyyy-MM-dd HH:mm:ss.SSS +00:00"]
-          timezone: "America/Los_Angeles"
-      ol.locationcoordinates:
-        type: "ol.locationcoordinates"
-        transforms:
-        - !<transforms.GeographyPointTransform>
-          latTransforms:
-          - !<transforms.ColumnTransform>
-            column: "gpsLat"
-          lonTransforms:
-          - !<transforms.ColumnTransform>
-            column: "gpsLng"
+          # timezone: "America/Los_Angeles"
+      # ol.locationcoordinates:
+      #   type: "ol.locationcoordinates"
+      #   transforms:
+      #   - !<transforms.GeographyPointTransform>
+      #     latTransforms:
+      #     - !<transforms.ColumnTransform>
+      #       column: "gpsLat"
+      #     lonTransforms:
+      #     - !<transforms.ColumnTransform>
+      #       column: "gpsLng"
       publicsafety.agencyname:
         type: "publicsafety.agencyname"
         column: "lprSourceId"
@@ -110,16 +111,16 @@ entityDefinitions:
         transforms:
         - !<transforms.ConcatTransform>
           columns: ["gpsLat","gpsLng"]
-      ol.locationcoordinates:
-        type: "ol.locationcoordinates"
-        transforms:
-        - !<transforms.GeographyPointTransform>
-          latTransforms:
-          - !<transforms.ColumnTransform>
-            column: "gpsLat"
-          lonTransforms:
-          - !<transforms.ColumnTransform>
-            column: "gpsLng" 
+      # ol.locationcoordinates:
+      #   type: "ol.locationcoordinates"
+      #   transforms:
+      #   - !<transforms.GeographyPointTransform>
+      #     latTransforms:
+      #     - !<transforms.ColumnTransform>
+      #       column: "gpsLat"
+      #     lonTransforms:
+      #     - !<transforms.ColumnTransform>
+      #       column: "gpsLng" 
     name: "locations"
 
   agencies:
@@ -163,26 +164,6 @@ entityDefinitions:
           value: "V5"    
     name: "confidencemetrics"
 
-  # v5alerts:
-  #   fqn: "ol.notification"
-  #   entitySetName: "NCRICNotifications"
-  #   propertyDefinitions:
-  #     ol.id: 
-  #       type: "ol.id"
-  #       column: "v5alertId"   # NOT unique
-  #     general.datetime:
-  #       type: "general.datetime"
-  #       column: "v5created"
-  #       transforms:
-  #       - !<transforms.DateTimeTransform>
-  #         pattern: ["yyyy-MM-dd HH:mm:ss.SSS +00:00"]
-  #         timezone: "America/Los Angeles"
-  #     ol.datasource:
-  #       type: "ol.datasource"
-  #       transforms:
-  #       - !<transforms.ValueTransform>
-  #         value: "V5"   
-  #   name: "v5alerts"
 
 
 associationDefinitions:
@@ -212,6 +193,7 @@ associationDefinitions:
     entitySetName: "NCRICRecordedBy"
     src: "vehiclerecords"
     dst: "imagesources"
+    updateType: "PartialReplace"
     propertyDefinitions:
       ol.datelogged:
         type: "ol.datelogged"
@@ -219,7 +201,7 @@ associationDefinitions:
         transforms:
         - !<transforms.DateTimeTransform>
           pattern: ["yyyy-MM-dd HH:mm:ss.SSS +00:00"]
-          timezone: "America/Los_Angeles"
+          # timezone: "America/Los_Angeles"
       general.stringid:
         type: "general.stringid"
         transforms:
@@ -239,6 +221,7 @@ associationDefinitions:
     entitySetName: "NCRICRecordedBy"
     src: "vehiclerecords"
     dst: "agencies"
+    updateType: "PartialReplace"
     propertyDefinitions:
       ol.datelogged:
         type: "ol.datelogged"
@@ -246,7 +229,7 @@ associationDefinitions:
         transforms:
         - !<transforms.DateTimeTransform>
           pattern: ["yyyy-MM-dd HH:mm:ss.SSS +00:00"]
-          timezone: "America/Los_Angeles"
+          # timezone: "America/Los_Angeles"
       general.stringid:
         type: "general.stringid"
         transforms:
@@ -266,6 +249,7 @@ associationDefinitions:
     entitySetName: "NCRICIncludes"
     src: "vehiclerecords"
     dst: "confidencemetrics"
+    updateType: "PartialReplace"
     propertyDefinitions:
       general.id:
         type: "general.id"
@@ -285,7 +269,7 @@ associationDefinitions:
         transforms:
         - !<transforms.DateTimeTransform>
           pattern: ["yyyy-MM-dd HH:mm:ss.SSS +00:00"]
-          timezone: "America/Los_Angeles"
+          # timezone: "America/Los_Angeles"
     name: "includes1"
 
   includes2:
@@ -293,6 +277,7 @@ associationDefinitions:
     entitySetName: "NCRICIncludes"
     src: "imagesources"
     dst: "confidencemetrics"
+    updateType: "PartialReplace"
     propertyDefinitions:
       general.id:
         type: "general.id"
@@ -312,7 +297,7 @@ associationDefinitions:
         transforms:
         - !<transforms.DateTimeTransform>
           pattern: ["yyyy-MM-dd HH:mm:ss.SSS +00:00"]
-          timezone: "America/Los_Angeles"
+          # timezone: "America/Los_Angeles"
     name: "includes2"
 
   locatedat1:
