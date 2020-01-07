@@ -46,7 +46,7 @@ entityDefinitions:
         transforms:
         - !<transforms.DateTimeTransform>
           pattern: ["yyyy-MM-dd HH:mm:ss.S","yyyy-MM-dd HH:mm:ss.SS","yyyy-MM-dd HH:mm:ss.SSS"]
-          timezone: "America/Los Angeles"
+          timezone: "America/Los_Angeles"
       vehicle.make:
         type: "vehicle.make"
         transforms:
@@ -123,108 +123,7 @@ entityDefinitions:
           value: "BOSS3"
     name: "vehiclerecords1"
 
-# Not integrating - hard to join with records spread among tables, and not necessary.
-# A record that was separate from the rest of the data from a particular "read". Different pk. Repeat info.
-# added "_labels" suffix to red_id. 
-  # vehiclerecords2:
-  #   fqn: "ol.vehicle"
-  #   entitySetName: "NCRICVehicleRecords"
-  #   propertyDefinitions:
-  #     ol.id:
-  #       type: "ol.id" 
-  #       transforms:
-  #       - !<transforms.ConcatCombineTransform>
-  #         separator: "-"
-  #         transforms:
-  #         - !<transforms.ColumnTransform>
-  #           column: "red_id"
-  #         - !<transforms.ValueTransform>
-  #           value: "labels"
-  #     vehicle.licensenumber:
-  #       type: "vehicle.licensenumber"
-  #       column: "Plate"
-  #     ol.datelogged:
-  #       type: "ol.datelogged"
-  #       column: "TimeStamp"
-  #       transforms:
-  #       - !<transforms.DateTimeTransform>
-  #         pattern: ["yyyy-MM-dd HH:mm:ss.S","yyyy-MM-dd HH:mm:ss.SS","yyyy-MM-dd HH:mm:ss.SSS"]
-  #         timezone: "America/Los Angeles"
-  #     vehicle.make:
-  #       type: "vehicle.make"
-  #       transforms:
-  #       - !<transforms.BooleanRegexTransform>
-  #         column: "LabelName"
-  #         pattern: "(?i)(acura|audi|bmw|buick|cadillac|chevy|chrysler|dodge|fiat|ford|gmc|honda|hyundai|infinity|jeep|kia|lexus|lincoln|mazda|mercedes|mercury|(\\bmini\\b)|mitsubishi|nissan|pontiac|scion|subaru|suzuki|tesla|toyota|volvo|vw)"
-  #         transformsIfTrue:
-  #         - !<transforms.ConcatCombineTransform>
-  #           separator: "-"
-  #           transforms:
-  #           - !<transforms.SplitTransform>
-  #             column: "LabelName"
-  #             separator: "-"
-  #             index: 0
-  #     vehicle.model:
-  #       type: "vehicle.model"
-  #       transforms:
-  #       - !<transforms.BooleanRegexTransform>
-  #         column: "LabelName"
-  #         pattern: "(?i)(ford-mustang-gt|ford-mustang)" 
-  #         transformsIfTrue:      ## we only want the mustang gt words, and not the "ford".
-  #         - !<transforms.ConcatCombineTransform>
-  #           separator: "-"
-  #           transforms:
-  #           - !<transforms.SplitTransform>
-  #             column: "LabelName"
-  #             separator: "-"
-  #             index: 1
-  #           - !<transforms.SplitTransform>
-  #             column: "LabelName"
-  #             separator: "-"
-  #             index: 2
-  #             ifMoreThan: 2
-  #     vehicle.color:
-  #       type: "vehicle.color"
-  #       transforms:
-  #       - !<transforms.BooleanRegexTransform>
-  #         column: "LabelName"
-  #         pattern: "(?i)(blue|dark|green|light|red|white|yellow)"
-  #         transformsIfTrue:
-  #         - !<transforms.ColumnTransform>
-  #           column: "LabelName"
-  #     ol.accessories:
-  #       type: "ol.accessories"
-  #       transforms:
-  #       - !<transforms.BooleanRegexTransform>
-  #         column: "LabelName"
-  #         pattern: "(?i)(spare tire|paper-plate|pedestal-spoiler|ca-clean-air-vehicle-sticker|rectangular-sticker|uber-sticker|roof-rack|pickup-ladder-rack|racing-strip)"
-  #         transformsIfTrue:
-  #         - !<transforms.ColumnTransform>
-  #           column: "LabelName"
-  #     vehicle.style:
-  #       type: "vehicle.style"
-  #       transforms:
-  #       - !<transforms.BooleanRegexTransform>
-  #         column: "LabelName"
-  #         pattern: "(?i)(box-truck|full-size-van|other-truck|car|pickup|minivan|hatchback|sedan|SUV)"
-  #         transformsIfTrue:
-  #         - !<transforms.ColumnTransform>
-  #           column: "LabelName"
-  #     ol.label:
-  #       type: "ol.label"
-  #       transforms:
-  #       - !<transforms.BooleanRegexTransform>
-  #         column: "LabelName"
-  #         pattern: "(?i)(night|day)"
-  #         transformsIfTrue:
-  #         - !<transforms.ColumnTransform>
-  #           column: "LabelName"
-  #     ol.datasource:
-  #       type: "ol.datasource"
-  #       transforms:
-  #       - !<transforms.ValueTransform>
-  #         value: "BOSS3"
-  #   name: "vehiclerecords2"
+
 
 
 associationDefinitions:
@@ -247,22 +146,4 @@ associationDefinitions:
           - !<transforms.ColumnTransform>
             column: "TimeStamp"
     name: "has1"
-  # has2:
-  #   fqn: "ol.has"
-  #   entitySetName: "NCRICHas"
-  #   src: "vehicles"
-  #   dst: "vehiclerecords2"
-  #   propertyDefinitions:
-  #     ol.id:
-  #       type: "ol.id"
-  #       transforms:
-  #       - !<transforms.ConcatCombineTransform>
-  #         separator: "-"
-  #         transforms:
-  #         - !<transforms.ColumnTransform>
-  #           column: "Plate"
-  #         - !<transforms.ColumnTransform>
-  #           column: "red_id"
-  #         - !<transforms.ValueTransform>
-  #           value: "labels"
-  #   name: "has2"
+  

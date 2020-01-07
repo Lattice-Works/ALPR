@@ -47,7 +47,7 @@ entityDefinitions:
         transforms:
         - !<transforms.DateTimeTransform>
           pattern: ["yyyy-MM-dd HH:mm:ss.S","yyyy-MM-dd HH:mm:ss.SS","yyyy-MM-dd HH:mm:ss.SSS"]
-          timezone: "America/Los Angeles"
+          timezone: "America/Los_Angeles"
       ol.locationcoordinates:
         type: "ol.locationcoordinates"
         transforms:
@@ -201,7 +201,7 @@ associationDefinitions:
         transforms:
         - !<transforms.DateTimeTransform>
           pattern: ["yyyy-MM-dd HH:mm:ss.S","yyyy-MM-dd HH:mm:ss.SS","yyyy-MM-dd HH:mm:ss.SSS"]
-          timezone: "America/Los Angeles"
+          timezone: "America/Los_Angeles"
       general.stringid:
         type: "general.stringid"
         transforms:
@@ -221,7 +221,7 @@ associationDefinitions:
         transforms:
         - !<transforms.DateTimeTransform>
           pattern: ["yyyy-MM-dd HH:mm:ss.S","yyyy-MM-dd HH:mm:ss.SS","yyyy-MM-dd HH:mm:ss.SSS"]
-          timezone: "America/Los Angeles"
+          timezone: "America/Los_Angeles"
       general.stringid:
         type: "general.stringid"
         transforms:
@@ -247,7 +247,7 @@ associationDefinitions:
         transforms:
         - !<transforms.DateTimeTransform>
           pattern: ["yyyy-MM-dd HH:mm:ss.S","yyyy-MM-dd HH:mm:ss.SS","yyyy-MM-dd HH:mm:ss.SSS"]
-          timezone: "America/Los Angeles"
+          timezone: "America/Los_Angeles"
     name: "includes1"
 
   includes2:
@@ -268,7 +268,7 @@ associationDefinitions:
         transforms:
         - !<transforms.DateTimeTransform>
           pattern: ["yyyy-MM-dd HH:mm:ss.S","yyyy-MM-dd HH:mm:ss.SS","yyyy-MM-dd HH:mm:ss.SSS"]
-          timezone: "America/Los Angeles"
+          timezone: "America/Los_Angeles"
     name: "includes2"
 
   locatedat1:

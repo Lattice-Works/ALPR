@@ -4,6 +4,7 @@
 #final recurring integration: 
 
 entityDefinitions:
+#### SET 1 - merging into same entity sets as all NCRIC sources
   vehicles:
     fqn: "ol.vehicle"
     entitySetName: "NCRICVehicles"
@@ -63,7 +64,7 @@ entityDefinitions:
         transforms:
         - !<transforms.DateTimeTransform>
           pattern: ["yyyy-MM-dd HH:mm:ss.S","yyyy-MM-dd HH:mm:ss.SS","yyyy-MM-dd HH:mm:ss.SSS"]
-          timezone: "America/Los Angeles"
+          timezone: "America/Los_Angeles"
       ol.datasource:
         type: "ol.datasource"
         transforms:
@@ -76,7 +77,81 @@ entityDefinitions:
       reverse: false
     name: "hits"
 
+#### SET 2 - separate entity sets for SCSO data only. -eventually will use these but duplicate for now.
+  vehicles2:
+    fqn: "ol.vehicle"
+    entitySetName: "NCRICVehiclesSCSO"
+    propertyDefinitions:
+      ol.id:
+        type: "ol.id"
+        column: "hts_VRM"
+      vehicle.licensenumber:
+        type: "vehicle.licensenumber"
+        column: "hts_VRM"
+    name: "vehicles2"
+
+  vehiclerecords2:
+    fqn: "ol.vehicle"
+    entitySetName: "NCRICVehicleRecordsSCSO"
+    propertyDefinitions:
+      ol.id:
+        type: "ol.id"
+        transforms:
+        - !<transforms.ConcatCombineTransform>
+          separator: "_"
+          transforms:
+          - !<transforms.ColumnTransform>
+            column: "hts_red_ID"
+          - !<transforms.ValueTransform>
+            value: "SCSO"
+      vehicle.licensenumber:
+        type: "vehicle.licensenumber"
+        column: "hts_VRM"
+      ol.datasource:
+        type: "ol.datasource"
+        transforms:
+        - !<transforms.ValueTransform>
+          value: "SCSO"
+    name: "vehiclerecords2"
+
+  hits2:
+    fqn: "ol.notification"
+    entitySetName: "NCRICNotificationsSCSO"
+    propertyDefinitions:
+      ol.id: 
+        type: "ol.id"
+        transforms:
+        - !<transforms.ConcatCombineTransform>
+          separator: "_"
+          transforms:
+          - !<transforms.ColumnTransform>
+            column: "hts_VRM"
+          - !<transforms.ValueTransform>
+            value: "SCSO"
+      ol.type:
+        type: ol.type
+        column: "hts_Hotlist"
+      general.datetime:
+        type: general.datetime
+        column: "hts_Timestamp"
+        transforms:
+        - !<transforms.DateTimeTransform>
+          pattern: ["yyyy-MM-dd HH:mm:ss.S","yyyy-MM-dd HH:mm:ss.SS","yyyy-MM-dd HH:mm:ss.SSS"]
+          timezone: "America/Los_Angeles"
+      ol.datasource:
+        type: "ol.datasource"
+        transforms:
+        - !<transforms.ValueTransform>
+          value: "SCSO"
+    conditions:
+    - !<conditions.BooleanRegexCondition>
+      column: "hts_Hotlist"
+      pattern: "STOLEN VEHICLE"
+      reverse: false
+    name: "hits2"
+
 associationDefinitions: 
+#### SET 1 - merging into same entity sets as all NCRIC sources
   has:
     fqn: "ol.has"
     entitySetName: "NCRICHas"
@@ -119,7 +194,7 @@ associationDefinitions:
         transforms:
         - !<transforms.DateTimeTransform>
           pattern: ["yyyy-MM-dd HH:mm:ss.S","yyyy-MM-dd HH:mm:ss.SS","yyyy-MM-dd HH:mm:ss.SSS"]
-          timezone: "America/Los Angeles"
+          timezone: "America/Los_Angeles"
     name: "resultsin1"
 
   resultsin2:
@@ -137,5 +212,69 @@ associationDefinitions:
         transforms:
         - !<transforms.DateTimeTransform>
           pattern: ["yyyy-MM-dd HH:mm:ss.S","yyyy-MM-dd HH:mm:ss.SS","yyyy-MM-dd HH:mm:ss.SSS"]
-          timezone: "America/Los Angeles"
+          timezone: "America/Los_Angeles"
     name: "resultsin2"
+
+#### SET 2 - separate entity sets for SCSO data only. -eventually will use these but duplicate for now.
+  has2:
+    fqn: "ol.has"
+    entitySetName: "NCRICHasSCSO"
+    src: "vehicles2"
+    dst: "vehiclerecords2"
+    propertyDefinitions:
+      ol.id:
+        type: "ol.id"
+        transforms:
+        - !<transforms.ConcatCombineTransform>
+          separator: "_"
+          transforms:
+          - !<transforms.ColumnTransform>
+            column: "hts_VRM"
+          - !<transforms.ColumnTransform>
+            column: "hts_red_ID"
+          - !<transforms.ValueTransform>
+            value: "SCSO"
+    name: "has2"
+
+  resultsin1_2:
+    fqn: "ol.resultsin"
+    entitySetName: "NCRICResultsInSCSO"
+    src: "vehiclerecords2"
+    dst: "hits2"
+    propertyDefinitions:
+      ol.id:
+        type: "ol.id"
+        transforms:
+        - !<transforms.ConcatCombineTransform>
+          separator: "_"
+          transforms:
+          - !<transforms.ColumnTransform>
+            column: "hts_red_ID"
+          - !<transforms.ValueTransform>
+            value: "SCSO"
+      general.datetime:
+        type: "general.datetime"
+        column: "hts_Timestamp"
+        transforms:
+        - !<transforms.DateTimeTransform>
+          pattern: ["yyyy-MM-dd HH:mm:ss.S","yyyy-MM-dd HH:mm:ss.SS","yyyy-MM-dd HH:mm:ss.SSS"]
+          timezone: "America/Los_Angeles"
+    name: "resultsin1_2"
+
+  resultsin2_2:
+    fqn: "ol.resultsin"
+    entitySetName: "NCRICResultsInSCSO"
+    src: "vehicles2"
+    dst: "hits2"
+    propertyDefinitions:
+      ol.id:
+        type: "ol.id"
+        column: "hts_VRM"
+      general.datetime:
+        type: "general.datetime"
+        column: "hts_Timestamp"
+        transforms:
+        - !<transforms.DateTimeTransform>
+          pattern: ["yyyy-MM-dd HH:mm:ss.S","yyyy-MM-dd HH:mm:ss.SS","yyyy-MM-dd HH:mm:ss.SSS"]
+          timezone: "America/Los_Angeles"
+    name: "resultsin2_2"
