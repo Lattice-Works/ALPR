@@ -2,7 +2,7 @@
 # sql query for sample in intellij: "select * from v5plates where \"lprTimeStamp\" >= '2018-08-01' AND \"lprTimeStamp\" <= '2018-09-01' limit 5000"
 # historical sql query in intellij: "select * from v5plates_all where \"lprTimeStamp\" <= current_timestamp order by \"id\";" 
 
-# [red_id, sourceid, siteid] will get a suffix added to prevent name collisions from BOSS3 and SCSO
+# [red_id, sourceid, siteid] will get a suffiZ added to prevent name collisions from BOSS3 and SCSO
 
 # taking out alerts, there's no info in them but an ID, so every read would have one. Meaningless. Also v5alertId is not unique.
 
@@ -45,16 +45,16 @@ entityDefinitions:
       vehicle.licensestate:
         type: "vehicle.licensestate"
         column: "lpstate"
-      ol.licenseplateimage:
-        type: "ol.licenseplateimage"
-        column: "lprpicture"
+      # ol.licenseplateimage:
+      #   type: "ol.licenseplateimage"
+      #   column: "lprpicture"
       ol.datelogged:
         type: "ol.datelogged"
         column: "lprtimestamp"
-        transforms:
-        - !<transforms.DateTimeTransform>
-          pattern: ["yyyy-MM-dd HH:mm:ss.SSS +00:00"]
-          # timezone: "America/Los_Angeles"
+        # transforms:
+        # - !<transforms.DateTimeTransform>
+        #   pattern: ["yyyy-MM-dd HH:mm:ss.SSS"]
+        #   timezone: "UTC"
       ol.locationcoordinates:
         type: "ol.locationcoordinates"
         transforms:
@@ -202,16 +202,16 @@ entityDefinitions:
       vehicle.licensestate:
         type: "vehicle.licensestate"
         column: "lpstate"
-      ol.licenseplateimage:
-        type: "ol.licenseplateimage"
-        column: "lprpicture"
+      # ol.licenseplateimage:
+      #   type: "ol.licenseplateimage"
+      #   column: "lprpicture"
       ol.datelogged:
         type: "ol.datelogged"
         column: "lprtimestamp"
-        transforms:
-        - !<transforms.DateTimeTransform>
-          pattern: ["yyyy-MM-dd HH:mm:ss.SSS +00:00"]
-          # timezone: "America/Los_Angeles"
+        # transforms:
+        # - !<transforms.DateTimeTransform>
+        #   pattern: ["yyyy-MM-dd HH:mm:ss.SSS"]
+        #   timezone: "UTC"
       ol.locationcoordinates:
         type: "ol.locationcoordinates"
         transforms:
@@ -319,7 +319,7 @@ entityDefinitions:
         transforms:
         - !<transforms.ValueTransform>
           value: "V5"    
-    name: "confidencemetricsv5"
+    name: "confidencemetrics2"
 
 
 
@@ -354,11 +354,11 @@ associationDefinitions:
     propertyDefinitions:
       ol.datelogged:
         type: "ol.datelogged"
-        column: "lprtimestamp"
-        transforms:
-        - !<transforms.DateTimeTransform>
-          pattern: ["yyyy-MM-dd HH:mm:ss.SSS +00:00"]
-          # timezone: "America/Los Angeles"
+        # column: "lprtimestamp"
+        # transforms:
+        # - !<transforms.DateTimeTransform>
+        #   pattern: ["yyyy-MM-dd HH:mm:ss.SSS"]
+        #   timezone: "UTC"
       general.stringid:
         type: "general.stringid"
         transforms:
@@ -382,10 +382,10 @@ associationDefinitions:
       ol.datelogged:
         type: "ol.datelogged"
         column: "lprtimestamp"
-        transforms:
-        - !<transforms.DateTimeTransform>
-          pattern: ["yyyy-MM-dd HH:mm:ss.SSS +00:00"]
-          # timezone: "America/Los_Angeles"
+        # transforms:
+        # - !<transforms.DateTimeTransform>
+        #   pattern: ["yyyy-MM-dd HH:mm:ss.SSS"]
+        #   timezone: "UTC"
       general.stringid:
         type: "general.stringid"
         transforms:
@@ -421,10 +421,10 @@ associationDefinitions:
       date.completeddatetime:
         type: "date.completeddatetime"
         column: "lprtimestamp"
-        transforms:
-        - !<transforms.DateTimeTransform>
-          pattern: ["yyyy-MM-dd HH:mm:ss.SSS +00:00"]
-          # timezone: "America/Los_Angeles"
+        # transforms:
+        # - !<transforms.DateTimeTransform>
+        #   pattern: ["yyyy-MM-dd HH:mm:ss.SSS"]
+        #   timezone: "UTC"
     name: "includes1"
 
   includes2:
@@ -448,10 +448,10 @@ associationDefinitions:
       date.completeddatetime:
         type: "date.completeddatetime"
         column: "lprtimestamp"
-        transforms:
-        - !<transforms.DateTimeTransform>
-          pattern: ["yyyy-MM-dd HH:mm:ss.SSS +00:00"]
-          # timezone: "America/Los_Angeles"
+        # transforms:
+        # - !<transforms.DateTimeTransform>
+        #   pattern: ["yyyy-MM-dd HH:mm:ss.SSS"]
+        #   timezone: "UTC"
     name: "includes2"
 
   locatedat1:
@@ -561,10 +561,10 @@ associationDefinitions:
       ol.datelogged:
         type: "ol.datelogged"
         column: "lprtimestamp"
-        transforms:
-        - !<transforms.DateTimeTransform>
-          pattern: ["yyyy-MM-dd HH:mm:ss.SSS +00:00"]
-          # timezone: "America/Los_Angeles"
+        # transforms:
+        # - !<transforms.DateTimeTransform>
+        #   pattern: ["yyyy-MM-dd HH:mm:ss.SSS"]
+        #   timezone: "UTC"
       general.stringid:
         type: "general.stringid"
         transforms:
@@ -588,10 +588,10 @@ associationDefinitions:
       ol.datelogged:
         type: "ol.datelogged"
         column: "lprtimestamp"
-        transforms:
-        - !<transforms.DateTimeTransform>
-          pattern: ["yyyy-MM-dd HH:mm:ss.SSS +00:00"]
-          # timezone: "America/Los_Angeles"
+        # transforms:
+        # - !<transforms.DateTimeTransform>
+        #   pattern: ["yyyy-MM-dd HH:mm:ss.SSS"]
+        #   timezone: "UTC"
       general.stringid:
         type: "general.stringid"
         transforms:
@@ -627,10 +627,10 @@ associationDefinitions:
       date.completeddatetime:
         type: "date.completeddatetime"
         column: "lprtimestamp"
-        transforms:
-        - !<transforms.DateTimeTransform>
-          pattern: ["yyyy-MM-dd HH:mm:ss.SSS +00:00"]
-          # timezone: "America/Los_Angeles"
+        # transforms:
+        # - !<transforms.DateTimeTransform>
+        #   pattern: ["yyyy-MM-dd HH:mm:ss.SSS"]
+        #   timezone: "UTC"
     name: "includes1_2"
 
   includes2_2:
@@ -654,10 +654,10 @@ associationDefinitions:
       date.completeddatetime:
         type: "date.completeddatetime"
         column: "lprtimestamp"
-        transforms:
-        - !<transforms.DateTimeTransform>
-          pattern: ["yyyy-MM-dd HH:mm:ss.SSS +00:00"]
-          # timezone: "America/Los_Angeles"
+        # transforms:
+        # - !<transforms.DateTimeTransform>
+        #   pattern: ["yyyy-MM-dd HH:mm:ss.SSS"]
+        #   timezone: "UTC"
     name: "includes2_2"
 
   locatedat1_2:

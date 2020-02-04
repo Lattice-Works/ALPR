@@ -53,18 +53,18 @@ entityDefinitions:
         column: "lprTimeStamp"
         transforms:
         - !<transforms.DateTimeTransform>
-          pattern: ["yyyy-MM-dd HH:mm:ss.SSS +00:00"]
-          # timezone: "America/Los_Angeles"
-      # ol.locationcoordinates:
-      #   type: "ol.locationcoordinates"
-      #   transforms:
-      #   - !<transforms.GeographyPointTransform>
-      #     latTransforms:
-      #     - !<transforms.ColumnTransform>
-      #       column: "gpsLat"
-      #     lonTransforms:
-      #     - !<transforms.ColumnTransform>
-      #       column: "gpsLng"
+          pattern: ["yyyy-MM-dd HH:mm:ss.SSS XXX"]
+          timezone: "UTC"
+      ol.locationcoordinates:
+        type: "ol.locationcoordinates"
+        transforms:
+        - !<transforms.GeographyPointTransform>
+          latTransforms:
+          - !<transforms.ColumnTransform>
+            column: "gpsLat"
+          lonTransforms:
+          - !<transforms.ColumnTransform>
+            column: "gpsLng"
       publicsafety.agencyname:
         type: "publicsafety.agencyname"
         column: "lprSourceId"
@@ -111,16 +111,16 @@ entityDefinitions:
         transforms:
         - !<transforms.ConcatTransform>
           columns: ["gpsLat","gpsLng"]
-      # ol.locationcoordinates:
-      #   type: "ol.locationcoordinates"
-      #   transforms:
-      #   - !<transforms.GeographyPointTransform>
-      #     latTransforms:
-      #     - !<transforms.ColumnTransform>
-      #       column: "gpsLat"
-      #     lonTransforms:
-      #     - !<transforms.ColumnTransform>
-      #       column: "gpsLng" 
+      ol.locationcoordinates:
+        type: "ol.locationcoordinates"
+        transforms:
+        - !<transforms.GeographyPointTransform>
+          latTransforms:
+          - !<transforms.ColumnTransform>
+            column: "gpsLat"
+          lonTransforms:
+          - !<transforms.ColumnTransform>
+            column: "gpsLng" 
     name: "locations"
 
   agencies:
@@ -200,8 +200,8 @@ associationDefinitions:
         column: "lprTimeStamp"
         transforms:
         - !<transforms.DateTimeTransform>
-          pattern: ["yyyy-MM-dd HH:mm:ss.SSS +00:00"]
-          # timezone: "America/Los_Angeles"
+          pattern: ["yyyy-MM-dd HH:mm:ss.SSS XXX"]
+          timezone: "UTC"
       general.stringid:
         type: "general.stringid"
         transforms:
@@ -228,8 +228,8 @@ associationDefinitions:
         column: "lprTimeStamp"
         transforms:
         - !<transforms.DateTimeTransform>
-          pattern: ["yyyy-MM-dd HH:mm:ss.SSS +00:00"]
-          # timezone: "America/Los_Angeles"
+          pattern: ["yyyy-MM-dd HH:mm:ss.SSS XXX"]
+          timezone: "UTC"
       general.stringid:
         type: "general.stringid"
         transforms:
@@ -268,8 +268,8 @@ associationDefinitions:
         column: "lprTimeStamp"
         transforms:
         - !<transforms.DateTimeTransform>
-          pattern: ["yyyy-MM-dd HH:mm:ss.SSS +00:00"]
-          # timezone: "America/Los_Angeles"
+          pattern: ["yyyy-MM-dd HH:mm:ss.SSS XXX"]
+          timezone: "UTC"
     name: "includes1"
 
   includes2:
@@ -296,8 +296,8 @@ associationDefinitions:
         column: "lprTimeStamp"
         transforms:
         - !<transforms.DateTimeTransform>
-          pattern: ["yyyy-MM-dd HH:mm:ss.SSS +00:00"]
-          # timezone: "America/Los_Angeles"
+          pattern: ["yyyy-MM-dd HH:mm:ss.SSS XXX"]
+          timezone: "UTC"
     name: "includes2"
 
   locatedat1:
