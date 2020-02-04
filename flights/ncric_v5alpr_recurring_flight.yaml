@@ -45,9 +45,9 @@ entityDefinitions:
       vehicle.licensestate:
         type: "vehicle.licensestate"
         column: "lpstate"
-      # ol.licenseplateimage:
-      #   type: "ol.licenseplateimage"
-      #   column: "lprpicture"
+      ol.licenseplateimage:
+        type: "ol.licenseplateimage"
+        column: "lprpicture"
       ol.datelogged:
         type: "ol.datelogged"
         column: "lprtimestamp"
@@ -202,9 +202,9 @@ entityDefinitions:
       vehicle.licensestate:
         type: "vehicle.licensestate"
         column: "lpstate"
-      # ol.licenseplateimage:
-      #   type: "ol.licenseplateimage"
-      #   column: "lprpicture"
+      ol.licenseplateimage:
+        type: "ol.licenseplateimage"
+        column: "lprpicture"
       ol.datelogged:
         type: "ol.datelogged"
         column: "lprtimestamp"
@@ -354,7 +354,7 @@ associationDefinitions:
     propertyDefinitions:
       ol.datelogged:
         type: "ol.datelogged"
-        # column: "lprtimestamp"
+        column: "lprtimestamp"
         # transforms:
         # - !<transforms.DateTimeTransform>
         #   pattern: ["yyyy-MM-dd HH:mm:ss.SSS"]

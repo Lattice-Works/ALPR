@@ -43,9 +43,9 @@ entityDefinitions:
       vehicle.licensestate:
         type: "vehicle.licensestate"
         column: "lpState"
-      # ol.licenseplateimage:
-      #   type: "ol.licenseplateimage"
-      #   column: "lprPicture"
+      ol.licenseplateimage:
+        type: "ol.licenseplateimage"
+        column: "lprPicture"
       ol.datelogged:
         type: "ol.datelogged"
         column: "lprTimeStamp"
