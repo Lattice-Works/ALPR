@@ -1,0 +1,598 @@
+# pks for all entity setsexcept location  will get a suffix added to prevent name collisions from BOSS3, V5, and SCSO
+
+
+
+entityDefinitions:
+  #### SET 1 - merging into same entity sets as all NCRIC sources
+  vehicles:
+    fqn: "ol.vehicle"
+    entitySetName: "NCRICVehicles"
+    propertyDefinitions:
+      ol.id:
+        type: "ol.id"
+        column: "id"
+      vehicle.licensenumber:
+        type: "vehicle.licensenumber"
+        column: "plate"
+      ol.datasource:            
+        type: "ol.datasource"
+        transforms:
+        - !<transforms.ValueTransform>
+          value: "INTELLISITE"
+    name: "vehicles"
+
+  vehiclerecords:
+    fqn: "ol.vehicle"
+    entitySetName: "NCRICVehicleRecords"
+    propertyDefinitions:
+      ol.id:
+        type:  "ol.id" 
+        transforms:
+        - !<transforms.ConcatCombineTransform>
+          separator: "_"
+          transforms:
+          - !<transforms.ColumnTransform>
+            column: "id"
+          - !<transforms.ValueTransform>
+            value: "INTELLISITE"
+      vehicle.licensenumber:
+        type: "vehicle.licensenumber"
+        column: "plate"
+      ol.licenseplateimage:
+        type: "ol.licenseplateimage"
+        column: "image2"
+      ol.vehicleimage:
+        type: "ol.vehicleimage"
+        column: "image1"
+      ol.datelogged:
+        type: "ol.datelogged"
+        column: "readStamp"
+        # transforms:
+        # - !<transforms.DateTimeTransform>
+        #   pattern: ["yyyy-MM-dd HH:mm:ss"]
+        #   timezone: "UTC"
+      ol.locationcoordinates:
+        type: "ol.locationcoordinates"
+        transforms:
+        - !<transforms.GeographyPointTransform>
+          latTransforms:
+          - !<transforms.ColumnTransform>
+            column: "latitude"
+          lonTransforms:
+          - !<transforms.ColumnTransform>
+            column: "longitude"
+      publicsafety.agencyname:
+        type: "publicsafety.agencyname"
+        column: "agency"                 
+      ol.datasource:
+        type: "ol.datasource"
+        transforms:
+        - !<transforms.ValueTransform>
+          value: "INTELLISITE"
+    name: "vehiclerecords"
+
+  imagesources:
+    fqn: "ol.imagesource"
+    entitySetName: "NCRICImageSources"
+    propertyDefinitions:
+      ol.id:
+        type:  "ol.id" 
+        transforms:
+        - !<transforms.ConcatCombineTransform>
+          separator: "_"
+          transforms:
+          - !<transforms.ColumnTransform>
+            column: "camera_description"
+          - !<transforms.ValueTransform>
+            value: "INTELLISITE"
+      ol.name:
+        type: "ol.name"
+        column: "camera_description"
+      ol.datasource:
+        type: "ol.datasource"
+        transforms:
+        - !<transforms.ValueTransform>
+          value: "INTELLISITE"
+    name: "imagesources"
+
+  locations:
+    fqn: "ol.location"
+    entitySetName: "NCRICLocations"
+    propertyDefinitions:
+      general.id: 
+        type: "general.id"
+        transforms:
+        - !<transforms.ConcatTransform>
+          columns: ["latitude","longitude"] 
+      ol.locationcoordinates:
+        type: "ol.locationcoordinates"
+        transforms:
+        - !<transforms.GeographyPointTransform>
+          latTransforms:
+          - !<transforms.ColumnTransform>
+            column: "latitude"
+          lonTransforms:
+          - !<transforms.ColumnTransform>
+            column: "longitude"
+    name: "locations"
+
+  agencies:
+    fqn: "ol.agency"
+    entitySetName: "NCRICAgencies"
+    propertyDefinitions:
+      ol.id: 
+        type: "ol.id"
+        transforms:
+        - !<transforms.ConcatCombineTransform>
+          separator: "_"
+          transforms:
+          - !<transforms.ColumnTransform>
+            column: "agency"
+          - !<transforms.ValueTransform>
+            value: "INTELLISITE"  
+      ol.name:
+        type: "ol.name"
+        column: "agency" #used to be sitename
+      ol.datasource:
+        type: "ol.datasource"
+        transforms:
+        - !<transforms.ValueTransform>
+          value: "INTELLISITE"
+    name: "agencies"
+
+  
+
+#####  SET 2 - separate entity sets for INTELLISITE data only. -eventually will use these but duplicate for now.
+  vehicles2:
+    fqn: "ol.vehicle"
+    entitySetName: "NCRICVehiclesINTELLISITE"
+    propertyDefinitions:
+      ol.id:
+        type: "ol.id"
+        column: "id"
+      vehicle.licensenumber:
+        type: "vehicle.licensenumber"
+        column: "plate"
+      ol.datasource:            
+        type: "ol.datasource"
+        transforms:
+        - !<transforms.ValueTransform>
+          value: "INTELLISITE"
+    name: "vehicles2"
+
+  vehiclerecords2:
+    fqn: "ol.vehicle"
+    entitySetName: "NCRICVehicleRecordsINTELLISITE"
+    propertyDefinitions:
+      ol.id:
+        type:  "ol.id" 
+        transforms:
+        - !<transforms.ConcatCombineTransform>
+          separator: "_"
+          transforms:
+          - !<transforms.ColumnTransform>
+            column: "id"
+          - !<transforms.ValueTransform>
+            value: "INTELLISITE"
+      vehicle.licensenumber:
+        type: "vehicle.licensenumber"
+        column: "plate"
+      ol.licenseplateimage:
+        type: "ol.licenseplateimage"
+        column: "image2"
+      ol.vehicleimage:
+        type: "ol.vehicleimage"
+        column: "image1"
+      ol.datelogged:
+        type: "ol.datelogged"
+        column: "readStamp"
+        # transforms:
+        # - !<transforms.DateTimeTransform>
+        #   pattern: ["yyyy-MM-dd HH:mm:ss"]
+        #   timezone: "UTC"
+      ol.locationcoordinates:
+        type: "ol.locationcoordinates"
+        transforms:
+        - !<transforms.GeographyPointTransform>
+          latTransforms:
+          - !<transforms.ColumnTransform>
+            column: "latitude"
+          lonTransforms:
+          - !<transforms.ColumnTransform>
+            column: "longitude"
+      publicsafety.agencyname:
+        type: "publicsafety.agencyname"
+        column: "agency"                 
+      ol.datasource:
+        type: "ol.datasource"
+        transforms:
+        - !<transforms.ValueTransform>
+          value: "INTELLISITE"
+    name: "vehiclerecords2"
+
+  imagesources2:
+    fqn: "ol.imagesource"
+    entitySetName: "NCRICImageSourcesINTELLISITE"
+    propertyDefinitions:
+      ol.id:
+        type:  "ol.id" 
+        transforms:
+        - !<transforms.ConcatCombineTransform>
+          separator: "_"
+          transforms:
+          - !<transforms.ColumnTransform>
+            column: "camera_description"
+          - !<transforms.ValueTransform>
+            value: "INTELLISITE"
+      ol.name:
+        type: "ol.name"
+        column: "camera_description"
+      ol.datasource:
+        type: "ol.datasource"
+        transforms:
+        - !<transforms.ValueTransform>
+          value: "INTELLISITE"
+    name: "imagesources2"
+
+  locations2:
+    fqn: "ol.location"
+    entitySetName: "NCRICLocationsINTELLISITE"
+    propertyDefinitions:
+      general.id: 
+        type: "general.id"
+        transforms:
+        - !<transforms.ConcatTransform>
+          columns: ["latitude","longitude"] 
+      ol.locationcoordinates:
+        type: "ol.locationcoordinates"
+        transforms:
+        - !<transforms.GeographyPointTransform>
+          latTransforms:
+          - !<transforms.ColumnTransform>
+            column: "latitude"
+          lonTransforms:
+          - !<transforms.ColumnTransform>
+            column: "longitude"
+    name: "locations2"
+
+  agencies2:
+    fqn: "ol.agency"
+    entitySetName: "NCRICAgenciesINTELLISITE"
+    propertyDefinitions:
+      ol.id: 
+        type: "ol.id"
+        transforms:
+        - !<transforms.ConcatCombineTransform>
+          separator: "_"
+          transforms:
+          - !<transforms.ColumnTransform>
+            column: "agency"
+          - !<transforms.ValueTransform>
+            value: "INTELLISITE"  
+      ol.name:
+        type: "ol.name"
+        column: "agency" 
+      ol.datasource:
+        type: "ol.datasource"
+        transforms:
+        - !<transforms.ValueTransform>
+          value: "INTELLISITE"
+    name: "agencies2"
+
+  
+
+associationDefinitions:
+#### SET 1 -
+  has:
+    fqn: "ol.has"
+    entitySetName: "NCRICHas"
+    src: "vehicles"
+    dst: "vehiclerecords"
+    propertyDefinitions:
+      ol.id:
+        type: "ol.id"
+        transforms:
+        - !<transforms.ConcatCombineTransform>
+          separator: "_"
+          transforms:
+          - !<transforms.ColumnTransform>
+            column: "plate"
+          - !<transforms.ColumnTransform>
+            column: "id"
+          - !<transforms.ValueTransform>
+            value: "INTELLISITE"
+    name: "has"
+
+  recordedby1:
+    fqn: "ol.recordedby"
+    entitySetName: "NCRICRecordedBy"
+    src: "vehiclerecords"
+    dst: "imagesources"
+    propertyDefinitions:
+      ol.datelogged:
+        type: "ol.datelogged"
+        column: "readStamp"
+        # transforms:
+        # - !<transforms.DateTimeTransform>
+        #   pattern: ["yyyy-MM-dd HH:mm:ss"]
+        #   timezone: "UTC"
+      general.stringid:
+        type: "general.stringid"
+        transforms:
+        - !<transforms.ConcatCombineTransform>
+          separator: "_"
+          transforms:
+          - !<transforms.ColumnTransform>
+            column: "id"
+          - !<transforms.ColumnTransform>
+            column: "camera_description"
+          - !<transforms.ValueTransform>
+            value: "INTELLISITE"
+    name: "recordedby1"
+
+  recordedby2:
+    fqn: "ol.recordedby"
+    entitySetName: "NCRICRecordedBy"
+    src: "vehiclerecords"
+    dst: "agencies"
+    propertyDefinitions:
+      ol.datelogged:
+        type: "ol.datelogged"
+        column: "readStamp"
+        # transforms:
+        # - !<transforms.DateTimeTransform>
+        #   pattern: ["yyyy-MM-dd HH:mm:ss"]
+        #   timezone: "UTC"
+      general.stringid:
+        type: "general.stringid"
+        transforms:
+        - !<transforms.ConcatCombineTransform>
+          separator: "_"
+          transforms:
+          - !<transforms.ColumnTransform>
+            column: "id"
+          - !<transforms.ColumnTransform>
+            column: "agency"
+          - !<transforms.ValueTransform>
+            value: "INTELLISITE"
+    name: "recordedby2"
+
+  locatedat1:
+    fqn: "ol.locatedat"
+    entitySetName: "NCRICLocatedAt"
+    src: "imagesources"
+    dst: "locations"
+    propertyDefinitions:
+      general.id:
+        type: "general.id"
+        transforms:
+        - !<transforms.ConcatCombineTransform>
+          separator: "_"
+          transforms:
+          - !<transforms.ColumnTransform>
+            column: "camera_description"
+          - !<transforms.ColumnTransform>
+            column: "latitude"
+          - !<transforms.ColumnTransform>
+            column: "longitude"
+          - !<transforms.ValueTransform>
+            value: "INTELLISITE"
+    name: "locatedat1"
+
+  locatedat2:
+    fqn: "ol.locatedat"
+    entitySetName: "NCRICLocatedAt"
+    src: "vehiclerecords"
+    dst: "locations"
+    propertyDefinitions:
+      general.id:
+        type: "general.id"
+        transforms:
+        - !<transforms.ConcatCombineTransform>
+          separator: "_"
+          transforms:
+          - !<transforms.ColumnTransform>
+            column: "id"
+          - !<transforms.ColumnTransform>
+            column: "latitude"
+          - !<transforms.ColumnTransform>
+            column: "longitude"
+          - !<transforms.ValueTransform>
+            value: "INTELLISITE"
+    name: "locatedat2"
+
+  locatedat3:
+    fqn: "ol.locatedat"
+    entitySetName: "NCRICLocatedAt"
+    src: "vehicles"
+    dst: "locations"
+    propertyDefinitions:
+      general.id:
+        type: "general.id"
+        transforms:
+        - !<transforms.ConcatTransform>
+          columns: ["plate","latitude","longitude"]
+          separator: "_"
+    name: "locatedat3"
+
+  collectedby:
+    fqn: "ol.collectedby"
+    entitySetName: "NCRICCollectedBy"
+    src: "imagesources"
+    dst: "agencies"
+    propertyDefinitions:
+      general.id:
+        type: "general.id"
+        transforms:
+        - !<transforms.ConcatCombineTransform>
+          separator: "_"
+          transforms:
+          - !<transforms.ColumnTransform>
+            column: "camera_description"
+          - !<transforms.ColumnTransform>
+            column: "agency"
+          - !<transforms.ValueTransform>
+            value: "INTELLISITE"
+    name: "collectedby"
+
+#### SET 2 -
+  has2:
+    fqn: "ol.has"
+    entitySetName: "NCRICHasINTELLISITE"
+    src: "vehicles2"
+    dst: "vehiclerecords2"
+    propertyDefinitions:
+      ol.id:
+        type: "ol.id"
+        transforms:
+        - !<transforms.ConcatCombineTransform>
+          separator: "_"
+          transforms:
+          - !<transforms.ColumnTransform>
+            column: "plate"
+          - !<transforms.ColumnTransform>
+            column: "id"
+          - !<transforms.ValueTransform>
+            value: "INTELLISITE"
+    name: "has2"
+
+  recordedby1_2:
+    fqn: "ol.recordedby"
+    entitySetName: "NCRICRecordedByINTELLISITE"
+    src: "vehiclerecords2"
+    dst: "imagesources2"
+    propertyDefinitions:
+      ol.datelogged:
+        type: "ol.datelogged"
+        column: "readStamp"
+        # transforms:
+        # - !<transforms.DateTimeTransform>
+        #   pattern: ["yyyy-MM-dd HH:mm:ss"]
+        #   timezone: "UTC"
+      general.stringid:
+        type: "general.stringid"
+        transforms:
+        - !<transforms.ConcatCombineTransform>
+          separator: "_"
+          transforms:
+          - !<transforms.ColumnTransform>
+            column: "id"
+          - !<transforms.ColumnTransform>
+            column: "camera_description"
+          - !<transforms.ValueTransform>
+            value: "INTELLISITE"
+    name: "recordedby1_2"
+
+  recordedby2_2:
+    fqn: "ol.recordedby"
+    entitySetName: "NCRICRecordedByINTELLISITE"
+    src: "vehiclerecords2"
+    dst: "agencies2"
+    propertyDefinitions:
+      ol.datelogged:
+        type: "ol.datelogged"
+        column: "readStamp"
+        # transforms:
+        # - !<transforms.DateTimeTransform>
+        #   pattern: ["yyyy-MM-dd HH:mm:ss"]
+        #   timezone: "UTC"
+      general.stringid:
+        type: "general.stringid"
+        transforms:
+        - !<transforms.ConcatCombineTransform>
+          separator: "_"
+          transforms:
+          - !<transforms.ColumnTransform>
+            column: "id"
+          - !<transforms.ColumnTransform>
+            column: "agency"
+          - !<transforms.ValueTransform>
+            value: "INTELLISITE"
+    name: "recordedby2_2"
+
+  locatedat1_2:
+    fqn: "ol.locatedat"
+    entitySetName: "NCRICLocatedAtINTELLISITE"
+    src: "imagesources2"
+    dst: "locations2"
+    propertyDefinitions:
+      general.id:
+        type: "general.id"
+        transforms:
+        - !<transforms.ConcatCombineTransform>
+          separator: "_"
+          transforms:
+          - !<transforms.ColumnTransform>
+            column: "agency"
+          - !<transforms.ColumnTransform>
+            column: "latitude"
+          - !<transforms.ColumnTransform>
+            column: "longitude"
+          - !<transforms.ValueTransform>
+            value: "INTELLISITE"
+    name: "locatedat1_2"
+
+  locatedat2_2:
+    fqn: "ol.locatedat"
+    entitySetName: "NCRICLocatedAtINTELLISITE"
+    src: "vehiclerecords2"
+    dst: "locations2"
+    propertyDefinitions:
+      general.id:
+        type: "general.id"
+        transforms:
+        - !<transforms.ConcatCombineTransform>
+          separator: "_"
+          transforms:
+          - !<transforms.ColumnTransform>
+            column: "id" 
+          - !<transforms.ColumnTransform>
+            column: "latitude"
+          - !<transforms.ColumnTransform>
+            column: "longitude"
+          - !<transforms.ValueTransform>
+            value: "INTELLISITE"
+    name: "locatedat2_2"
+
+  locatedat3_2:
+    fqn: "ol.locatedat"
+    entitySetName: "NCRICLocatedAtINTELLISITE"
+    src: "vehicles2"
+    dst: "locations2"
+    propertyDefinitions:
+      general.id:
+        type: "general.id"
+        transforms:
+        - !<transforms.ConcatCombineTransform>
+          separator: "_"
+          transforms:
+          - !<transforms.ColumnTransform>
+            column: "plate" 
+          - !<transforms.ColumnTransform>
+            column: "latitude"
+          - !<transforms.ColumnTransform>
+            column: "longitude"
+          - !<transforms.ValueTransform>
+            value: "INTELLISITE"
+    name: "locatedat3_2"
+
+  collectedby2:
+    fqn: "ol.collectedby"
+    entitySetName: "NCRICCollectedByINTELLISITE"
+    src: "imagesources2"
+    dst: "agencies2"
+    propertyDefinitions:
+      general.id:
+        type: "general.id"
+        transforms:
+        - !<transforms.ConcatCombineTransform>
+          separator: "_"
+          transforms:
+          - !<transforms.ColumnTransform>
+            column: "camera_description"
+          - !<transforms.ColumnTransform>
+            column: "agency"
+          - !<transforms.ValueTransform>
+            value: "INTELLISITE"
+    name: "collectedby2"
+
