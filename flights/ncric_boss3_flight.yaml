@@ -53,10 +53,10 @@ entityDefinitions:
         transforms:
         - !<transforms.GeographyPointTransform>
           latTransforms:
-          - !<transforms.ColumnTransform>
+          - !<com.openlattice.shuttle.transforms.ColumnTransform>
             column: "Latitude"
           lonTransforms:
-          - !<transforms.ColumnTransform>
+          - !<com.openlattice.shuttle.transforms.ColumnTransform>
             column: "Longitude"
       publicsafety.agencyname:
         type: "publicsafety.agencyname"
@@ -116,10 +116,10 @@ entityDefinitions:
         transforms:
         - !<transforms.GeographyPointTransform>
           latTransforms:
-          - !<transforms.ColumnTransform>
+          - !<com.openlattice.shuttle.transforms.ColumnTransform>
             column: "Latitude"
           lonTransforms:
-          - !<transforms.ColumnTransform>
+          - !<com.openlattice.shuttle.transforms.ColumnTransform>
             column: "Longitude"
     name: "locations"
 
