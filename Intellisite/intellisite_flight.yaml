@@ -40,17 +40,13 @@ entityDefinitions:
         column: "plate"
       ol.licenseplateimage:
         type: "ol.licenseplateimage"
-        column: "image2"
+        column: "image1"
       ol.vehicleimage:
         type: "ol.vehicleimage"
-        column: "image1"
+        column: "image2"
       ol.datelogged:
         type: "ol.datelogged"
         column: "readStamp"
-        # transforms:
-        # - !<transforms.DateTimeTransform>
-        #   pattern: ["yyyy-MM-dd HH:mm:ss"]
-        #   timezone: "UTC"
       ol.locationcoordinates:
         type: "ol.locationcoordinates"
         transforms:
@@ -179,17 +175,13 @@ entityDefinitions:
         column: "plate"
       ol.licenseplateimage:
         type: "ol.licenseplateimage"
-        column: "image2"
+        column: "image1"
       ol.vehicleimage:
         type: "ol.vehicleimage"
-        column: "image1"
+        column: "image2"
       ol.datelogged:
         type: "ol.datelogged"
         column: "readStamp"
-        # transforms:
-        # - !<transforms.DateTimeTransform>
-        #   pattern: ["yyyy-MM-dd HH:mm:ss"]
-        #   timezone: "UTC"
       ol.locationcoordinates:
         type: "ol.locationcoordinates"
         transforms:
@@ -312,10 +304,6 @@ associationDefinitions:
       ol.datelogged:
         type: "ol.datelogged"
         column: "readStamp"
-        # transforms:
-        # - !<transforms.DateTimeTransform>
-        #   pattern: ["yyyy-MM-dd HH:mm:ss"]
-        #   timezone: "UTC"
       general.stringid:
         type: "general.stringid"
         transforms:
@@ -339,10 +327,6 @@ associationDefinitions:
       ol.datelogged:
         type: "ol.datelogged"
         column: "readStamp"
-        # transforms:
-        # - !<transforms.DateTimeTransform>
-        #   pattern: ["yyyy-MM-dd HH:mm:ss"]
-        #   timezone: "UTC"
       general.stringid:
         type: "general.stringid"
         transforms:
@@ -465,10 +449,6 @@ associationDefinitions:
       ol.datelogged:
         type: "ol.datelogged"
         column: "readStamp"
-        # transforms:
-        # - !<transforms.DateTimeTransform>
-        #   pattern: ["yyyy-MM-dd HH:mm:ss"]
-        #   timezone: "UTC"
       general.stringid:
         type: "general.stringid"
         transforms:
@@ -492,10 +472,6 @@ associationDefinitions:
       ol.datelogged:
         type: "ol.datelogged"
         column: "readStamp"
-        # transforms:
-        # - !<transforms.DateTimeTransform>
-        #   pattern: ["yyyy-MM-dd HH:mm:ss"]
-        #   timezone: "UTC"
       general.stringid:
         type: "general.stringid"
         transforms:
