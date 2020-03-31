@@ -1,0 +1,16 @@
+entityDefinitions:
+  vehiclerecords:
+    fqn: "ol.vehicle"
+    entitySetName: "NCRICVehicleRecords"
+    propertyDefinitions:
+      ol.id:
+        type:  "ol.id" 
+        column: "red_id"
+      ol.licenseplateimage:
+        type: "ol.licenseplateimage"
+        column: "red_patch"
+      ol.vehicleimage:
+        type: "ol.vehicleimage"
+        column: "red_overview"
+
+associationDefinitions: {}
