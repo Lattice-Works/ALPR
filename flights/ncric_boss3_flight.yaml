@@ -35,12 +35,6 @@ entityDefinitions:
       vehicle.licensenumber:
         type: "vehicle.licensenumber"
         column: "red_vrm"
-      ol.licenseplateimage:
-        type: "ol.licenseplateimage"
-        column: "red_patch"
-      ol.vehicleimage:
-        type: "ol.vehicleimage"
-        column: "red_overview"
       ol.datelogged:
         type: "ol.datelogged"
         column: "date"
