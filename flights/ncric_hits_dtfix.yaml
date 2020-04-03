@@ -12,7 +12,7 @@ entityDefinitions:
         transforms:
         - !<transforms.TimezoneShiftTransform>
           pattern: ["yyyy-MM-dd HH:mm:ss.S","yyyy-MM-dd HH:mm:ss.SS","yyyy-MM-dd HH:mm:ss.SSS"]
-          timezone: "America/Los_Angeles"ß
+          timezone: "America/Los_Angeles"
     conditions:
     - !<conditions.BooleanRegexCondition>
       column: "hts_Hotlist"
