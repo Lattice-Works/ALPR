@@ -31,7 +31,7 @@ entityDefinitions:
         - !<transforms.TimezoneShiftTransform>
           pattern: ["yyyy-MM-dd HH:mm:ss.S","yyyy-MM-dd HH:mm:ss.SS","yyyy-MM-dd HH:mm:ss.SSS"]
           timezone: "America/Los_Angeles"
-    updateType: partialReplace
+    updateType: PartialReplace
     name: "vehiclerecords"
 
   imagesources:
@@ -71,7 +71,7 @@ associationDefinitions:
         transforms:
         - !<transforms.ConcatTransform>
           columns: ["red_id","sourceid"] 
-    updateType: partialReplace
+    updateType: PartialReplace
     name: "recordedby1"
 
   recordedby2:
@@ -92,7 +92,7 @@ associationDefinitions:
         transforms:
         - !<transforms.ConcatTransform>
           columns: ["red_id","siteid"]
-    updateType: partialReplace
+    updateType: PartialReplace
     name: "recordedby2"
 
   includes1:
@@ -114,7 +114,7 @@ associationDefinitions:
         - !<transforms.TimezoneShiftTransform>
           pattern: ["yyyy-MM-dd HH:mm:ss.S","yyyy-MM-dd HH:mm:ss.SS","yyyy-MM-dd HH:mm:ss.SSS"]
           timezone: "America/Los_Angeles"
-    updateType: partialReplace
+    updateType: PartialReplace
     name: "includes1"
 
   includes2:
@@ -136,6 +136,6 @@ associationDefinitions:
         - !<transforms.TimezoneShiftTransform>
           pattern: ["yyyy-MM-dd HH:mm:ss.S","yyyy-MM-dd HH:mm:ss.SS","yyyy-MM-dd HH:mm:ss.SSS"]
           timezone: "America/Los_Angeles"
-    updateType: partialReplace
+    updateType: PartialReplace
     name: "includes2"
 
