@@ -1,0 +1,26 @@
+entityDefinitions:
+  vehiclerecords1:
+    fqn: "ol.vehicle"
+    entitySetName: "NCRICVehicleRecords"
+    propertyDefinitions:
+      ol.id:
+        type: "ol.id" 
+        transforms:
+        - !<transforms.ConcatCombineTransform>
+          separator: "_"
+          transforms:
+          - !<transforms.ColumnTransform>
+            column: "Plate"
+          - !<transforms.ValueTransform>
+            value: "labels"
+      ol.datelogged:
+        type: "ol.datelogged"
+        column: "TimeStamp"
+        transforms:
+        - !<transforms.TimezoneShiftTransform>
+          pattern: ["yyyy-MM-dd HH:mm:ss.S","yyyy-MM-dd HH:mm:ss.SS","yyyy-MM-dd HH:mm:ss.SSS"]
+          timezone: "America/Los_Angeles"
+    name: "vehiclerecords1"
+
+associationDefinitions: {}
+  

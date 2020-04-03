@@ -1,0 +1,24 @@
+entityDefinitions:
+  hits:
+    fqn: "ol.notification"
+    entitySetName: "NCRICNotifications"
+    propertyDefinitions:
+      ol.id: 
+        type: "ol.id"
+        column: hts_VRM
+      general.datetime:
+        type: general.datetime
+        column: "hts_Timestamp"
+        transforms:
+        - !<transforms.TimezoneShiftTransform>
+          pattern: ["yyyy-MM-dd HH:mm:ss.S","yyyy-MM-dd HH:mm:ss.SS","yyyy-MM-dd HH:mm:ss.SSS"]
+          timezone: "America/Los_Angeles"ß
+    conditions:
+    - !<conditions.BooleanRegexCondition>
+      column: "hts_Hotlist"
+      pattern: "STOLEN VEHICLES DOJ"
+      reverse: false
+    updateType: PartialReplace
+    name: "hits"
+
+associationDefinitions: {}
