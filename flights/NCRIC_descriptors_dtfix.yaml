@@ -20,6 +20,7 @@ entityDefinitions:
         - !<transforms.TimezoneShiftTransform>
           pattern: ["yyyy-MM-dd HH:mm:ss.S","yyyy-MM-dd HH:mm:ss.SS","yyyy-MM-dd HH:mm:ss.SSS"]
           timezone: "America/Los_Angeles"
+    updateType: PartialReplace
     name: "vehiclerecords1"
 
 associationDefinitions: {}
