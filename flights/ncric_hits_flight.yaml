@@ -47,7 +47,7 @@ entityDefinitions:
         type: general.datetime
         column: "hts_Timestamp"
         transforms:
-        - !<transforms.DateTimeTransform>
+        - !<transforms.TimezoneShiftTransform>
           pattern: ["yyyy-MM-dd HH:mm:ss.S","yyyy-MM-dd HH:mm:ss.SS","yyyy-MM-dd HH:mm:ss.SSS"]
           timezone: "America/Los_Angeles"
       ol.datasource:
