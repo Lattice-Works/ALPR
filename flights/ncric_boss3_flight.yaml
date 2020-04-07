@@ -39,7 +39,7 @@ entityDefinitions:
         type: "ol.datelogged"
         column: "date"
         transforms:
-        - !<transforms.DateTimeTransform>
+        - !<transforms.TimezoneShiftTransform>
           pattern: ["yyyy-MM-dd HH:mm:ss.S","yyyy-MM-dd HH:mm:ss.SS","yyyy-MM-dd HH:mm:ss.SSS"]
           timezone: "America/Los_Angeles"
       ol.locationcoordinates:
@@ -193,7 +193,7 @@ associationDefinitions:
         type: "ol.datelogged"
         column: "date"
         transforms:
-        - !<transforms.DateTimeTransform>
+        - !<transforms.TimezoneShiftTransform>
           pattern: ["yyyy-MM-dd HH:mm:ss.S","yyyy-MM-dd HH:mm:ss.SS","yyyy-MM-dd HH:mm:ss.SSS"]
           timezone: "America/Los_Angeles"
       general.stringid:
@@ -213,7 +213,7 @@ associationDefinitions:
         type: "ol.datelogged"
         column: "date"
         transforms:
-        - !<transforms.DateTimeTransform>
+        - !<transforms.TimezoneShiftTransform>
           pattern: ["yyyy-MM-dd HH:mm:ss.S","yyyy-MM-dd HH:mm:ss.SS","yyyy-MM-dd HH:mm:ss.SSS"]
           timezone: "America/Los_Angeles"
       general.stringid:
@@ -239,7 +239,7 @@ associationDefinitions:
         type: "date.completeddatetime"
         column: "date"
         transforms:
-        - !<transforms.DateTimeTransform>
+        - !<transforms.TimezoneShiftTransform>
           pattern: ["yyyy-MM-dd HH:mm:ss.S","yyyy-MM-dd HH:mm:ss.SS","yyyy-MM-dd HH:mm:ss.SSS"]
           timezone: "America/Los_Angeles"
     name: "includes1"
@@ -260,7 +260,7 @@ associationDefinitions:
         type: "date.completeddatetime"
         column: "date"
         transforms:
-        - !<transforms.DateTimeTransform>
+        - !<transforms.TimezoneShiftTransform>
           pattern: ["yyyy-MM-dd HH:mm:ss.S","yyyy-MM-dd HH:mm:ss.SS","yyyy-MM-dd HH:mm:ss.SSS"]
           timezone: "America/Los_Angeles"
     name: "includes2"

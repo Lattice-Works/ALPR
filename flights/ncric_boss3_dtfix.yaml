@@ -1,0 +1,19 @@
+entityDefinitions:
+  vehiclerecords:
+    fqn: "ol.vehicle"
+    entitySetName: "NCRICVehicleRecords"
+    propertyDefinitions:
+      ol.id:
+        type:  "ol.id" 
+        column: "red_id"
+      ol.datelogged:
+        type: "ol.datelogged"
+        column: "date"
+        transforms:
+        - !<transforms.TimezoneShiftTransform>
+          pattern: ["yyyy-MM-dd HH:mm:ss.S","yyyy-MM-dd HH:mm:ss.SS","yyyy-MM-dd HH:mm:ss.SSS"]
+          timezone: "America/Los_Angeles"
+    updateType: PartialReplace
+    name: "vehiclerecords"
+
+associationDefinitions: {}
