@@ -1,3 +1,4 @@
+organizationId: 47b646d7-a01a-4232-b25b-15c880ea4046
 entityDefinitions:
   vehiclerecords:
     fqn: "ol.vehicle"

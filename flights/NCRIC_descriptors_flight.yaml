@@ -33,7 +33,7 @@ entityDefinitions:
         - !<transforms.ConcatCombineTransform>
           separator: "_"
           transforms:
-          - !<transforms.ColumnTransform>
+          - !<com.openlattice.shuttle.transforms.ColumnTransform>
             column: "Plate"
           - !<transforms.ValueTransform>
             value: "labels"
@@ -87,7 +87,7 @@ entityDefinitions:
           column: "LabelName"
           pattern: "(?i)(blue|dark|green|light|red|white|yellow)"
           transformsIfTrue:
-          - !<transforms.ColumnTransform>
+          - !<com.openlattice.shuttle.transforms.ColumnTransform>
             column: "LabelName"
       ol.accessories:
         type: "ol.accessories"
@@ -96,7 +96,7 @@ entityDefinitions:
           column: "LabelName"
           pattern: "(?i)(spare tire|paper-plate|pedestal-spoiler|ca-clean-air-vehicle-sticker|rectangular-sticker|uber-sticker|roof-rack|pickup-ladder-rack|racing-strip)"
           transformsIfTrue:
-          - !<transforms.ColumnTransform>
+          - !<com.openlattice.shuttle.transforms.ColumnTransform>
             column: "LabelName"
       vehicle.style:
         type: "vehicle.style"
@@ -105,7 +105,7 @@ entityDefinitions:
           column: "LabelName"
           pattern: "(?i)(box-truck|full-size-van|other-truck|car|pickup|minivan|hatchback|sedan|SUV)"
           transformsIfTrue:
-          - !<transforms.ColumnTransform>
+          - !<com.openlattice.shuttle.transforms.ColumnTransform>
             column: "LabelName"
       ol.label:
         type: "ol.label"
@@ -114,7 +114,7 @@ entityDefinitions:
           column: "LabelName"
           pattern: "(?i)(night|day)"
           transformsIfTrue:
-          - !<transforms.ColumnTransform>
+          - !<com.openlattice.shuttle.transforms.ColumnTransform>
             column: "LabelName"
       ol.datasource:
         type: "ol.datasource"
@@ -139,11 +139,11 @@ associationDefinitions:
         - !<transforms.ConcatCombineTransform>
           separator: "_"
           transforms:
-          - !<transforms.ColumnTransform>
+          - !<com.openlattice.shuttle.transforms.ColumnTransform>
             column: "Plate"
           - !<transforms.ValueTransform>
             value: "labels"
-          - !<transforms.ColumnTransform>
+          - !<com.openlattice.shuttle.transforms.ColumnTransform>
             column: "TimeStamp"
     name: "has1"
   

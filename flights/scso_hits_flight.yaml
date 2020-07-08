@@ -1,8 +1,9 @@
 #separated because otherwise hits are not existing in the boss3 vehicles with 
-#psql select * from hits_21 limit 5000;
-#intellij historical run: "select * from scso_hits_historical"
+  #psql select * from hits_21 limit 5000;
+  #intellij historical run: "select * from scso_hits_historical"
 #final recurring integration: 
 
+organizationId: 47b646d7-a01a-4232-b25b-15c880ea4046
 entityDefinitions:
 #### SET 1 - merging into same entity sets as all NCRIC sources
   vehicles:
@@ -27,7 +28,7 @@ entityDefinitions:
         - !<transforms.ConcatCombineTransform>
           separator: "_"
           transforms:
-          - !<transforms.ColumnTransform>
+          - !<com.openlattice.shuttle.transforms.ColumnTransform>
             column: "hts_red_ID"
           - !<transforms.ValueTransform>
             value: "SCSO"
@@ -51,7 +52,7 @@ entityDefinitions:
         - !<transforms.ConcatCombineTransform>
           separator: "_"
           transforms:
-          - !<transforms.ColumnTransform>
+          - !<com.openlattice.shuttle.transforms.ColumnTransform>
             column: "hts_VRM"
           - !<transforms.ValueTransform>
             value: "SCSO"
@@ -62,7 +63,7 @@ entityDefinitions:
         type: general.datetime
         column: "hts_Timestamp"
         transforms:
-        - !<transforms.DateTimeTransform>
+        - !<transforms.TimezoneShiftTransform>
           pattern: ["yyyy-MM-dd HH:mm:ss.S","yyyy-MM-dd HH:mm:ss.SS","yyyy-MM-dd HH:mm:ss.SSS"]
           timezone: "America/Los_Angeles"
       ol.datasource:
@@ -100,7 +101,7 @@ entityDefinitions:
         - !<transforms.ConcatCombineTransform>
           separator: "_"
           transforms:
-          - !<transforms.ColumnTransform>
+          - !<com.openlattice.shuttle.transforms.ColumnTransform>
             column: "hts_red_ID"
           - !<transforms.ValueTransform>
             value: "SCSO"
@@ -124,7 +125,7 @@ entityDefinitions:
         - !<transforms.ConcatCombineTransform>
           separator: "_"
           transforms:
-          - !<transforms.ColumnTransform>
+          - !<com.openlattice.shuttle.transforms.ColumnTransform>
             column: "hts_VRM"
           - !<transforms.ValueTransform>
             value: "SCSO"
@@ -135,7 +136,7 @@ entityDefinitions:
         type: general.datetime
         column: "hts_Timestamp"
         transforms:
-        - !<transforms.DateTimeTransform>
+        - !<transforms.TimezoneShiftTransform>
           pattern: ["yyyy-MM-dd HH:mm:ss.S","yyyy-MM-dd HH:mm:ss.SS","yyyy-MM-dd HH:mm:ss.SSS"]
           timezone: "America/Los_Angeles"
       ol.datasource:
@@ -164,9 +165,9 @@ associationDefinitions:
         - !<transforms.ConcatCombineTransform>
           separator: "_"
           transforms:
-          - !<transforms.ColumnTransform>
+          - !<com.openlattice.shuttle.transforms.ColumnTransform>
             column: "hts_VRM"
-          - !<transforms.ColumnTransform>
+          - !<com.openlattice.shuttle.transforms.ColumnTransform>
             column: "hts_red_ID"
           - !<transforms.ValueTransform>
             value: "SCSO"
@@ -184,7 +185,7 @@ associationDefinitions:
         - !<transforms.ConcatCombineTransform>
           separator: "_"
           transforms:
-          - !<transforms.ColumnTransform>
+          - !<com.openlattice.shuttle.transforms.ColumnTransform>
             column: "hts_red_ID"
           - !<transforms.ValueTransform>
             value: "SCSO"
@@ -192,7 +193,7 @@ associationDefinitions:
         type: "general.datetime"
         column: "hts_Timestamp"
         transforms:
-        - !<transforms.DateTimeTransform>
+        - !<transforms.TimezoneShiftTransform>
           pattern: ["yyyy-MM-dd HH:mm:ss.S","yyyy-MM-dd HH:mm:ss.SS","yyyy-MM-dd HH:mm:ss.SSS"]
           timezone: "America/Los_Angeles"
     name: "resultsin1"
@@ -210,7 +211,7 @@ associationDefinitions:
         type: "general.datetime"
         column: "hts_Timestamp"
         transforms:
-        - !<transforms.DateTimeTransform>
+        - !<transforms.TimezoneShiftTransform>
           pattern: ["yyyy-MM-dd HH:mm:ss.S","yyyy-MM-dd HH:mm:ss.SS","yyyy-MM-dd HH:mm:ss.SSS"]
           timezone: "America/Los_Angeles"
     name: "resultsin2"
@@ -228,9 +229,9 @@ associationDefinitions:
         - !<transforms.ConcatCombineTransform>
           separator: "_"
           transforms:
-          - !<transforms.ColumnTransform>
+          - !<com.openlattice.shuttle.transforms.ColumnTransform>
             column: "hts_VRM"
-          - !<transforms.ColumnTransform>
+          - !<com.openlattice.shuttle.transforms.ColumnTransform>
             column: "hts_red_ID"
           - !<transforms.ValueTransform>
             value: "SCSO"
@@ -248,7 +249,7 @@ associationDefinitions:
         - !<transforms.ConcatCombineTransform>
           separator: "_"
           transforms:
-          - !<transforms.ColumnTransform>
+          - !<com.openlattice.shuttle.transforms.ColumnTransform>
             column: "hts_red_ID"
           - !<transforms.ValueTransform>
             value: "SCSO"
@@ -256,7 +257,7 @@ associationDefinitions:
         type: "general.datetime"
         column: "hts_Timestamp"
         transforms:
-        - !<transforms.DateTimeTransform>
+        - !<transforms.TimezoneShiftTransform>
           pattern: ["yyyy-MM-dd HH:mm:ss.S","yyyy-MM-dd HH:mm:ss.SS","yyyy-MM-dd HH:mm:ss.SSS"]
           timezone: "America/Los_Angeles"
     name: "resultsin1_2"
@@ -274,7 +275,7 @@ associationDefinitions:
         type: "general.datetime"
         column: "hts_Timestamp"
         transforms:
-        - !<transforms.DateTimeTransform>
+        - !<transforms.TimezoneShiftTransform>
           pattern: ["yyyy-MM-dd HH:mm:ss.S","yyyy-MM-dd HH:mm:ss.SS","yyyy-MM-dd HH:mm:ss.SSS"]
           timezone: "America/Los_Angeles"
     name: "resultsin2_2"
