@@ -1,0 +1,354 @@
+#final recurring:
+# select * from boss3_v2_fields_15m
+  #1st intellij sample: "select * from boss3data21_aug2018_top200k limit 5000"
+  #piper's july/demo dataset: intellij: "select boss3data_july2018.*, hits.\"hts_Hotlist\", hits.\"hts_Timestamp\" from boss3data_july2018 left join hits on \"red_id\"=hits.\"hts_red_ID\" where hits.\"hts_red_ID\" is not null limit 5000"
+  #psql: select * from boss3data21_aug2018_top200k limit 5000;
+
+# In Boss3 [red_id, sourceid, siteid] will remain as it is. In all other DBs, they will get a suffix added. 
+# This will correctly merge existing vehicle records with new integrations, in case we reintegrate a record that was already integrated.
+  # (hard to be precise with tombstoning)
+
+organizationId: 47b646d7-a01a-4232-b25b-15c880ea4046
+entityDefinitions:
+  vehicles:
+    fqn: "ol.vehicle"
+    entitySetName: "NCRICVehicles"
+    updateType: Replace
+    propertyDefinitions:
+      ol.id:
+        type: "ol.id"
+        column: "red_vrm"
+      vehicle.licensenumber:
+        type: "vehicle.licensenumber"
+        column: "red_vrm"
+      ol.datasource:            
+        type: "ol.datasource"
+        transforms:
+        - !<transforms.ValueTransform>
+          value: "BOSS3"
+    name: "vehicles"
+
+  vehiclerecords:
+    fqn: "ol.vehicle"
+    entitySetName: "NCRICVehicleRecords"
+    updateType: Replace
+    propertyDefinitions:
+      ol.id:
+        type:  "ol.id" 
+        column: "red_id"
+      vehicle.licensenumber:
+        type: "vehicle.licensenumber"
+        column: "red_vrm"
+      ol.datelogged:
+        type: "ol.datelogged"
+        column: "date"
+        transforms:
+        - !<transforms.TimezoneShiftTransform>
+          pattern: ["yyyy-MM-dd HH:mm:ss.S","yyyy-MM-dd HH:mm:ss.SS","yyyy-MM-dd HH:mm:ss.SSS"]
+          timezone: "America/Los_Angeles"
+      ol.locationcoordinates:
+        type: "ol.locationcoordinates"
+        transforms:
+        - !<transforms.GeographyPointTransform>
+          latTransforms:
+          - !<com.openlattice.shuttle.transforms.ColumnTransform>
+            column: "Latitude"
+          lonTransforms:
+          - !<com.openlattice.shuttle.transforms.ColumnTransform>
+            column: "Longitude"
+      publicsafety.agencyname:
+        type: "publicsafety.agencyname"
+        column: "siteid"
+      ol.resourceid:
+        type: "ol.resourceid"
+        column: "sourceid"
+      # ol.description:
+      #   type: "ol.description"
+      #   column: "hts_Hotlist"
+      ol.datasource:
+        type: "ol.datasource"
+        transforms:
+        - !<transforms.ValueTransform>
+          value: "BOSS3"
+    name: "vehiclerecords"
+
+  imagesources:
+    fqn: "ol.imagesource"
+    entitySetName: "NCRICImageSources"
+    updateType: Replace
+    propertyDefinitions:
+      ol.id:
+        type:  "ol.id" 
+        column: "sourceid"
+      ol.name:
+        type: "ol.name"
+        column: "sourcename"
+      ol.description:
+        type: "ol.description"
+        column: "srcdescr"
+      ol.fixedlocation:
+        type: "ol.fixedlocation"
+        column: "fixedmobile"
+        transforms:
+        - !<transforms.ReplaceTransform>
+          target: ["t", "f"]
+          goal: [true, false]
+          ignoreCase: true
+      ol.datasource:
+        type: "ol.datasource"
+        transforms:
+        - !<transforms.ValueTransform>
+          value: "BOSS3"
+    conditions:
+    - !<conditions.ConditionalOr> {}
+    - !<conditions.BooleanIsNullCondition>
+      column: "sourceid"
+      reverse: true
+    - !<conditions.BooleanIsNullCondition>
+      column: "sourcename"
+      reverse: true
+    - !<conditions.BooleanIsNullCondition>
+      column: "srcdescr"
+      reverse: true
+    - !<conditions.BooleanIsNullCondition>
+      column: "fixedmobile"
+      reverse: true
+    name: "imagesources"
+
+  locations:
+    fqn: "ol.location"
+    entitySetName: "NCRICLocations"
+    updateType: Replace
+    propertyDefinitions:
+      general.id: 
+        type: "general.id"
+        transforms:
+        - !<transforms.ConcatTransform>
+          columns: ["Latitude","Longitude"] 
+      ol.locationcoordinates:
+        type: "ol.locationcoordinates"
+        transforms:
+        - !<transforms.GeographyPointTransform>
+          latTransforms:
+          - !<com.openlattice.shuttle.transforms.ColumnTransform>
+            column: "Latitude"
+          lonTransforms:
+          - !<com.openlattice.shuttle.transforms.ColumnTransform>
+            column: "Longitude"
+    name: "locations"
+
+  agencies:
+    fqn: "ol.agency"
+    entitySetName: "NCRICAgencies"
+    updateType: Replace
+    propertyDefinitions:
+      ol.id: 
+        type: "ol.id"
+        column: "siteid" 
+      ol.name:
+        type: "ol.name"
+        column: "sitedescr"    #used to be sitename
+      ## this is actually a more fleshed-out name field
+      # ol.description:             
+      #   type: "ol.description"
+      #   column: "sitedescr"
+      ol.datasource:
+        type: "ol.datasource"
+        transforms:
+        - !<transforms.ValueTransform>
+          value: "BOSS3"
+    name: "agencies"
+
+  confidencemetrics:
+    fqn: "ol.confidencemetrics"
+    entitySetName: "NCRICConfidenceMetrics"
+    updateType: Replace
+    propertyDefinitions:
+      ol.id: 
+        type: "ol.id"
+        column: "red_id" 
+      ol.misclassified:
+        type: "ol.misclassified"
+        column: "red_misread"
+        transforms:
+        - !<transforms.ReplaceTransform>
+          target: ["t", "f"]
+          goal: [true, false]
+      ol.manuallyclassified:
+        type: "ol.manuallyclassified"
+        column: "red_manualentry"
+        transforms:
+        - !<transforms.ReplaceTransform>
+          target: ["t", "f"]
+          goal: [true, false]
+      ol.datasource:
+        type: "ol.datasource"
+        transforms:
+        - !<transforms.ValueTransform>
+          value: "BOSS3"     
+    name: "confidencemetrics"
+
+  
+
+associationDefinitions:
+  has:
+    fqn: "ol.has"
+    entitySetName: "NCRICHas"
+    updateType: Replace
+    src: "vehicles"
+    dst: "vehiclerecords"
+    propertyDefinitions:
+      ol.id:
+        type: "ol.id"
+        transforms:
+        - !<transforms.ConcatTransform>
+          columns: ["red_vrm", "red_id"]
+          separator: "_"
+    name: "has"
+
+  recordedby1:
+    fqn: "ol.recordedby"
+    entitySetName: "NCRICRecordedBy"
+    updateType: Replace
+    src: "vehiclerecords"
+    dst: "imagesources"
+    propertyDefinitions:
+      ol.datelogged:
+        type: "ol.datelogged"
+        column: "date"
+        transforms:
+        - !<transforms.TimezoneShiftTransform>
+          pattern: ["yyyy-MM-dd HH:mm:ss.S","yyyy-MM-dd HH:mm:ss.SS","yyyy-MM-dd HH:mm:ss.SSS"]
+          timezone: "America/Los_Angeles"
+      general.stringid:
+        type: "general.stringid"
+        transforms:
+        - !<transforms.ConcatTransform>
+          columns: ["red_id","sourceid"] 
+    name: "recordedby1"
+
+  recordedby2:
+    fqn: "ol.recordedby"
+    entitySetName: "NCRICRecordedBy"
+    src: "vehiclerecords"
+    dst: "agencies"
+    updateType: Replace
+    propertyDefinitions:
+      ol.datelogged:
+        type: "ol.datelogged"
+        column: "date"
+        transforms:
+        - !<transforms.TimezoneShiftTransform>
+          pattern: ["yyyy-MM-dd HH:mm:ss.S","yyyy-MM-dd HH:mm:ss.SS","yyyy-MM-dd HH:mm:ss.SSS"]
+          timezone: "America/Los_Angeles"
+      general.stringid:
+        type: "general.stringid"
+        transforms:
+        - !<transforms.ConcatTransform>
+          columns: ["red_id","siteid"]
+    name: "recordedby2"
+
+  includes1:
+    fqn: "ol.includes"
+    entitySetName: "NCRICIncludes"
+    src: "vehiclerecords"
+    dst: "confidencemetrics"
+    updateType: Replace
+    propertyDefinitions:
+      general.id:
+        type: "general.id"
+        transforms:
+        - !<transforms.ConcatTransform>
+          columns: ["red_id", "date"]
+          separator: "_"
+      date.completeddatetime:
+        type: "date.completeddatetime"
+        column: "date"
+        transforms:
+        - !<transforms.TimezoneShiftTransform>
+          pattern: ["yyyy-MM-dd HH:mm:ss.S","yyyy-MM-dd HH:mm:ss.SS","yyyy-MM-dd HH:mm:ss.SSS"]
+          timezone: "America/Los_Angeles"
+    name: "includes1"
+
+  includes2:
+    fqn: "ol.includes"
+    entitySetName: "NCRICIncludes"
+    updateType: Replace
+    src: "imagesources"
+    dst: "confidencemetrics"
+    propertyDefinitions:
+      general.id:
+        type: "general.id"
+        transforms:
+        - !<transforms.ConcatTransform>
+          columns: ["sourceid", "date"]
+          separator: "_"
+      date.completeddatetime:
+        type: "date.completeddatetime"
+        column: "date"
+        transforms:
+        - !<transforms.TimezoneShiftTransform>
+          pattern: ["yyyy-MM-dd HH:mm:ss.S","yyyy-MM-dd HH:mm:ss.SS","yyyy-MM-dd HH:mm:ss.SSS"]
+          timezone: "America/Los_Angeles"
+    name: "includes2"
+
+  locatedat1:
+    fqn: "ol.locatedat"
+    entitySetName: "NCRICLocatedAt"
+    updateType: Replace
+    src: "imagesources"
+    dst: "locations"
+    propertyDefinitions:
+      general.id:
+        type: "general.id"
+        transforms:
+        - !<transforms.ConcatTransform>
+          columns: ["sourceid","Latitude","Longitude"] 
+          separator: "_"
+    name: "locatedat1"
+
+  locatedat2:
+    fqn: "ol.locatedat"
+    entitySetName: "NCRICLocatedAt"
+    updateType: Replace
+    src: "vehiclerecords"
+    dst: "locations"
+    propertyDefinitions:
+      general.id:
+        type: "general.id"
+        transforms:
+        - !<transforms.ConcatTransform>
+          columns: ["red_id","Latitude","Longitude"] 
+          separator: "_"
+    name: "locatedat2"
+
+  locatedat3:
+    fqn: "ol.locatedat"
+    entitySetName: "NCRICLocatedAt"
+    updateType: Replace
+    src: "vehicles"
+    dst: "locations"
+    propertyDefinitions:
+      general.id:
+        type: "general.id"
+        transforms:
+        - !<transforms.ConcatTransform>
+          columns: ["red_vrm","Latitude","Longitude"] 
+          separator: "_"
+    name: "locatedat3"
+
+  collectedby:
+    fqn: "ol.collectedby"
+    entitySetName: "NCRICCollectedBy"
+    src: "imagesources"
+    dst: "agencies"
+    updateType: Replace
+    propertyDefinitions:
+      general.id:
+        type: "general.id"
+        transforms:
+        - !<transforms.ConcatTransform>
+          columns: ["sourceid", "siteid"]
+          separator: "_"
+    name: "collectedby"
+
