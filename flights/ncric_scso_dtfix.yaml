@@ -1,0 +1,53 @@
+# [red_id, sourceid, siteid] will get a suffix added to prevent name collisions from BOSS3 and V5
+
+
+organizationId: 47b646d7-a01a-4232-b25b-15c880ea4046
+entityDefinitions:
+  vehiclerecords:
+    fqn: "ol.vehicle"
+    entitySetName: "NCRICVehicleRecords"
+    propertyDefinitions:
+      ol.id:
+        type:  "ol.id" 
+        transforms:
+        - !<transforms.ConcatCombineTransform>
+          separator: "_"
+          transforms:
+          - !<com.openlattice.shuttle.transforms.ColumnTransform>
+            column: "red_id"
+          - !<transforms.ValueTransform>
+            value: "SCSO"
+      ol.datelogged:
+        type: "ol.datelogged"
+        column: "date"
+        transforms:
+        - !<transforms.TimezoneShiftTransform>
+          pattern: ["yyyy-MM-dd HH:mm:ss.S","yyyy-MM-dd HH:mm:ss.SS","yyyy-MM-dd HH:mm:ss.SSS"]
+          timezone: "America/Los_Angeles"
+    name: "vehiclerecords"
+
+
+  vehiclerecords2:
+    fqn: "ol.vehicle"
+    entitySetName: "NCRICVehicleRecordsSCSO"
+    propertyDefinitions:
+      ol.id:
+        type:  "ol.id" 
+        transforms:
+        - !<transforms.ConcatCombineTransform>
+          separator: "_"
+          transforms:
+          - !<com.openlattice.shuttle.transforms.ColumnTransform>
+            column: "red_id"
+          - !<transforms.ValueTransform>
+            value: "SCSO"
+      ol.datelogged:
+        type: "ol.datelogged"
+        column: "date"
+        transforms:
+        - !<transforms.TimezoneShiftTransform>
+          pattern: ["yyyy-MM-dd HH:mm:ss.S","yyyy-MM-dd HH:mm:ss.SS","yyyy-MM-dd HH:mm:ss.SSS"]
+          timezone: "America/Los_Angeles"
+    name: "vehiclerecords2"
+
+associationDefinitions: {}
