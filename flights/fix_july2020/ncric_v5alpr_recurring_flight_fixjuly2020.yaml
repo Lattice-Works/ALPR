@@ -1,0 +1,737 @@
+# sql query in psql: select * from v5plates where "lprTimeStamp" >= '2018-08-01' AND "lprTimeStamp" <= '2018-09-01' limit 5000 ;
+# sql query for sample in intellij: "select * from v5plates where \"lprTimeStamp\" >= '2018-08-01' AND \"lprTimeStamp\" <= '2018-09-01' limit 5000"
+# historical sql query in intellij: "select * from v5plates_all where \"lprTimeStamp\" <= current_timestamp order by \"id\";" 
+
+# [red_id, sourceid, siteid] will get a suffiZ added to prevent name collisions from BOSS3 and SCSO
+
+# taking out alerts, there's no info in them but an ID, so every read would have one. Meaningless. Also v5alertId is not unique.
+
+entityDefinitions:
+#### SET 1 - merging into same entity sets as all NCRIC sources
+  vehicles: 
+    fqn: "ol.vehicle"
+    entitySetName: "NCRICVehicles"
+    propertyDefinitions:
+      ol.id:
+        type: "ol.id"
+        column: "lpr"
+      vehicle.licensenumber: 
+        type: "vehicle.licensenumber"
+        column: "lpr"
+      ol.datasource:            
+        type: "ol.datasource"
+        transforms:
+        - !<transforms.ValueTransform>
+          value: "V5"
+    name: "vehicles"
+
+  vehiclerecords:
+    fqn: "ol.vehicle"
+    entitySetName: "NCRICVehicleRecords"
+    propertyDefinitions:
+      ol.id:
+        type:  "ol.id"
+        transforms:
+        - !<transforms.ConcatCombineTransform>
+          separator: "_"
+          transforms:
+          - !<transforms.ColumnTransform>
+            column: "id"
+          - !<transforms.ValueTransform>
+            value: "V5"
+      vehicle.licensenumber:
+        type: "vehicle.licensenumber"
+        column: "lpr"
+      vehicle.licensestate:
+        type: "vehicle.licensestate"
+        column: "lpstate"
+      ol.licenseplateimage:
+        type: "ol.licenseplateimage"
+        column: "lprpicture"
+      ol.datelogged:
+        type: "ol.datelogged"
+        column: "lprtimestamp"
+        # transforms:
+        # - !<transforms.DateTimeTransform>
+        #   pattern: ["yyyy-MM-dd HH:mm:ss.SSS"]
+        #   timezone: "UTC"
+      ol.locationcoordinates:
+        type: "ol.locationcoordinates"
+        transforms:
+        - !<transforms.GeographyPointTransform>
+          latTransforms:
+          - !<transforms.ColumnTransform>
+            column: "gpslat"
+          lonTransforms:
+          - !<transforms.ColumnTransform>
+            column: "gpslng"
+      publicsafety.agencyname:
+        type: "publicsafety.agencyname"
+        column: "lprsourceid"
+      ol.resourceid:
+        type: "ol.resourceid"
+        column: "unitid"
+      ol.datasource:
+        type: "ol.datasource"
+        transforms:
+        - !<transforms.ValueTransform>
+          value: "V5"
+    name: "vehiclerecords"
+
+  imagesources:
+    fqn: "ol.imagesource"
+    entitySetName: "NCRICImageSources"
+    propertyDefinitions:
+      ol.id:
+        type:  "ol.id" 
+        transforms:
+        - !<transforms.ConcatCombineTransform>
+          separator: "_"
+          transforms:
+          - !<transforms.ColumnTransform>
+            column: "unitid"
+          - !<transforms.ValueTransform>
+            value: "V5"
+      ol.name:
+        type: "ol.name"
+        column: "unitlabel"
+      ol.datasource:
+        type: "ol.datasource"
+        transforms:
+        - !<transforms.ValueTransform>
+          value: "V5"
+    name: "imagesources"
+
+  locations:
+    fqn: "ol.location"
+    entitySetName: "NCRICLocations"
+    propertyDefinitions:
+      general.id: 
+        type: "general.id"
+        transforms:
+        - !<transforms.ConcatTransform>
+          columns: ["gpslat","gpslng"]
+      ol.locationcoordinates:
+        type: "ol.locationcoordinates"
+        transforms:
+        - !<transforms.GeographyPointTransform>
+          latTransforms:
+          - !<transforms.ColumnTransform>
+            column: "gpslat"
+          lonTransforms:
+          - !<transforms.ColumnTransform>
+            column: "gpslng" 
+    name: "locations"
+
+  agencies:
+    fqn: "ol.agency"
+    entitySetName: "NCRICAgencies"
+    propertyDefinitions:
+      ol.id: 
+        type: "ol.id"
+        column: "lprsourceid" 
+      ol.name:
+        type: "ol.name"
+        column: "lprsourceid"
+      ol.datasource:
+        type: "ol.datasource"
+        transforms:
+        - !<transforms.ValueTransform>
+          value: "V5"
+    name: "agencies"
+
+  confidencemetrics:
+    fqn: "ol.confidencemetrics"
+    entitySetName: "NCRICConfidenceMetrics"
+    propertyDefinitions:
+      ol.id: 
+        type: "ol.id"
+        transforms:
+        - !<transforms.ConcatCombineTransform>
+          separator: "_"
+          transforms:
+          - !<transforms.ColumnTransform>
+            column: "incidentid" 
+          - !<transforms.ValueTransform>
+            value: "V5"
+      ol.confidence:
+        type: "ol.confidence"
+        column: "confidence"  
+      ol.datasource:
+        type: "ol.datasource"
+        transforms:
+        - !<transforms.ValueTransform>
+          value: "V5"    
+    name: "confidencemetrics"
+
+  #### SET 2 - separate entity sets for v5 data only. -eventually will use these but duplicate for now.
+  vehicles2: 
+    fqn: "ol.vehicle"
+    entitySetName: "NCRICVehiclesV5"
+    propertyDefinitions:
+      ol.id:
+        type: "ol.id"
+        column: "lpr"
+      vehicle.licensenumber: 
+        type: "vehicle.licensenumber"
+        column: "lpr"
+      ol.datasource:            
+        type: "ol.datasource"
+        transforms:
+        - !<transforms.ValueTransform>
+          value: "V5"
+    name: "vehicles2"
+
+  vehiclerecords2:
+    fqn: "ol.vehicle"
+    entitySetName: "NCRICVehicleRecordsV5"
+    propertyDefinitions:
+      ol.id:
+        type:  "ol.id"
+        transforms:
+        - !<transforms.ConcatCombineTransform>
+          separator: "_"
+          transforms:
+          - !<transforms.ColumnTransform>
+            column: "id"
+          - !<transforms.ValueTransform>
+            value: "V5"
+      vehicle.licensenumber:
+        type: "vehicle.licensenumber"
+        column: "lpr"
+      vehicle.licensestate:
+        type: "vehicle.licensestate"
+        column: "lpstate"
+      ol.licenseplateimage:
+        type: "ol.licenseplateimage"
+        column: "lprpicture"
+      ol.datelogged:
+        type: "ol.datelogged"
+        column: "lprtimestamp"
+        # transforms:
+        # - !<transforms.DateTimeTransform>
+        #   pattern: ["yyyy-MM-dd HH:mm:ss.SSS"]
+        #   timezone: "UTC"
+      ol.locationcoordinates:
+        type: "ol.locationcoordinates"
+        transforms:
+        - !<transforms.GeographyPointTransform>
+          latTransforms:
+          - !<transforms.ColumnTransform>
+            column: "gpslat"
+          lonTransforms:
+          - !<transforms.ColumnTransform>
+            column: "gpslng"
+      publicsafety.agencyname:
+        type: "publicsafety.agencyname"
+        column: "lprsourceid"
+      ol.resourceid:
+        type: "ol.resourceid"
+        column: "unitid"
+      ol.datasource:
+        type: "ol.datasource"
+        transforms:
+        - !<transforms.ValueTransform>
+          value: "V5"
+    name: "vehiclerecords2"
+
+  imagesources2:
+    fqn: "ol.imagesource"
+    entitySetName: "NCRICImageSourcesV5"
+    propertyDefinitions:
+      ol.id:
+        type:  "ol.id" 
+        transforms:
+        - !<transforms.ConcatCombineTransform>
+          separator: "_"
+          transforms:
+          - !<transforms.ColumnTransform>
+            column: "unitid"
+          - !<transforms.ValueTransform>
+            value: "V5"
+      ol.name:
+        type: "ol.name"
+        column: "unitlabel"
+      ol.datasource:
+        type: "ol.datasource"
+        transforms:
+        - !<transforms.ValueTransform>
+          value: "V5"
+    name: "imagesources2"
+
+  locations2:
+    fqn: "ol.location"
+    entitySetName: "NCRICLocationsV5"
+    propertyDefinitions:
+      general.id: 
+        type: "general.id"
+        transforms:
+        - !<transforms.ConcatTransform>
+          columns: ["gpslat","gpslng"]
+      ol.locationcoordinates:
+        type: "ol.locationcoordinates"
+        transforms:
+        - !<transforms.GeographyPointTransform>
+          latTransforms:
+          - !<transforms.ColumnTransform>
+            column: "gpslat"
+          lonTransforms:
+          - !<transforms.ColumnTransform>
+            column: "gpslng" 
+    name: "locations2"
+
+  agencies2:
+    fqn: "ol.agency"
+    entitySetName: "NCRICAgenciesV5"
+    propertyDefinitions:
+      ol.id: 
+        type: "ol.id"
+        column: "lprsourceid" 
+      ol.name:
+        type: "ol.name"
+        column: "lprsourceid"
+      ol.datasource:
+        type: "ol.datasource"
+        transforms:
+        - !<transforms.ValueTransform>
+          value: "V5"
+    name: "agencies2"
+
+  confidencemetrics2:
+    fqn: "ol.confidencemetrics"
+    entitySetName: "NCRICConfidenceMetricsV5"
+    propertyDefinitions:
+      ol.id: 
+        type: "ol.id"
+        transforms:
+        - !<transforms.ConcatCombineTransform>
+          separator: "_"
+          transforms:
+          - !<transforms.ColumnTransform>
+            column: "incidentid" 
+          - !<transforms.ValueTransform>
+            value: "V5"
+      ol.confidence:
+        type: "ol.confidence"
+        column: "confidence"  
+      ol.datasource:
+        type: "ol.datasource"
+        transforms:
+        - !<transforms.ValueTransform>
+          value: "V5"    
+    name: "confidencemetrics2"
+
+
+
+associationDefinitions:
+#### SET 1
+  has:
+    fqn: ol.has
+    entitySetName: NCRICHas
+    src: vehicles
+    dst: vehiclerecords
+    name: "has"
+    propertyDefinitions:
+      ol.id:
+        type: "ol.id"
+        transforms:
+        - !<transforms.ConcatCombineTransform>
+          separator: "_"
+          transforms:
+          - !<transforms.ColumnTransform>
+            column: "lpr"
+          - !<transforms.ColumnTransform>
+            column: "id"
+          - !<transforms.ValueTransform>
+            value: "V5"
+    name: "has"
+
+  recordedby1:
+    fqn: "ol.recordedby"
+    entitySetName: "NCRICRecordedBy"
+    src: "vehiclerecords"
+    dst: "imagesources"
+    propertyDefinitions:
+      ol.datelogged:
+        type: "ol.datelogged"
+        column: "lprtimestamp"
+        # transforms:
+        # - !<transforms.DateTimeTransform>
+        #   pattern: ["yyyy-MM-dd HH:mm:ss.SSS"]
+        #   timezone: "UTC"
+      general.stringid:
+        type: "general.stringid"
+        transforms:
+        - !<transforms.ConcatCombineTransform>
+          separator: "_"
+          transforms:
+          - !<transforms.ColumnTransform>
+            column: "id"
+          - !<transforms.ColumnTransform>
+            column: "unitid"
+          - !<transforms.ValueTransform>
+            value: "V5"
+    name: "recordedby1"
+
+  recordedby2:
+    fqn: "ol.recordedby"
+    entitySetName: "NCRICRecordedBy"
+    src: "vehiclerecords"
+    dst: "agencies"
+    propertyDefinitions:
+      ol.datelogged:
+        type: "ol.datelogged"
+        column: "lprtimestamp"
+        # transforms:
+        # - !<transforms.DateTimeTransform>
+        #   pattern: ["yyyy-MM-dd HH:mm:ss.SSS"]
+        #   timezone: "UTC"
+      general.stringid:
+        type: "general.stringid"
+        transforms:
+        - !<transforms.ConcatCombineTransform>
+          separator: "_"
+          transforms:
+          - !<transforms.ColumnTransform>
+            column: "id"
+          - !<transforms.ColumnTransform>
+            column: "lprsourceid"
+          - !<transforms.ValueTransform>
+            value: "V5"
+    name: "recordedby2"
+
+  includes1:
+    fqn: "ol.includes"
+    entitySetName: "NCRICIncludes"
+    src: "vehiclerecords"
+    dst: "confidencemetrics"
+    propertyDefinitions:
+      general.id:
+        type: "general.id"
+        transforms:
+        - !<transforms.ConcatCombineTransform>
+          separator: "_"
+          transforms:          
+          - !<transforms.ColumnTransform>
+            column: "id"
+          - !<transforms.ColumnTransform>
+            column: "lprtimestamp"
+          - !<transforms.ValueTransform>
+            value: "V5"
+      date.completeddatetime:
+        type: "date.completeddatetime"
+        column: "lprtimestamp"
+        # transforms:
+        # - !<transforms.DateTimeTransform>
+        #   pattern: ["yyyy-MM-dd HH:mm:ss.SSS"]
+        #   timezone: "UTC"
+    name: "includes1"
+
+  includes2:
+    fqn: "ol.includes"
+    entitySetName: "NCRICIncludes"
+    src: "imagesources"
+    dst: "confidencemetrics"
+    propertyDefinitions:
+      general.id:
+        type: "general.id"
+        transforms:
+        - !<transforms.ConcatCombineTransform>
+          separator: "_"
+          transforms:          
+          - !<transforms.ColumnTransform>
+            column: "unitid"
+          - !<transforms.ColumnTransform>
+            column: "lprtimestamp"
+          - !<transforms.ValueTransform>
+            value: "V5"
+      date.completeddatetime:
+        type: "date.completeddatetime"
+        column: "lprtimestamp"
+        # transforms:
+        # - !<transforms.DateTimeTransform>
+        #   pattern: ["yyyy-MM-dd HH:mm:ss.SSS"]
+        #   timezone: "UTC"
+    name: "includes2"
+
+  locatedat1:
+    fqn: "ol.locatedat"
+    entitySetName: "NCRICLocatedAt"
+    src: "imagesources"
+    dst: "locations"
+    propertyDefinitions:
+      general.id:
+        type: "general.id"
+        transforms:
+        - !<transforms.ConcatCombineTransform>
+          separator: "_"
+          transforms:          
+          - !<transforms.ColumnTransform>
+            column: "unitid"
+          - !<transforms.ColumnTransform>
+            column: "gpslat"
+          - !<transforms.ColumnTransform>
+            column: "gpslng"
+          - !<transforms.ValueTransform>
+            value: "V5"
+    name: "locatedat1"
+
+  locatedat2:
+    fqn: "ol.locatedat"
+    entitySetName: "NCRICLocatedAt"
+    src: "vehiclerecords"
+    dst: "locations"
+    propertyDefinitions:
+      general.id:
+        type: "general.id"
+        transforms:
+        - !<transforms.ConcatCombineTransform>
+          separator: "_"
+          transforms:          
+          - !<transforms.ColumnTransform>
+            column: "id"
+          - !<transforms.ColumnTransform>
+            column: "gpslat"
+          - !<transforms.ColumnTransform>
+            column: "gpslng"
+          - !<transforms.ValueTransform>
+            value: "V5"
+    name: "locatedat2"
+
+  located3:
+    fqn: "ol.locatedat"
+    entitySetName: "NCRICLocatedAt"
+    src: "vehicles"
+    dst: "locations"
+    propertyDefinitions:
+      general.id:
+        type: "general.id"
+        transforms:
+        - !<transforms.ConcatTransform>
+          columns: ["lpr", "gpslat", "gpslng"]
+          separator: "_"
+    name: "locatedat3"
+
+  collectedby:
+    fqn: "ol.collectedby"
+    entitySetName: "NCRICCollectedBy"
+    src: "imagesources"
+    dst: "agencies"
+    propertyDefinitions:
+      general.id:
+        type: "general.id"
+        transforms:
+        - !<transforms.ConcatCombineTransform>
+          separator: "_"
+          transforms:          
+          - !<transforms.ColumnTransform>
+            column: "unitid"
+          - !<transforms.ValueTransform>
+            value: "V5"
+    name: "collectedby"
+
+#### SET 2
+  has2:
+    fqn: ol.has
+    entitySetName: NCRICHasV5
+    src: "vehicles2"
+    dst: "vehiclerecords2"
+    name: "has"
+    propertyDefinitions:
+      ol.id:
+        type: "ol.id"
+        transforms:
+        - !<transforms.ConcatCombineTransform>
+          separator: "_"
+          transforms:
+          - !<transforms.ColumnTransform>
+            column: "lpr"
+          - !<transforms.ColumnTransform>
+            column: "id"
+          - !<transforms.ValueTransform>
+            value: "V5"
+    name: "has2"
+
+  recordedby1_2:
+    fqn: "ol.recordedby"
+    entitySetName: "NCRICRecordedByV5"
+    src: "vehiclerecords2"
+    dst: "imagesources2"
+    propertyDefinitions:
+      ol.datelogged:
+        type: "ol.datelogged"
+        column: "lprtimestamp"
+        # transforms:
+        # - !<transforms.DateTimeTransform>
+        #   pattern: ["yyyy-MM-dd HH:mm:ss.SSS"]
+        #   timezone: "UTC"
+      general.stringid:
+        type: "general.stringid"
+        transforms:
+        - !<transforms.ConcatCombineTransform>
+          separator: "_"
+          transforms:
+          - !<transforms.ColumnTransform>
+            column: "id"
+          - !<transforms.ColumnTransform>
+            column: "unitid"
+          - !<transforms.ValueTransform>
+            value: "V5"
+    name: "recordedby1_2"
+
+  recordedby2_2:
+    fqn: "ol.recordedby"
+    entitySetName: "NCRICRecordedByV5"
+    src: "vehiclerecords2"
+    dst: "agencies2"
+    propertyDefinitions:
+      ol.datelogged:
+        type: "ol.datelogged"
+        column: "lprtimestamp"
+        # transforms:
+        # - !<transforms.DateTimeTransform>
+        #   pattern: ["yyyy-MM-dd HH:mm:ss.SSS"]
+        #   timezone: "UTC"
+      general.stringid:
+        type: "general.stringid"
+        transforms:
+        - !<transforms.ConcatCombineTransform>
+          separator: "_"
+          transforms:
+          - !<transforms.ColumnTransform>
+            column: "id"
+          - !<transforms.ColumnTransform>
+            column: "lprsourceid"
+          - !<transforms.ValueTransform>
+            value: "V5"
+    name: "recordedby2_2"
+
+  includes1_2:
+    fqn: "ol.includes"
+    entitySetName: "NCRICIncludesV5"
+    src: "vehiclerecords2"
+    dst: "confidencemetrics2"
+    propertyDefinitions:
+      general.id:
+        type: "general.id"
+        transforms:
+        - !<transforms.ConcatCombineTransform>
+          separator: "_"
+          transforms:          
+          - !<transforms.ColumnTransform>
+            column: "id"
+          - !<transforms.ColumnTransform>
+            column: "lprtimestamp"
+          - !<transforms.ValueTransform>
+            value: "V5"
+      date.completeddatetime:
+        type: "date.completeddatetime"
+        column: "lprtimestamp"
+        # transforms:
+        # - !<transforms.DateTimeTransform>
+        #   pattern: ["yyyy-MM-dd HH:mm:ss.SSS"]
+        #   timezone: "UTC"
+    name: "includes1_2"
+
+  includes2_2:
+    fqn: "ol.includes"
+    entitySetName: "NCRICIncludesV5"
+    src: "imagesources2"
+    dst: "confidencemetrics2"
+    propertyDefinitions:
+      general.id:
+        type: "general.id"
+        transforms:
+        - !<transforms.ConcatCombineTransform>
+          separator: "_"
+          transforms:          
+          - !<transforms.ColumnTransform>
+            column: "unitid"
+          - !<transforms.ColumnTransform>
+            column: "lprtimestamp"
+          - !<transforms.ValueTransform>
+            value: "V5"
+      date.completeddatetime:
+        type: "date.completeddatetime"
+        column: "lprtimestamp"
+        # transforms:
+        # - !<transforms.DateTimeTransform>
+        #   pattern: ["yyyy-MM-dd HH:mm:ss.SSS"]
+        #   timezone: "UTC"
+    name: "includes2_2"
+
+  locatedat1_2:
+    fqn: "ol.locatedat"
+    entitySetName: "NCRICLocatedAtV5"
+    src: "imagesources2"
+    dst: "locations2"
+    propertyDefinitions:
+      general.id:
+        type: "general.id"
+        transforms:
+        - !<transforms.ConcatCombineTransform>
+          separator: "_"
+          transforms:          
+          - !<transforms.ColumnTransform>
+            column: "unitid"
+          - !<transforms.ColumnTransform>
+            column: "gpslat"
+          - !<transforms.ColumnTransform>
+            column: "gpslng"
+          - !<transforms.ValueTransform>
+            value: "V5"
+    name: "locatedat1_2"
+
+  locatedat2_2:
+    fqn: "ol.locatedat"
+    entitySetName: "NCRICLocatedAtV5"
+    src: "vehiclerecords2"
+    dst: "locations2"
+    propertyDefinitions:
+      general.id:
+        type: "general.id"
+        transforms:
+        - !<transforms.ConcatCombineTransform>
+          separator: "_"
+          transforms:          
+          - !<transforms.ColumnTransform>
+            column: "id"
+          - !<transforms.ColumnTransform>
+            column: "gpslat"
+          - !<transforms.ColumnTransform>
+            column: "gpslng"
+          - !<transforms.ValueTransform>
+            value: "V5"
+    name: "locatedat2_2"
+
+  located3_2:
+    fqn: "ol.locatedat"
+    entitySetName: "NCRICLocatedAtV5"
+    src: "vehicles2"
+    dst: "locations2"
+    propertyDefinitions:
+      general.id:
+        type: "general.id"
+        transforms:
+        - !<transforms.ConcatTransform>
+          columns: ["lpr", "gpslat", "gpslng"]
+          separator: "_"
+    name: "locatedat3_2"
+
+  collectedby2:
+    fqn: "ol.collectedby"
+    entitySetName: "NCRICCollectedByV5"
+    src: "imagesources2"
+    dst: "agencies2"
+    propertyDefinitions:
+      general.id:
+        type: "general.id"
+        transforms:
+        - !<transforms.ConcatCombineTransform>
+          separator: "_"
+          transforms:          
+          - !<transforms.ColumnTransform>
+            column: "unitid"
+          - !<transforms.ValueTransform>
+            value: "V5"
+    name: "collectedby2"

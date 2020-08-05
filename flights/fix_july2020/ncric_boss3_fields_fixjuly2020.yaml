@@ -1,7 +1,8 @@
 #final recurring:
-#intellij sample: "select * from boss3data21_aug2018_top200k limit 5000"
-#piper's july/demo dataset: intellij: "select boss3data_july2018.*, hits.\"hts_Hotlist\", hits.\"hts_Timestamp\" from boss3data_july2018 left join hits on \"red_id\"=hits.\"hts_red_ID\" where hits.\"hts_red_ID\" is not null limit 5000"
-#psql: select * from boss3data21_aug2018_top200k limit 5000;
+# select * from boss3_v2_fields_15m
+  #1st intellij sample: "select * from boss3data21_aug2018_top200k limit 5000"
+  #piper's july/demo dataset: intellij: "select boss3data_july2018.*, hits.\"hts_Hotlist\", hits.\"hts_Timestamp\" from boss3data_july2018 left join hits on \"red_id\"=hits.\"hts_red_ID\" where hits.\"hts_red_ID\" is not null limit 5000"
+  #psql: select * from boss3data21_aug2018_top200k limit 5000;
 
 # In Boss3 [red_id, sourceid, siteid] will remain as it is. In all other DBs, they will get a suffix added. 
 # This will correctly merge existing vehicle records with new integrations, in case we reintegrate a record that was already integrated.
@@ -12,6 +13,7 @@ entityDefinitions:
   vehicles:
     fqn: "ol.vehicle"
     entitySetName: "NCRICVehicles"
+    updateType: Replace
     propertyDefinitions:
       ol.id:
         type: "ol.id"
@@ -29,6 +31,7 @@ entityDefinitions:
   vehiclerecords:
     fqn: "ol.vehicle"
     entitySetName: "NCRICVehicleRecords"
+    updateType: Replace
     propertyDefinitions:
       ol.id:
         type:  "ol.id" 
@@ -72,16 +75,50 @@ entityDefinitions:
   imagesources:
     fqn: "ol.imagesource"
     entitySetName: "NCRICImageSources"
+    updateType: Replace
     propertyDefinitions:
       ol.id:
         type:  "ol.id" 
         column: "sourceid"
-    associateOnly: true
+      ol.name:
+        type: "ol.name"
+        column: "sourcename"
+      ol.description:
+        type: "ol.description"
+        column: "srcdescr"
+      ol.fixedlocation:
+        type: "ol.fixedlocation"
+        column: "fixedmobile"
+        transforms:
+        - !<transforms.ReplaceTransform>
+          target: ["t", "f"]
+          goal: [true, false]
+          ignoreCase: true
+      ol.datasource:
+        type: "ol.datasource"
+        transforms:
+        - !<transforms.ValueTransform>
+          value: "BOSS3"
+    conditions:
+    - !<conditions.ConditionalAnd> {}
+    - !<conditions.BooleanIsNullCondition>
+      column: "sourceid"
+      reverse: true
+    - !<conditions.BooleanIsNullCondition>
+      column: "sourcename"
+      reverse: true
+    - !<conditions.BooleanIsNullCondition>
+      column: "srcdescr"
+      reverse: true
+    - !<conditions.BooleanIsNullCondition>
+      column: "fixedmobile"
+      reverse: true
     name: "imagesources"
 
   locations:
     fqn: "ol.location"
     entitySetName: "NCRICLocations"
+    updateType: Replace
     propertyDefinitions:
       general.id: 
         type: "general.id"
@@ -103,16 +140,29 @@ entityDefinitions:
   agencies:
     fqn: "ol.agency"
     entitySetName: "NCRICAgencies"
+    updateType: Replace
     propertyDefinitions:
       ol.id: 
         type: "ol.id"
         column: "siteid" 
-    associateOnly: true
+      ol.name:
+        type: "ol.name"
+        column: "sitedescr"    #used to be sitename
+      ## this is actually a more fleshed-out name field
+      # ol.description:             
+      #   type: "ol.description"
+      #   column: "sitedescr"
+      ol.datasource:
+        type: "ol.datasource"
+        transforms:
+        - !<transforms.ValueTransform>
+          value: "BOSS3"
     name: "agencies"
 
   confidencemetrics:
     fqn: "ol.confidencemetrics"
     entitySetName: "NCRICConfidenceMetrics"
+    updateType: Replace
     propertyDefinitions:
       ol.id: 
         type: "ol.id"
@@ -144,6 +194,7 @@ associationDefinitions:
   has:
     fqn: "ol.has"
     entitySetName: "NCRICHas"
+    updateType: Replace
     src: "vehicles"
     dst: "vehiclerecords"
     propertyDefinitions:
@@ -158,6 +209,7 @@ associationDefinitions:
   recordedby1:
     fqn: "ol.recordedby"
     entitySetName: "NCRICRecordedBy"
+    updateType: Replace
     src: "vehiclerecords"
     dst: "imagesources"
     propertyDefinitions:
@@ -180,6 +232,7 @@ associationDefinitions:
     entitySetName: "NCRICRecordedBy"
     src: "vehiclerecords"
     dst: "agencies"
+    updateType: Replace
     propertyDefinitions:
       ol.datelogged:
         type: "ol.datelogged"
@@ -200,6 +253,7 @@ associationDefinitions:
     entitySetName: "NCRICIncludes"
     src: "vehiclerecords"
     dst: "confidencemetrics"
+    updateType: Replace
     propertyDefinitions:
       general.id:
         type: "general.id"
@@ -219,6 +273,7 @@ associationDefinitions:
   includes2:
     fqn: "ol.includes"
     entitySetName: "NCRICIncludes"
+    updateType: Replace
     src: "imagesources"
     dst: "confidencemetrics"
     propertyDefinitions:
@@ -240,6 +295,7 @@ associationDefinitions:
   locatedat1:
     fqn: "ol.locatedat"
     entitySetName: "NCRICLocatedAt"
+    updateType: Replace
     src: "imagesources"
     dst: "locations"
     propertyDefinitions:
@@ -254,6 +310,7 @@ associationDefinitions:
   locatedat2:
     fqn: "ol.locatedat"
     entitySetName: "NCRICLocatedAt"
+    updateType: Replace
     src: "vehiclerecords"
     dst: "locations"
     propertyDefinitions:
@@ -268,6 +325,7 @@ associationDefinitions:
   locatedat3:
     fqn: "ol.locatedat"
     entitySetName: "NCRICLocatedAt"
+    updateType: Replace
     src: "vehicles"
     dst: "locations"
     propertyDefinitions:
@@ -284,6 +342,7 @@ associationDefinitions:
     entitySetName: "NCRICCollectedBy"
     src: "imagesources"
     dst: "agencies"
+    updateType: Replace
     propertyDefinitions:
       general.id:
         type: "general.id"
