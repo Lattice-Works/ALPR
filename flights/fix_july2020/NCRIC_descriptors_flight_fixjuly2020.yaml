@@ -2,11 +2,12 @@
    # not using confidencemetrics (LabelConfidence in Descriptors view dataset) so then 2 entities and 1 association.
 
 
-
+organizationId: 47b646d7-a01a-4232-b25b-15c880ea4046
 entityDefinitions:
   vehicles:
     fqn: "ol.vehicle"
     entitySetName: "NCRICVehicles"
+    updateType: Replace
     propertyDefinitions:
       ol.id:
         type: "ol.id"
@@ -26,6 +27,7 @@ entityDefinitions:
   vehiclerecords1:
     fqn: "ol.vehicle"
     entitySetName: "NCRICVehicleRecords"
+    updateType: Replace
     propertyDefinitions:
       ol.id:
         type: "ol.id" 
@@ -33,7 +35,7 @@ entityDefinitions:
         - !<transforms.ConcatCombineTransform>
           separator: "_"
           transforms:
-          - !<com.openlattice.shuttle.transforms.ColumnTransform>
+          - !<transforms.ColumnTransform>
             column: "Plate"
           - !<transforms.ValueTransform>
             value: "labels"
@@ -87,7 +89,7 @@ entityDefinitions:
           column: "LabelName"
           pattern: "(?i)(blue|dark|green|light|red|white|yellow)"
           transformsIfTrue:
-          - !<com.openlattice.shuttle.transforms.ColumnTransform>
+          - !<transforms.ColumnTransform>
             column: "LabelName"
       ol.accessories:
         type: "ol.accessories"
@@ -96,7 +98,7 @@ entityDefinitions:
           column: "LabelName"
           pattern: "(?i)(spare tire|paper-plate|pedestal-spoiler|ca-clean-air-vehicle-sticker|rectangular-sticker|uber-sticker|roof-rack|pickup-ladder-rack|racing-strip)"
           transformsIfTrue:
-          - !<com.openlattice.shuttle.transforms.ColumnTransform>
+          - !<transforms.ColumnTransform>
             column: "LabelName"
       vehicle.style:
         type: "vehicle.style"
@@ -105,7 +107,7 @@ entityDefinitions:
           column: "LabelName"
           pattern: "(?i)(box-truck|full-size-van|other-truck|car|pickup|minivan|hatchback|sedan|SUV)"
           transformsIfTrue:
-          - !<com.openlattice.shuttle.transforms.ColumnTransform>
+          - !<transforms.ColumnTransform>
             column: "LabelName"
       ol.label:
         type: "ol.label"
@@ -114,7 +116,7 @@ entityDefinitions:
           column: "LabelName"
           pattern: "(?i)(night|day)"
           transformsIfTrue:
-          - !<com.openlattice.shuttle.transforms.ColumnTransform>
+          - !<transforms.ColumnTransform>
             column: "LabelName"
       ol.datasource:
         type: "ol.datasource"
@@ -130,6 +132,7 @@ associationDefinitions:
   has1:
     fqn: "ol.has"
     entitySetName: "NCRICHas"
+    updateType: Replace
     src: "vehicles"
     dst: "vehiclerecords1"
     propertyDefinitions:
@@ -139,11 +142,11 @@ associationDefinitions:
         - !<transforms.ConcatCombineTransform>
           separator: "_"
           transforms:
-          - !<com.openlattice.shuttle.transforms.ColumnTransform>
+          - !<transforms.ColumnTransform>
             column: "Plate"
           - !<transforms.ValueTransform>
             value: "labels"
-          - !<com.openlattice.shuttle.transforms.ColumnTransform>
+          - !<transforms.ColumnTransform>
             column: "TimeStamp"
     name: "has1"
   

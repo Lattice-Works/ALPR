@@ -3,6 +3,7 @@ entityDefinitions:
   vehiclerecords:
     fqn: "ol.vehicle"
     entitySetName: "NCRICVehicleRecords"
+    updateType: Replace
     propertyDefinitions:
       ol.id:
         type:  "ol.id" 

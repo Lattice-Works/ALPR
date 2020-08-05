@@ -1,12 +1,14 @@
 #separated because otherwise hits are not existing in the boss3 vehicles with 
-  #psql select * from hits_21 limit 5000;
-  #intellij sample test: "select * from hits_21 limit 5000"
-  #final recurring integration: "select * from boss3_v2_hits_15m;"
+#psql select * from hits_21 limit 5000;
+#intellij sample test: "select * from hits_21 limit 5000"
+#final recurring integration: "select * from boss3_21_hits_10minutes;"
+
 organizationId: 47b646d7-a01a-4232-b25b-15c880ea4046
 entityDefinitions:
   vehicles:
     fqn: "ol.vehicle"
     entitySetName: "NCRICVehicles"
+    updateType: Replace
     propertyDefinitions:
       ol.id:
         type: "ol.id"
@@ -19,6 +21,7 @@ entityDefinitions:
   vehiclerecords:
     fqn: "ol.vehicle"
     entitySetName: "NCRICVehicleRecords"
+    updateType: Replace
     propertyDefinitions:
       ol.id:
         type: "ol.id"
@@ -36,6 +39,7 @@ entityDefinitions:
   hits:
     fqn: "ol.notification"
     entitySetName: "NCRICNotifications"
+    updateType: Replace
     propertyDefinitions:
       ol.id: 
         type: "ol.id"
@@ -66,6 +70,7 @@ associationDefinitions:
   has:
     fqn: "ol.has"
     entitySetName: "NCRICHas"
+    updateType: Replace
     src: "vehicles"
     dst: "vehiclerecords"
     propertyDefinitions:
@@ -80,6 +85,7 @@ associationDefinitions:
   resultsin1:
     fqn: "ol.resultsin"
     entitySetName: "NCRICResultsIn"
+    updateType: Replace
     src: "vehiclerecords"
     dst: "hits"
     propertyDefinitions:
@@ -91,6 +97,7 @@ associationDefinitions:
   resultsin2:
     fqn: "ol.resultsin"
     entitySetName: "NCRICResultsIn"
+    updateType: Replace
     src: "vehicles"
     dst: "hits"
     propertyDefinitions:

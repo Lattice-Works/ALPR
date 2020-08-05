@@ -5,7 +5,7 @@
 # [red_id, sourceid, siteid] will get a suffiZ added to prevent name collisions from BOSS3 and SCSO
 
 # taking out alerts, there's no info in them but an ID, so every read would have one. Meaningless. Also v5alertId is not unique.
-organizationId: 47b646d7-a01a-4232-b25b-15c880ea4046
+
 entityDefinitions:
 #### SET 1 - merging into same entity sets as all NCRIC sources
   vehicles: 
@@ -35,7 +35,7 @@ entityDefinitions:
         - !<transforms.ConcatCombineTransform>
           separator: "_"
           transforms:
-          - !<com.openlattice.shuttle.transforms.ColumnTransform>
+          - !<transforms.ColumnTransform>
             column: "id"
           - !<transforms.ValueTransform>
             value: "V5"
@@ -60,10 +60,10 @@ entityDefinitions:
         transforms:
         - !<transforms.GeographyPointTransform>
           latTransforms:
-          - !<com.openlattice.shuttle.transforms.ColumnTransform>
+          - !<transforms.ColumnTransform>
             column: "gpslat"
           lonTransforms:
-          - !<com.openlattice.shuttle.transforms.ColumnTransform>
+          - !<transforms.ColumnTransform>
             column: "gpslng"
       publicsafety.agencyname:
         type: "publicsafety.agencyname"
@@ -88,7 +88,7 @@ entityDefinitions:
         - !<transforms.ConcatCombineTransform>
           separator: "_"
           transforms:
-          - !<com.openlattice.shuttle.transforms.ColumnTransform>
+          - !<transforms.ColumnTransform>
             column: "unitid"
           - !<transforms.ValueTransform>
             value: "V5"
@@ -116,10 +116,10 @@ entityDefinitions:
         transforms:
         - !<transforms.GeographyPointTransform>
           latTransforms:
-          - !<com.openlattice.shuttle.transforms.ColumnTransform>
+          - !<transforms.ColumnTransform>
             column: "gpslat"
           lonTransforms:
-          - !<com.openlattice.shuttle.transforms.ColumnTransform>
+          - !<transforms.ColumnTransform>
             column: "gpslng" 
     name: "locations"
 
@@ -150,7 +150,7 @@ entityDefinitions:
         - !<transforms.ConcatCombineTransform>
           separator: "_"
           transforms:
-          - !<com.openlattice.shuttle.transforms.ColumnTransform>
+          - !<transforms.ColumnTransform>
             column: "incidentid" 
           - !<transforms.ValueTransform>
             value: "V5"
@@ -192,7 +192,7 @@ entityDefinitions:
         - !<transforms.ConcatCombineTransform>
           separator: "_"
           transforms:
-          - !<com.openlattice.shuttle.transforms.ColumnTransform>
+          - !<transforms.ColumnTransform>
             column: "id"
           - !<transforms.ValueTransform>
             value: "V5"
@@ -217,10 +217,10 @@ entityDefinitions:
         transforms:
         - !<transforms.GeographyPointTransform>
           latTransforms:
-          - !<com.openlattice.shuttle.transforms.ColumnTransform>
+          - !<transforms.ColumnTransform>
             column: "gpslat"
           lonTransforms:
-          - !<com.openlattice.shuttle.transforms.ColumnTransform>
+          - !<transforms.ColumnTransform>
             column: "gpslng"
       publicsafety.agencyname:
         type: "publicsafety.agencyname"
@@ -245,7 +245,7 @@ entityDefinitions:
         - !<transforms.ConcatCombineTransform>
           separator: "_"
           transforms:
-          - !<com.openlattice.shuttle.transforms.ColumnTransform>
+          - !<transforms.ColumnTransform>
             column: "unitid"
           - !<transforms.ValueTransform>
             value: "V5"
@@ -273,10 +273,10 @@ entityDefinitions:
         transforms:
         - !<transforms.GeographyPointTransform>
           latTransforms:
-          - !<com.openlattice.shuttle.transforms.ColumnTransform>
+          - !<transforms.ColumnTransform>
             column: "gpslat"
           lonTransforms:
-          - !<com.openlattice.shuttle.transforms.ColumnTransform>
+          - !<transforms.ColumnTransform>
             column: "gpslng" 
     name: "locations2"
 
@@ -307,7 +307,7 @@ entityDefinitions:
         - !<transforms.ConcatCombineTransform>
           separator: "_"
           transforms:
-          - !<com.openlattice.shuttle.transforms.ColumnTransform>
+          - !<transforms.ColumnTransform>
             column: "incidentid" 
           - !<transforms.ValueTransform>
             value: "V5"
@@ -338,9 +338,9 @@ associationDefinitions:
         - !<transforms.ConcatCombineTransform>
           separator: "_"
           transforms:
-          - !<com.openlattice.shuttle.transforms.ColumnTransform>
+          - !<transforms.ColumnTransform>
             column: "lpr"
-          - !<com.openlattice.shuttle.transforms.ColumnTransform>
+          - !<transforms.ColumnTransform>
             column: "id"
           - !<transforms.ValueTransform>
             value: "V5"
@@ -365,9 +365,9 @@ associationDefinitions:
         - !<transforms.ConcatCombineTransform>
           separator: "_"
           transforms:
-          - !<com.openlattice.shuttle.transforms.ColumnTransform>
+          - !<transforms.ColumnTransform>
             column: "id"
-          - !<com.openlattice.shuttle.transforms.ColumnTransform>
+          - !<transforms.ColumnTransform>
             column: "unitid"
           - !<transforms.ValueTransform>
             value: "V5"
@@ -392,9 +392,9 @@ associationDefinitions:
         - !<transforms.ConcatCombineTransform>
           separator: "_"
           transforms:
-          - !<com.openlattice.shuttle.transforms.ColumnTransform>
+          - !<transforms.ColumnTransform>
             column: "id"
-          - !<com.openlattice.shuttle.transforms.ColumnTransform>
+          - !<transforms.ColumnTransform>
             column: "lprsourceid"
           - !<transforms.ValueTransform>
             value: "V5"
@@ -412,9 +412,9 @@ associationDefinitions:
         - !<transforms.ConcatCombineTransform>
           separator: "_"
           transforms:          
-          - !<com.openlattice.shuttle.transforms.ColumnTransform>
+          - !<transforms.ColumnTransform>
             column: "id"
-          - !<com.openlattice.shuttle.transforms.ColumnTransform>
+          - !<transforms.ColumnTransform>
             column: "lprtimestamp"
           - !<transforms.ValueTransform>
             value: "V5"
@@ -439,9 +439,9 @@ associationDefinitions:
         - !<transforms.ConcatCombineTransform>
           separator: "_"
           transforms:          
-          - !<com.openlattice.shuttle.transforms.ColumnTransform>
+          - !<transforms.ColumnTransform>
             column: "unitid"
-          - !<com.openlattice.shuttle.transforms.ColumnTransform>
+          - !<transforms.ColumnTransform>
             column: "lprtimestamp"
           - !<transforms.ValueTransform>
             value: "V5"
@@ -466,11 +466,11 @@ associationDefinitions:
         - !<transforms.ConcatCombineTransform>
           separator: "_"
           transforms:          
-          - !<com.openlattice.shuttle.transforms.ColumnTransform>
+          - !<transforms.ColumnTransform>
             column: "unitid"
-          - !<com.openlattice.shuttle.transforms.ColumnTransform>
+          - !<transforms.ColumnTransform>
             column: "gpslat"
-          - !<com.openlattice.shuttle.transforms.ColumnTransform>
+          - !<transforms.ColumnTransform>
             column: "gpslng"
           - !<transforms.ValueTransform>
             value: "V5"
@@ -488,11 +488,11 @@ associationDefinitions:
         - !<transforms.ConcatCombineTransform>
           separator: "_"
           transforms:          
-          - !<com.openlattice.shuttle.transforms.ColumnTransform>
+          - !<transforms.ColumnTransform>
             column: "id"
-          - !<com.openlattice.shuttle.transforms.ColumnTransform>
+          - !<transforms.ColumnTransform>
             column: "gpslat"
-          - !<com.openlattice.shuttle.transforms.ColumnTransform>
+          - !<transforms.ColumnTransform>
             column: "gpslng"
           - !<transforms.ValueTransform>
             value: "V5"
@@ -524,7 +524,7 @@ associationDefinitions:
         - !<transforms.ConcatCombineTransform>
           separator: "_"
           transforms:          
-          - !<com.openlattice.shuttle.transforms.ColumnTransform>
+          - !<transforms.ColumnTransform>
             column: "unitid"
           - !<transforms.ValueTransform>
             value: "V5"
@@ -544,9 +544,9 @@ associationDefinitions:
         - !<transforms.ConcatCombineTransform>
           separator: "_"
           transforms:
-          - !<com.openlattice.shuttle.transforms.ColumnTransform>
+          - !<transforms.ColumnTransform>
             column: "lpr"
-          - !<com.openlattice.shuttle.transforms.ColumnTransform>
+          - !<transforms.ColumnTransform>
             column: "id"
           - !<transforms.ValueTransform>
             value: "V5"
@@ -571,9 +571,9 @@ associationDefinitions:
         - !<transforms.ConcatCombineTransform>
           separator: "_"
           transforms:
-          - !<com.openlattice.shuttle.transforms.ColumnTransform>
+          - !<transforms.ColumnTransform>
             column: "id"
-          - !<com.openlattice.shuttle.transforms.ColumnTransform>
+          - !<transforms.ColumnTransform>
             column: "unitid"
           - !<transforms.ValueTransform>
             value: "V5"
@@ -598,9 +598,9 @@ associationDefinitions:
         - !<transforms.ConcatCombineTransform>
           separator: "_"
           transforms:
-          - !<com.openlattice.shuttle.transforms.ColumnTransform>
+          - !<transforms.ColumnTransform>
             column: "id"
-          - !<com.openlattice.shuttle.transforms.ColumnTransform>
+          - !<transforms.ColumnTransform>
             column: "lprsourceid"
           - !<transforms.ValueTransform>
             value: "V5"
@@ -618,9 +618,9 @@ associationDefinitions:
         - !<transforms.ConcatCombineTransform>
           separator: "_"
           transforms:          
-          - !<com.openlattice.shuttle.transforms.ColumnTransform>
+          - !<transforms.ColumnTransform>
             column: "id"
-          - !<com.openlattice.shuttle.transforms.ColumnTransform>
+          - !<transforms.ColumnTransform>
             column: "lprtimestamp"
           - !<transforms.ValueTransform>
             value: "V5"
@@ -645,9 +645,9 @@ associationDefinitions:
         - !<transforms.ConcatCombineTransform>
           separator: "_"
           transforms:          
-          - !<com.openlattice.shuttle.transforms.ColumnTransform>
+          - !<transforms.ColumnTransform>
             column: "unitid"
-          - !<com.openlattice.shuttle.transforms.ColumnTransform>
+          - !<transforms.ColumnTransform>
             column: "lprtimestamp"
           - !<transforms.ValueTransform>
             value: "V5"
@@ -672,11 +672,11 @@ associationDefinitions:
         - !<transforms.ConcatCombineTransform>
           separator: "_"
           transforms:          
-          - !<com.openlattice.shuttle.transforms.ColumnTransform>
+          - !<transforms.ColumnTransform>
             column: "unitid"
-          - !<com.openlattice.shuttle.transforms.ColumnTransform>
+          - !<transforms.ColumnTransform>
             column: "gpslat"
-          - !<com.openlattice.shuttle.transforms.ColumnTransform>
+          - !<transforms.ColumnTransform>
             column: "gpslng"
           - !<transforms.ValueTransform>
             value: "V5"
@@ -694,11 +694,11 @@ associationDefinitions:
         - !<transforms.ConcatCombineTransform>
           separator: "_"
           transforms:          
-          - !<com.openlattice.shuttle.transforms.ColumnTransform>
+          - !<transforms.ColumnTransform>
             column: "id"
-          - !<com.openlattice.shuttle.transforms.ColumnTransform>
+          - !<transforms.ColumnTransform>
             column: "gpslat"
-          - !<com.openlattice.shuttle.transforms.ColumnTransform>
+          - !<transforms.ColumnTransform>
             column: "gpslng"
           - !<transforms.ValueTransform>
             value: "V5"
@@ -730,7 +730,7 @@ associationDefinitions:
         - !<transforms.ConcatCombineTransform>
           separator: "_"
           transforms:          
-          - !<com.openlattice.shuttle.transforms.ColumnTransform>
+          - !<transforms.ColumnTransform>
             column: "unitid"
           - !<transforms.ValueTransform>
             value: "V5"

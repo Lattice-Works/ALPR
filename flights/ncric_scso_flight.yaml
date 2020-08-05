@@ -1,7 +1,7 @@
 # [red_id, sourceid, siteid] will get a suffix added to prevent name collisions from BOSS3 and V5
 
 
-
+organizationId: 47b646d7-a01a-4232-b25b-15c880ea4046
 entityDefinitions:
   #### SET 1 - merging into same entity sets as all NCRIC sources
   vehicles:
@@ -31,7 +31,7 @@ entityDefinitions:
         - !<transforms.ConcatCombineTransform>
           separator: "_"
           transforms:
-          - !<transforms.ColumnTransform>
+          - !<com.openlattice.shuttle.transforms.ColumnTransform>
             column: "red_id"
           - !<transforms.ValueTransform>
             value: "SCSO"
@@ -48,7 +48,7 @@ entityDefinitions:
         type: "ol.datelogged"
         column: "date"
         transforms:
-        - !<transforms.DateTimeTransform>
+        - !<transforms.TimezoneShiftTransform>
           pattern: ["yyyy-MM-dd HH:mm:ss.S","yyyy-MM-dd HH:mm:ss.SS","yyyy-MM-dd HH:mm:ss.SSS"]
           timezone: "America/Los_Angeles"
       ol.locationcoordinates:
@@ -56,10 +56,10 @@ entityDefinitions:
         transforms:
         - !<transforms.GeographyPointTransform>
           latTransforms:
-          - !<transforms.ColumnTransform>
+          - !<com.openlattice.shuttle.transforms.ColumnTransform>
             column: "Latitude"
           lonTransforms:
-          - !<transforms.ColumnTransform>
+          - !<com.openlattice.shuttle.transforms.ColumnTransform>
             column: "Longitude"
       publicsafety.agencyname:
         type: "publicsafety.agencyname"
@@ -84,7 +84,7 @@ entityDefinitions:
         - !<transforms.ConcatCombineTransform>
           separator: "_"
           transforms:
-          - !<transforms.ColumnTransform>
+          - !<com.openlattice.shuttle.transforms.ColumnTransform>
             column: "sourceid"
           - !<transforms.ValueTransform>
             value: "SCSO"
@@ -107,6 +107,20 @@ entityDefinitions:
         transforms:
         - !<transforms.ValueTransform>
           value: "SCSO"
+    conditions:
+    - !<conditions.ConditionalOr> {}
+    - !<conditions.BooleanIsNullCondition>
+      column: "sourceid"
+      reverse: true
+    - !<conditions.BooleanIsNullCondition>
+      column: "sourcename"
+      reverse: true
+    - !<conditions.BooleanIsNullCondition>
+      column: "srcdescr"
+      reverse: true
+    - !<conditions.BooleanIsNullCondition>
+      column: "fixedmobile"
+      reverse: true
     name: "imagesources"
 
   locations:
@@ -123,10 +137,10 @@ entityDefinitions:
         transforms:
         - !<transforms.GeographyPointTransform>
           latTransforms:
-          - !<transforms.ColumnTransform>
+          - !<com.openlattice.shuttle.transforms.ColumnTransform>
             column: "Latitude"
           lonTransforms:
-          - !<transforms.ColumnTransform>
+          - !<com.openlattice.shuttle.transforms.ColumnTransform>
             column: "Longitude"
     name: "locations"
 
@@ -140,7 +154,7 @@ entityDefinitions:
         - !<transforms.ConcatCombineTransform>
           separator: "_"
           transforms:
-          - !<transforms.ColumnTransform>
+          - !<com.openlattice.shuttle.transforms.ColumnTransform>
             column: "siteid"
           - !<transforms.ValueTransform>
             value: "SCSO"  
@@ -168,7 +182,7 @@ entityDefinitions:
         - !<transforms.ConcatCombineTransform>
           separator: "_"
           transforms:
-          - !<transforms.ColumnTransform>
+          - !<com.openlattice.shuttle.transforms.ColumnTransform>
             column: "red_id"
           - !<transforms.ValueTransform>
             value: "SCSO"
@@ -221,7 +235,7 @@ entityDefinitions:
         - !<transforms.ConcatCombineTransform>
           separator: "_"
           transforms:
-          - !<transforms.ColumnTransform>
+          - !<com.openlattice.shuttle.transforms.ColumnTransform>
             column: "red_id"
           - !<transforms.ValueTransform>
             value: "SCSO"
@@ -238,7 +252,7 @@ entityDefinitions:
         type: "ol.datelogged"
         column: "date"
         transforms:
-        - !<transforms.DateTimeTransform>
+        - !<transforms.TimezoneShiftTransform>
           pattern: ["yyyy-MM-dd HH:mm:ss.S","yyyy-MM-dd HH:mm:ss.SS","yyyy-MM-dd HH:mm:ss.SSS"]
           timezone: "America/Los_Angeles"
       ol.locationcoordinates:
@@ -246,10 +260,10 @@ entityDefinitions:
         transforms:
         - !<transforms.GeographyPointTransform>
           latTransforms:
-          - !<transforms.ColumnTransform>
+          - !<com.openlattice.shuttle.transforms.ColumnTransform>
             column: "Latitude"
           lonTransforms:
-          - !<transforms.ColumnTransform>
+          - !<com.openlattice.shuttle.transforms.ColumnTransform>
             column: "Longitude"
       publicsafety.agencyname:
         type: "publicsafety.agencyname"
@@ -274,7 +288,7 @@ entityDefinitions:
         - !<transforms.ConcatCombineTransform>
           separator: "_"
           transforms:
-          - !<transforms.ColumnTransform>
+          - !<com.openlattice.shuttle.transforms.ColumnTransform>
             column: "sourceid"
           - !<transforms.ValueTransform>
             value: "SCSO"
@@ -313,10 +327,10 @@ entityDefinitions:
         transforms:
         - !<transforms.GeographyPointTransform>
           latTransforms:
-          - !<transforms.ColumnTransform>
+          - !<com.openlattice.shuttle.transforms.ColumnTransform>
             column: "Latitude"
           lonTransforms:
-          - !<transforms.ColumnTransform>
+          - !<com.openlattice.shuttle.transforms.ColumnTransform>
             column: "Longitude"
     name: "locations2"
 
@@ -330,7 +344,7 @@ entityDefinitions:
         - !<transforms.ConcatCombineTransform>
           separator: "_"
           transforms:
-          - !<transforms.ColumnTransform>
+          - !<com.openlattice.shuttle.transforms.ColumnTransform>
             column: "siteid"
           - !<transforms.ValueTransform>
             value: "SCSO"  
@@ -358,7 +372,7 @@ entityDefinitions:
         - !<transforms.ConcatCombineTransform>
           separator: "_"
           transforms:
-          - !<transforms.ColumnTransform>
+          - !<com.openlattice.shuttle.transforms.ColumnTransform>
             column: "red_id"
           - !<transforms.ValueTransform>
             value: "SCSO"
@@ -398,9 +412,9 @@ associationDefinitions:
         - !<transforms.ConcatCombineTransform>
           separator: "_"
           transforms:
-          - !<transforms.ColumnTransform>
+          - !<com.openlattice.shuttle.transforms.ColumnTransform>
             column: "red_vrm"
-          - !<transforms.ColumnTransform>
+          - !<com.openlattice.shuttle.transforms.ColumnTransform>
             column: "red_id"
           - !<transforms.ValueTransform>
             value: "SCSO"
@@ -416,7 +430,7 @@ associationDefinitions:
         type: "ol.datelogged"
         column: "date"
         transforms:
-        - !<transforms.DateTimeTransform>
+        - !<transforms.TimezoneShiftTransform>
           pattern: ["yyyy-MM-dd HH:mm:ss.S","yyyy-MM-dd HH:mm:ss.SS","yyyy-MM-dd HH:mm:ss.SSS"]
           timezone: "America/Los_Angeles"
       general.stringid:
@@ -425,9 +439,9 @@ associationDefinitions:
         - !<transforms.ConcatCombineTransform>
           separator: "_"
           transforms:
-          - !<transforms.ColumnTransform>
+          - !<com.openlattice.shuttle.transforms.ColumnTransform>
             column: "red_id"
-          - !<transforms.ColumnTransform>
+          - !<com.openlattice.shuttle.transforms.ColumnTransform>
             column: "sourceid"
           - !<transforms.ValueTransform>
             value: "SCSO" 
@@ -443,7 +457,7 @@ associationDefinitions:
         type: "ol.datelogged"
         column: "date"
         transforms:
-        - !<transforms.DateTimeTransform>
+        - !<transforms.TimezoneShiftTransform>
           pattern: ["yyyy-MM-dd HH:mm:ss.S","yyyy-MM-dd HH:mm:ss.SS","yyyy-MM-dd HH:mm:ss.SSS"]
           timezone: "America/Los_Angeles"
       general.stringid:
@@ -452,9 +466,9 @@ associationDefinitions:
         - !<transforms.ConcatCombineTransform>
           separator: "_"
           transforms:
-          - !<transforms.ColumnTransform>
+          - !<com.openlattice.shuttle.transforms.ColumnTransform>
             column: "red_id"
-          - !<transforms.ColumnTransform>
+          - !<com.openlattice.shuttle.transforms.ColumnTransform>
             column: "siteid"
           - !<transforms.ValueTransform>
             value: "SCSO"
@@ -472,9 +486,9 @@ associationDefinitions:
         - !<transforms.ConcatCombineTransform>
           separator: "_"
           transforms:          
-          - !<transforms.ColumnTransform>
+          - !<com.openlattice.shuttle.transforms.ColumnTransform>
             column: "red_id"
-          - !<transforms.ColumnTransform>
+          - !<com.openlattice.shuttle.transforms.ColumnTransform>
             column: "date"
           - !<transforms.ValueTransform>
             value: "SCSO"
@@ -482,7 +496,7 @@ associationDefinitions:
         type: "date.completeddatetime"
         column: "date"
         transforms:
-        - !<transforms.DateTimeTransform>
+        - !<transforms.TimezoneShiftTransform>
           pattern: ["yyyy-MM-dd HH:mm:ss.S","yyyy-MM-dd HH:mm:ss.SS","yyyy-MM-dd HH:mm:ss.SSS"]
           timezone: "America/Los_Angeles"
     name: "includes1"
@@ -499,9 +513,9 @@ associationDefinitions:
         - !<transforms.ConcatCombineTransform>
           separator: "_"
           transforms:
-          - !<transforms.ColumnTransform>
+          - !<com.openlattice.shuttle.transforms.ColumnTransform>
             column: "sourceid"
-          - !<transforms.ColumnTransform>
+          - !<com.openlattice.shuttle.transforms.ColumnTransform>
             column: "date"
           - !<transforms.ValueTransform>
             value: "SCSO"
@@ -509,7 +523,7 @@ associationDefinitions:
         type: "date.completeddatetime"
         column: "date"
         transforms:
-        - !<transforms.DateTimeTransform>
+        - !<transforms.TimezoneShiftTransform>
           pattern: ["yyyy-MM-dd HH:mm:ss.S","yyyy-MM-dd HH:mm:ss.SS","yyyy-MM-dd HH:mm:ss.SSS"]
           timezone: "America/Los_Angeles"
     name: "includes2"
@@ -526,13 +540,13 @@ associationDefinitions:
         - !<transforms.ConcatCombineTransform>
           separator: "_"
           transforms:
-          - !<transforms.ColumnTransform>
+          - !<com.openlattice.shuttle.transforms.ColumnTransform>
             column: "sourceid"
           - !<transforms.ValueTransform>
             value: "SCSO"
-          - !<transforms.ColumnTransform>
+          - !<com.openlattice.shuttle.transforms.ColumnTransform>
             column: "Latitude"
-          - !<transforms.ColumnTransform>
+          - !<com.openlattice.shuttle.transforms.ColumnTransform>
             column: "Longitude"
     name: "locatedat1"
 
@@ -548,13 +562,13 @@ associationDefinitions:
         - !<transforms.ConcatCombineTransform>
           separator: "_"
           transforms:
-          - !<transforms.ColumnTransform>
+          - !<com.openlattice.shuttle.transforms.ColumnTransform>
             column: "red_id"
           - !<transforms.ValueTransform>
             value: "SCSO"
-          - !<transforms.ColumnTransform>
+          - !<com.openlattice.shuttle.transforms.ColumnTransform>
             column: "Latitude"
-          - !<transforms.ColumnTransform>
+          - !<com.openlattice.shuttle.transforms.ColumnTransform>
             column: "Longitude"
     name: "locatedat2"
 
@@ -584,9 +598,9 @@ associationDefinitions:
         - !<transforms.ConcatCombineTransform>
           separator: "_"
           transforms:
-          - !<transforms.ColumnTransform>
+          - !<com.openlattice.shuttle.transforms.ColumnTransform>
             column: "sourceid"
-          - !<transforms.ColumnTransform>
+          - !<com.openlattice.shuttle.transforms.ColumnTransform>
             column: "siteid"
           - !<transforms.ValueTransform>
             value: "SCSO"
@@ -605,9 +619,9 @@ associationDefinitions:
         - !<transforms.ConcatCombineTransform>
           separator: "_"
           transforms:
-          - !<transforms.ColumnTransform>
+          - !<com.openlattice.shuttle.transforms.ColumnTransform>
             column: "red_vrm"
-          - !<transforms.ColumnTransform>
+          - !<com.openlattice.shuttle.transforms.ColumnTransform>
             column: "red_id"
           - !<transforms.ValueTransform>
             value: "SCSO"
@@ -623,7 +637,7 @@ associationDefinitions:
         type: "ol.datelogged"
         column: "date"
         transforms:
-        - !<transforms.DateTimeTransform>
+        - !<transforms.TimezoneShiftTransform>
           pattern: ["yyyy-MM-dd HH:mm:ss.S","yyyy-MM-dd HH:mm:ss.SS","yyyy-MM-dd HH:mm:ss.SSS"]
           timezone: "America/Los_Angeles"
       general.stringid:
@@ -632,9 +646,9 @@ associationDefinitions:
         - !<transforms.ConcatCombineTransform>
           separator: "_"
           transforms:
-          - !<transforms.ColumnTransform>
+          - !<com.openlattice.shuttle.transforms.ColumnTransform>
             column: "red_id"
-          - !<transforms.ColumnTransform>
+          - !<com.openlattice.shuttle.transforms.ColumnTransform>
             column: "sourceid"
           - !<transforms.ValueTransform>
             value: "SCSO" 
@@ -650,7 +664,7 @@ associationDefinitions:
         type: "ol.datelogged"
         column: "date"
         transforms:
-        - !<transforms.DateTimeTransform>
+        - !<transforms.TimezoneShiftTransform>
           pattern: ["yyyy-MM-dd HH:mm:ss.S","yyyy-MM-dd HH:mm:ss.SS","yyyy-MM-dd HH:mm:ss.SSS"]
           timezone: "America/Los_Angeles"
       general.stringid:
@@ -659,9 +673,9 @@ associationDefinitions:
         - !<transforms.ConcatCombineTransform>
           separator: "_"
           transforms:
-          - !<transforms.ColumnTransform>
+          - !<com.openlattice.shuttle.transforms.ColumnTransform>
             column: "red_id"
-          - !<transforms.ColumnTransform>
+          - !<com.openlattice.shuttle.transforms.ColumnTransform>
             column: "siteid"
           - !<transforms.ValueTransform>
             value: "SCSO"
@@ -679,9 +693,9 @@ associationDefinitions:
         - !<transforms.ConcatCombineTransform>
           separator: "_"
           transforms:          
-          - !<transforms.ColumnTransform>
+          - !<com.openlattice.shuttle.transforms.ColumnTransform>
             column: "red_id"
-          - !<transforms.ColumnTransform>
+          - !<com.openlattice.shuttle.transforms.ColumnTransform>
             column: "date"
           - !<transforms.ValueTransform>
             value: "SCSO"
@@ -689,7 +703,7 @@ associationDefinitions:
         type: "date.completeddatetime"
         column: "date"
         transforms:
-        - !<transforms.DateTimeTransform>
+        - !<transforms.TimezoneShiftTransform>
           pattern: ["yyyy-MM-dd HH:mm:ss.S","yyyy-MM-dd HH:mm:ss.SS","yyyy-MM-dd HH:mm:ss.SSS"]
           timezone: "America/Los_Angeles"
     name: "includes1_2"
@@ -706,9 +720,9 @@ associationDefinitions:
         - !<transforms.ConcatCombineTransform>
           separator: "_"
           transforms:
-          - !<transforms.ColumnTransform>
+          - !<com.openlattice.shuttle.transforms.ColumnTransform>
             column: "sourceid"
-          - !<transforms.ColumnTransform>
+          - !<com.openlattice.shuttle.transforms.ColumnTransform>
             column: "date"
           - !<transforms.ValueTransform>
             value: "SCSO"
@@ -716,7 +730,7 @@ associationDefinitions:
         type: "date.completeddatetime"
         column: "date"
         transforms:
-        - !<transforms.DateTimeTransform>
+        - !<transforms.TimezoneShiftTransform>
           pattern: ["yyyy-MM-dd HH:mm:ss.S","yyyy-MM-dd HH:mm:ss.SS","yyyy-MM-dd HH:mm:ss.SSS"]
           timezone: "America/Los_Angeles"
     name: "includes2_2"
@@ -733,13 +747,13 @@ associationDefinitions:
         - !<transforms.ConcatCombineTransform>
           separator: "_"
           transforms:
-          - !<transforms.ColumnTransform>
+          - !<com.openlattice.shuttle.transforms.ColumnTransform>
             column: "sourceid"
           - !<transforms.ValueTransform>
             value: "SCSO"
-          - !<transforms.ColumnTransform>
+          - !<com.openlattice.shuttle.transforms.ColumnTransform>
             column: "Latitude"
-          - !<transforms.ColumnTransform>
+          - !<com.openlattice.shuttle.transforms.ColumnTransform>
             column: "Longitude"
     name: "locatedat1_2"
 
@@ -755,13 +769,13 @@ associationDefinitions:
         - !<transforms.ConcatCombineTransform>
           separator: "_"
           transforms:
-          - !<transforms.ColumnTransform>
+          - !<com.openlattice.shuttle.transforms.ColumnTransform>
             column: "red_id"
           - !<transforms.ValueTransform>
             value: "SCSO"
-          - !<transforms.ColumnTransform>
+          - !<com.openlattice.shuttle.transforms.ColumnTransform>
             column: "Latitude"
-          - !<transforms.ColumnTransform>
+          - !<com.openlattice.shuttle.transforms.ColumnTransform>
             column: "Longitude"
     name: "locatedat2_2"
 
@@ -791,9 +805,9 @@ associationDefinitions:
         - !<transforms.ConcatCombineTransform>
           separator: "_"
           transforms:
-          - !<transforms.ColumnTransform>
+          - !<com.openlattice.shuttle.transforms.ColumnTransform>
             column: "sourceid"
-          - !<transforms.ColumnTransform>
+          - !<com.openlattice.shuttle.transforms.ColumnTransform>
             column: "siteid"
           - !<transforms.ValueTransform>
             value: "SCSO"
