@@ -1,0 +1,18 @@
+organizationId: 47b646d7-a01a-4232-b25b-15c880ea4046
+entityDefinitions:
+  vehiclerecords:
+    fqn: "ol.vehicle"
+    entitySetName: "NCRICVehicleRecords"
+    updateType: Replace
+    propertyDefinitions:
+      ol.id:
+        type:  "ol.id" 
+        column: "red_id"
+      ol.licenseplateimage:
+        type: "ol.licenseplateimage"
+        column: "red_patch"
+      ol.vehicleimage:
+        type: "ol.vehicleimage"
+        column: "red_overview"
+
+associationDefinitions: {}

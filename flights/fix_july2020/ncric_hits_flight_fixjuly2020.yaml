@@ -1,0 +1,107 @@
+#separated because otherwise hits are not existing in the boss3 vehicles with 
+#psql select * from hits_21 limit 5000;
+#intellij sample test: "select * from hits_21 limit 5000"
+#final recurring integration: "select * from boss3_21_hits_10minutes;"
+
+organizationId: 47b646d7-a01a-4232-b25b-15c880ea4046
+entityDefinitions:
+  vehicles:
+    fqn: "ol.vehicle"
+    entitySetName: "NCRICVehicles"
+    updateType: Replace
+    propertyDefinitions:
+      ol.id:
+        type: "ol.id"
+        column: "hts_VRM"
+      vehicle.licensenumber:
+        type: "vehicle.licensenumber"
+        column: "hts_VRM"
+    name: "vehicles"
+
+  vehiclerecords:
+    fqn: "ol.vehicle"
+    entitySetName: "NCRICVehicleRecords"
+    updateType: Replace
+    propertyDefinitions:
+      ol.id:
+        type: "ol.id"
+        column: "hts_red_ID"
+      vehicle.licensenumber:
+        type: "vehicle.licensenumber"
+        column: "hts_VRM"
+      ol.datasource:
+        type: "ol.datasource"
+        transforms:
+        - !<transforms.ValueTransform>
+          value: "BOSS3"
+    name: "vehiclerecords"
+
+  hits:
+    fqn: "ol.notification"
+    entitySetName: "NCRICNotifications"
+    updateType: Replace
+    propertyDefinitions:
+      ol.id: 
+        type: "ol.id"
+        column: hts_VRM
+      ol.type:
+        type: ol.type
+        column: "hts_Hotlist"
+      general.datetime:
+        type: general.datetime
+        column: "hts_Timestamp"
+        transforms:
+        - !<transforms.TimezoneShiftTransform>
+          pattern: ["yyyy-MM-dd HH:mm:ss.S","yyyy-MM-dd HH:mm:ss.SS","yyyy-MM-dd HH:mm:ss.SSS"]
+          timezone: "America/Los_Angeles"
+      ol.datasource:
+        type: "ol.datasource"
+        transforms:
+        - !<transforms.ValueTransform>
+          value: "BOSS3"
+    conditions:
+    - !<conditions.BooleanRegexCondition>
+      column: "hts_Hotlist"
+      pattern: "STOLEN VEHICLES DOJ"
+      reverse: false
+    name: "hits"
+
+associationDefinitions: 
+  has:
+    fqn: "ol.has"
+    entitySetName: "NCRICHas"
+    updateType: Replace
+    src: "vehicles"
+    dst: "vehiclerecords"
+    propertyDefinitions:
+      ol.id:
+        type: "ol.id"
+        transforms:
+        - !<transforms.ConcatTransform>
+          columns: ["hts_VRM", "hts_red_ID"]
+          separator: "_"
+    name: "has"
+
+  resultsin1:
+    fqn: "ol.resultsin"
+    entitySetName: "NCRICResultsIn"
+    updateType: Replace
+    src: "vehiclerecords"
+    dst: "hits"
+    propertyDefinitions:
+      ol.id:
+        type: "ol.id"
+        column: "hts_red_ID"
+    name: "resultsin1"
+
+  resultsin2:
+    fqn: "ol.resultsin"
+    entitySetName: "NCRICResultsIn"
+    updateType: Replace
+    src: "vehicles"
+    dst: "hits"
+    propertyDefinitions:
+      ol.id:
+        type: "ol.id"
+        column: "hts_VRM"
+    name: "resultsin2"

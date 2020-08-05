@@ -12,10 +12,11 @@ import yaml
 
 # INPUT ARGUMENTS
 def get_parser():
-    parser = argparse.ArgumentParser(description='QA check on aggregate launchpad pulls. Compare to count from source.')
+    parser = argparse.ArgumentParser(description='Copy and store datetime in proper column type in postgres.')
     parser.add_argument('--config', required=True)
     parser.add_argument('--datasource', required=True)
     parser.add_argument('--recur_table', required=True)
+    parser.add_argument('--final_table', required=True)
 
     args = parser.parse_args()
     return args
@@ -30,7 +31,6 @@ def main():
     # Connect to db
     args = get_parser()  # get the args from the parser function
     with open(args.config, 'r') as fl:
-        # with open(config, 'r') as fl:
         configfile = yaml.load(fl, Loader=yaml.FullLoader)
 
     db_user = configfile['hikariConfigs'][args.datasource]['username']
@@ -38,6 +38,7 @@ def main():
     jdbcUrl = configfile['hikariConfigs'][args.datasource]['jdbcUrl']
     db_name = jdbcUrl.split("/")[::-1][0].split("?")[0]
     atlastable = args.recur_table
+    finaltable = args.final_table
 
     engine = db.create_engine(f'postgresql://{db_user}:{db_pwd}@atlas.openlattice.com:30001/{db_name}',
                               connect_args={'sslmode': 'require'})
@@ -48,15 +49,13 @@ def main():
     )
     atlas_df = pd.read_sql_query(atlas_query, engine)
 
-    # Copy table
-    clean_atlas = atlas_df
-
     # Set dates & datetimes in cleaned table - THE KEY STEP
-    clean_atlas ['readStamp'] = clean_atlas ['readStamp'].dt.tz_localize("UTC")
+    atlas_df['readStamp'] = atlas_df['readStamp'].dt.tz_localize("UTC")
+    print("Formatted timestamp to add UTC timezone.")
 
     # Now copy cleaned table back into atlas and overwrite itself
     # Identical to original recurring table except readStamp = "timestamp with timezone"
-    clean_atlas.to_sql('zzz_recurring_clean', con=engine, index=False, if_exists='replace',
+    atlas_df.to_sql(f'{finaltable}', con=engine, index=False, if_exists='replace',
                        dtype={'id': Integer,
                               'readstamp': TIMESTAMP(timezone=True),
                               'plate': String,
@@ -70,8 +69,10 @@ def main():
                               'camera_id': Integer,
                               'site_id': Integer
                               })
+    print("Action: recurring table copied with proper datetime format.")
+    engine.dispose()
 
-    if __name__ == '__main__':
+if __name__ == '__main__':
         main()
 
 
