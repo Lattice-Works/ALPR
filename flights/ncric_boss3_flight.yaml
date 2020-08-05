@@ -75,25 +75,6 @@ entityDefinitions:
       ol.id:
         type:  "ol.id" 
         column: "sourceid"
-      ol.name:
-        type: "ol.name"
-        column: "sourcename"
-      ol.description:
-        type: "ol.description"
-        column: "srcdescr"
-      ol.fixedlocation:
-        type: "ol.fixedlocation"
-        column: "fixedmobile"
-        transforms:
-        - !<transforms.ReplaceTransform>
-          target: ["t", "f"]
-          goal: [true, false]
-          ignoreCase: true
-      ol.datasource:
-        type: "ol.datasource"
-        transforms:
-        - !<transforms.ValueTransform>
-          value: "BOSS3"
     associateOnly: true
     name: "imagesources"
 
@@ -125,18 +106,6 @@ entityDefinitions:
       ol.id: 
         type: "ol.id"
         column: "siteid" 
-      ol.name:
-        type: "ol.name"
-        column: "sitedescr"    #used to be sitename
-      ## this is actually a more fleshed-out name field
-      # ol.description:             
-      #   type: "ol.description"
-      #   column: "sitedescr"
-      ol.datasource:
-        type: "ol.datasource"
-        transforms:
-        - !<transforms.ValueTransform>
-          value: "BOSS3"
     associateOnly: true
     name: "agencies"
 
