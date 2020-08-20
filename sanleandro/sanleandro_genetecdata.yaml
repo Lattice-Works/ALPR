@@ -1,0 +1,533 @@
+# # ###### SET 2 - separate copies for San Leandro data only, belonging to San Leandro org.
+  # Added patrollers/officers but not in universal NCRIC datasets as they're the only ones who have any.
+  # Eventually Astrometrics will switch to using these
+
+
+# organizationId: "1cfb5870-9368-4dcf-9bea-13954d6e52ae" #SAN LEANDRO ORG
+organizationId: 00000000-0000-0001-0000-000000000000 #local testing
+entityDefinitions:
+  NCRICVehiclesSanLeandro:
+    fqn: "ol.vehicle"
+    entitySetName: "NCRICVehiclesSanLeandro"
+    propertyDefinitions:
+      ol.id:
+        type: "ol.id"
+        column: "Plate"
+      vehicle.licensenumber:
+        type: "vehicle.licensenumber"
+        column: "Plate"
+      ol.datasource:            
+        type: "ol.datasource"
+        transforms:
+        - !<transforms.ValueTransform>
+          value: "SanLeandro"
+    name: "NCRICVehiclesSanLeandro"
+
+  NCRICVehicleRecordsSanLeandro:
+    fqn: "ol.vehicle"
+    entitySetName: "NCRICVehicleRecordsSanLeandro"
+    propertyDefinitions:
+      ol.id:
+        type:  "ol.id" 
+        transforms:
+        - !<transforms.ConcatCombineTransform>
+          separator: "_"
+          transforms:
+          - !<com.openlattice.shuttle.transforms.ColumnTransform>
+            column: "VehicleID"
+          - !<transforms.ValueTransform>
+            value: "SanLeandro"
+      vehicle.licensenumber:
+        type: "vehicle.licensenumber"
+        column: "Plate"
+      vehicle.licensestate:
+        type: "vehicle.licensestate"
+        column: "State"
+      # ol.licenseplateimage:
+      #   type: "ol.licenseplateimage"        
+      #   transforms:
+      #   - !<transforms.Base64DecodeTransform>
+      #     column: "PlateImage"
+      # ol.vehicleimage:
+      #   type: "ol.vehicleimage"
+      #   transforms:
+      #   - !<transforms.Base64DecodeTransform>
+      #     column: "ContextImage"
+      ol.datelogged:
+        type: "ol.datelogged"
+        transforms:
+        - !<transforms.CombineDateTimeTransform>
+          dateColumn: "Date"
+          datePattern: ["MM/dd/yyyy", "M/dd/yyyy", "MM/d/yyyy", "M/d/yyyy" ]
+          timeColumn: "Time"
+          timePattern: ["HH:mm:ss", "HH:mm:ss.S"] # confirmed military time
+          timezone: "America/Los_Angeles"
+      ol.locationcoordinates:
+        type: "ol.locationcoordinates"
+        transforms:
+        - !<transforms.GeographyPointTransform>
+          latTransforms:
+          - !<com.openlattice.shuttle.transforms.ColumnTransform>
+            column: "Latitude"
+          lonTransforms:
+          - !<com.openlattice.shuttle.transforms.ColumnTransform>
+            column: "Longitude"
+      publicsafety.agencyname:
+        type: "publicsafety.agencyname"
+        transforms:
+        - !<transforms.ValueTransform>
+          value: "San Leandro Police Department"
+      ol.datasource:
+        type: "ol.datasource"
+        transforms:
+        - !<transforms.ValueTransform>
+          value: "SanLeandro"
+    name: "NCRICVehicleRecordsSanLeandro"
+
+# associateOnly will be uncommented after the 1st run of the data on prod,
+ # ...and ol.name property will be commented out
+  NCRICAgenciesSanLeandro:
+    fqn: "ol.agency"
+    entitySetName: "NCRICAgenciesSanLeandro"
+    propertyDefinitions:
+      ol.id: 
+        type: "ol.id"
+        transforms:
+        - !<transforms.ConcatCombineTransform>
+          separator: "_"
+          transforms:
+          - !<transforms.ValueTransform>
+            value: "San Leandro Police Department"
+          - !<transforms.ValueTransform>
+            value: "SanLeandro"  
+      ol.name:
+        type: "ol.name"
+        transforms:
+        - !<transforms.ValueTransform>
+          value: "San Leandro Police Department"
+      ol.datasource:
+        type: "ol.datasource"
+        transforms:
+        - !<transforms.ValueTransform>
+          value: "SanLeandro"
+    # associateOnly: true  
+    name: "NCRICAgenciesSanLeandro"
+
+  NCRICImageSourcesSanLeandro:
+    fqn: "ol.imagesource"
+    entitySetName: "NCRICImageSourcesSanLeandro"
+    propertyDefinitions:
+      ol.id:
+        type:  "ol.id" 
+        transforms:
+        - !<transforms.ConcatCombineTransform>
+          separator: "_"
+          transforms:
+          - !<com.openlattice.shuttle.transforms.ColumnTransform>
+            column: "SharpName"
+          - !<transforms.ValueTransform>
+            value: "SanLeandro"
+      ol.name:
+        type: "ol.name"
+        column: "SharpName"
+      ol.datasource:
+        type: "ol.datasource"
+        transforms:
+        - !<transforms.ValueTransform>
+          value: "SanLeandro"
+    name: "NCRICImageSourcesSanLeandro"
+
+  NCRICLocationsSanLeandro:
+    fqn: "ol.location"
+    entitySetName: "NCRICLocationsSanLeandro"
+    propertyDefinitions:
+      general.id: 
+        type: "general.id"
+        transforms:
+        - !<transforms.ConcatTransform>
+          columns: ["Latitude","Longitude"] 
+      ol.locationcoordinates:
+        type: "ol.locationcoordinates"
+        transforms:
+        - !<transforms.GeographyPointTransform>
+          latTransforms:
+          - !<com.openlattice.shuttle.transforms.ColumnTransform>
+            column: "Latitude"
+          lonTransforms:
+          - !<com.openlattice.shuttle.transforms.ColumnTransform>
+            column: "Longitude"
+    name: "NCRICLocationsSanLeandro"
+
+  NCRICNotificationsSanLeandro:
+    fqn: "ol.notification"
+    entitySetName: "NCRICNotificationsSanLeandro"
+    propertyDefinitions:
+      ol.id: 
+        type: "ol.id"
+        transforms:
+        - !<transforms.ConcatCombineTransform>
+          separator: "_"
+          transforms:
+          - !<com.openlattice.shuttle.transforms.ColumnTransform>
+            column: "IsHit"   # just yes/no
+          - !<com.openlattice.shuttle.transforms.ColumnTransform>
+            column: "Date"
+          - !<com.openlattice.shuttle.transforms.ColumnTransform>
+            column: "Time"
+          - !<com.openlattice.shuttle.transforms.ColumnTransform>
+            column: "VehicleID"
+      general.datetime:
+        type: "general.datetime"
+        transforms:
+        - !<transforms.CombineDateTimeTransform>
+          dateColumn: "Date"
+          datePattern: ["MM/dd/yyyy", "M/dd/yyyy", "MM/d/yyyy", "M/d/yyyy" ]
+          timeColumn: "Time" 
+          timePattern: ["HH:mm:ss", "HH:mm:ss.S"] # confirmed military time
+          timezone: "America/Los_Angeles"
+      ol.datasource:
+        type: "ol.datasource"
+        transforms:
+        - !<transforms.ValueTransform>
+          value: "SanLeandro"   
+    conditions:
+    - !<conditions.BooleanRegexCondition>
+      column: "IsHit"
+      pattern: "No"
+      reverse: true
+    name: "NCRICNotificationsSanLeandro"
+
+  NCRICPatrollersSanLeandro:
+    fqn: "ol.unit"
+    entitySetName: "NCRICPatrollersSanLeandro"
+    propertyDefinitions:
+      ol.id:
+        type:  "ol.id"
+        column: "PatrollerId"
+      ol.name:
+        type: "ol.name"
+        column: "PatrollerName"
+    name: "NCRICPatrollersSanLeandro"
+
+  NCRICOfficerInfoSanLeandro:
+    fqn: "ol.employee"
+    entitySetName: "NCRICOfficerInfoSanLeandro"
+    propertyDefinitions:
+      ol.id:
+        type: "ol.id"
+        column: "UserId"
+      publicsafety.employeeid:
+        type: "publicsafety.employeeid"
+        column: "UserId"
+    name: "NCRICOfficerInfoSanLeandro"
+
+  NCRICOfficersSanLeandro:
+    fqn: "general.person"
+    entitySetName: "NCRICOfficersSanLeandro"
+    propertyDefinitions:
+      nc.SubjectIdentification:
+        type: "nc.SubjectIdentification"
+        column: "UserId"
+      general.fullname:
+        type: "general.fullname"
+        column: "UserName"
+    conditions:
+    - !<conditions.BooleanRegexCondition>
+      column: "UserName"
+      pattern: "DEFAULT"
+      reverse: true
+    name: "NCRICOfficersSanLeandro"
+
+
+
+associationDefinitions: 
+  # ###### SET 2
+  NCRICHasSanLeandro:
+    fqn: "ol.has"
+    entitySetName: "NCRICHasSanLeandro"
+    src: "NCRICVehiclesSanLeandro"
+    dst: "NCRICVehicleRecordsSanLeandro"
+    propertyDefinitions:
+      ol.id:
+        type: "ol.id"
+        transforms:
+        - !<transforms.ConcatCombineTransform>
+          separator: "_"
+          transforms:
+          - !<com.openlattice.shuttle.transforms.ColumnTransform>
+            column: "VehicleID"
+          - !<com.openlattice.shuttle.transforms.ColumnTransform>
+            column: "Plate"
+          - !<transforms.ValueTransform>
+            value: "SanLeandro"
+    name: "NCRICHasSanLeandro"
+
+  NCRICRecordedBySanLeandro2:
+    fqn: "ol.recordedby"
+    entitySetName: "NCRICRecordedBySanLeandro"
+    src: "NCRICVehicleRecordsSanLeandro"
+    dst: "NCRICImageSourcesSanLeandro"
+    propertyDefinitions:
+      general.stringid:
+        type: "general.stringid"
+        transforms:
+        - !<transforms.ConcatCombineTransform>
+          separator: "_"
+          transforms:
+          - !<com.openlattice.shuttle.transforms.ColumnTransform>
+            column: "VehicleID"
+          - !<com.openlattice.shuttle.transforms.ColumnTransform>
+            column: "CameraName"
+          - !<transforms.ValueTransform>
+            value: "SanLeandro" 
+      ol.datelogged:
+        type: "ol.datelogged"
+        transforms:
+        - !<transforms.CombineDateTimeTransform>
+          dateColumn: "Date"
+          datePattern: ["MM/dd/yyyy", "M/dd/yyyy", "MM/d/yyyy", "M/d/yyyy" ]
+          timeColumn: "Time"
+          timePattern: ["HH:mm:ss", "HH:mm:ss.S"] # confirmed military time
+          timezone: "America/Los_Angeles"
+    name: "NCRICRecordedBySanLeandro2"
+
+  NCRICRecordedBySanLeandro2_2:
+    fqn: "ol.recordedby"
+    entitySetName: "NCRICRecordedBySanLeandro"
+    src: "NCRICVehicleRecordsSanLeandro"
+    dst: "NCRICAgenciesSanLeandro"
+    propertyDefinitions:
+      ol.datelogged:
+        type: "ol.datelogged"
+        transforms:
+        - !<transforms.CombineDateTimeTransform>
+          dateColumn: "Date"
+          datePattern: ["MM/dd/yyyy", "M/dd/yyyy", "MM/d/yyyy", "M/d/yyyy" ]
+          timeColumn: "Time"
+          timePattern: ["HH:mm:ss", "HH:mm:ss.S"] # confirmed military time
+          timezone: "America/Los_Angeles"
+      general.stringid:
+        type: "general.stringid"
+        transforms:
+        - !<transforms.ConcatCombineTransform>
+          separator: "_"
+          transforms:
+          - !<transforms.ValueTransform>
+            value: "San Leandro Police Department"
+          - !<transforms.ValueTransform>
+            value: "SanLeandro"
+    name: "NCRICRecordedBySanLeandro2_2"
+
+
+  NCRICLocatedAtSanLeandro1_2:
+    fqn: "ol.locatedat"
+    entitySetName: "NCRICLocatedAtSanLeandro"
+    src: "NCRICVehicleRecordsSanLeandro"
+    dst: "NCRICLocationsSanLeandro"
+    propertyDefinitions:
+      general.id:
+        type: "general.id"
+        transforms:
+        - !<transforms.ConcatCombineTransform>
+          separator: "_"
+          transforms:
+          - !<com.openlattice.shuttle.transforms.ColumnTransform>
+            column: "VehicleID"
+          - !<com.openlattice.shuttle.transforms.ColumnTransform>
+            column: "Latitude"
+          - !<com.openlattice.shuttle.transforms.ColumnTransform>
+            column: "Longitude"
+          - !<transforms.ValueTransform>
+            value: "SanLeandro"
+    name: "NCRICLocatedAtSanLeandro1_2"
+
+  NCRICLocatedAtSanLeandro2_2:
+    fqn: "ol.locatedat"
+    entitySetName: "NCRICLocatedAtSanLeandro"
+    src: "NCRICVehiclesSanLeandro"
+    dst: "NCRICLocationsSanLeandro"
+    propertyDefinitions:
+      general.id:
+        type: "general.id"
+        transforms:
+        - !<transforms.ConcatCombineTransform>
+          separator: "_"
+          transforms:
+          - !<com.openlattice.shuttle.transforms.ColumnTransform>
+            column: "Plate"
+          - !<com.openlattice.shuttle.transforms.ColumnTransform>
+            column: "Latitude"
+          - !<com.openlattice.shuttle.transforms.ColumnTransform>
+            column: "Longitude"
+          - !<transforms.ValueTransform>
+            value: "SanLeandro"
+    name: "NCRICLocatedAtSanLeandro2_2"
+
+  NCRICLocatedAtSanLeandro3_2:
+    fqn: "ol.locatedat"
+    entitySetName: "NCRICLocatedAtSanLeandro"
+    src: "NCRICImageSourcesSanLeandro"
+    dst: "NCRICLocationsSanLeandro"
+    propertyDefinitions:
+      general.id:
+        type: "general.id"
+        transforms:
+        - !<transforms.ConcatCombineTransform>
+          separator: "_"
+          transforms:
+          - !<com.openlattice.shuttle.transforms.ColumnTransform>
+            column: "SharpName"
+          - !<com.openlattice.shuttle.transforms.ColumnTransform>
+            column: "Latitude"
+          - !<com.openlattice.shuttle.transforms.ColumnTransform>
+            column: "Longitude"
+          - !<transforms.ValueTransform>
+            value: "SanLeandro"
+    name: "NCRICLocatedAtSanLeandro3_2"
+
+  NCRICResultsInSanLeandro1_2:
+    fqn: "ol.resultsin"
+    entitySetName: "NCRICResultsInSanLeandro"
+    src: "NCRICVehicleRecordsSanLeandro"
+    dst: "NCRICNotificationsSanLeandro"
+    propertyDefinitions:
+      ol.id:
+        type: "ol.id"
+        transforms:
+        - !<transforms.ConcatCombineTransform>
+          separator: "_"
+          transforms:
+          - !<com.openlattice.shuttle.transforms.ColumnTransform>
+            column: "VehicleID"
+          - !<com.openlattice.shuttle.transforms.ColumnTransform>
+            column: "IsHit"
+          - !<com.openlattice.shuttle.transforms.ColumnTransform>
+            column: "Date"
+          - !<com.openlattice.shuttle.transforms.ColumnTransform>
+            column: "Time"
+          - !<transforms.ValueTransform>
+            value: "SanLeandro"
+    name: "NCRICResultsInSanLeandro1_2"
+
+  NCRICResultsInSanLeandro2_2:
+    fqn: "ol.resultsin"
+    entitySetName: "NCRICResultsInSanLeandro"
+    src: "NCRICVehiclesSanLeandro"
+    dst: "NCRICNotificationsSanLeandro"
+    propertyDefinitions:
+      ol.id:
+        type: "ol.id"
+        transforms:
+        - !<transforms.ConcatCombineTransform>
+          separator: "_"
+          transforms:
+          - !<com.openlattice.shuttle.transforms.ColumnTransform>
+            column: "Plate"
+          - !<com.openlattice.shuttle.transforms.ColumnTransform>
+            column: "IsHit"
+          - !<com.openlattice.shuttle.transforms.ColumnTransform>
+            column: "Date"
+          - !<com.openlattice.shuttle.transforms.ColumnTransform>
+            column: "Time"
+          - !<transforms.ValueTransform>
+            value: "SanLeandro"
+    name: "NCRICResultsInSanLeandro2_2"
+
+  
+  NCRICCollectedBySanLeandro:
+    fqn: "ol.collectedby"
+    entitySetName: "NCRICCollectedBySanLeandro"
+    src: "NCRICVehicleRecordsSanLeandro"
+    dst: "NCRICPatrollersSanLeandro"
+    propertyDefinitions:
+      general.id:
+        type: "general.id"
+        transforms:
+        - !<transforms.ConcatCombineTransform>
+          separator: "_"
+          transforms:
+          - !<com.openlattice.shuttle.transforms.ColumnTransform>
+            column: "VehicleID"
+          - !<transforms.ValueTransform>
+            value: "SanLeandro"
+          - !<com.openlattice.shuttle.transforms.ColumnTransform>
+            column: "PatrollerId"
+      date.completeddatetime:
+        type: "date.completeddatetime"
+        transforms:
+        - !<transforms.CombineDateTimeTransform>
+          dateColumn: "Date"
+          datePattern: ["MM/dd/yyyy", "M/dd/yyyy", "MM/d/yyyy", "M/d/yyyy" ]
+          timeColumn: "Time"
+          timePattern: ["HH:mm:ss", "HH:mm:ss.S"] # confirmed military time
+          timezone: "America/Los_Angeles"
+    name: "NCRICCollectedBySanLeandro"
+
+  NCRICCollectedBySanLeandro2:
+    fqn: "ol.collectedby"
+    entitySetName: "NCRICCollectedBySanLeandro"
+    src: "NCRICVehicleRecordsSanLeandro"
+    dst: "NCRICOfficerInfoSanLeandro"
+    propertyDefinitions:
+      general.id:
+        type: "general.id"
+        transforms:
+        - !<transforms.ConcatCombineTransform>
+          separator: "_"
+          transforms:
+          - !<com.openlattice.shuttle.transforms.ColumnTransform>
+            column: "VehicleID"
+          - !<transforms.ValueTransform>
+            value: "SanLeandro"
+          - !<com.openlattice.shuttle.transforms.ColumnTransform>
+            column: "UserId"
+      date.completeddatetime:
+        type: "date.completeddatetime"
+        transforms:
+        - !<transforms.CombineDateTimeTransform>
+          dateColumn: "Date"
+          datePattern: ["MM/dd/yyyy", "M/dd/yyyy", "MM/d/yyyy", "M/d/yyyy" ]
+          timeColumn: "Time"
+          timePattern: ["HH:mm:ss", "HH:mm:ss.S"] # confirmed military time
+          timezone: "America/Los_Angeles"
+    name: "NCRICCollectedBySanLeandro2"
+
+  NCRICIsSanLeandro:
+    fqn: "o.is"
+    entitySetName: "NCRICIsSanLeandro"
+    src: "NCRICOfficersSanLeandro"
+    dst: "NCRICOfficerInfoSanLeandro"
+    propertyDefinitions:
+      general.id:
+        type: "general.id"
+        transforms:
+        - !<transforms.ConcatCombineTransform>
+          separator: "_"
+          transforms:
+          - !<com.openlattice.shuttle.transforms.ColumnTransform>
+            column: "UserId"
+          - !<com.openlattice.shuttle.transforms.ColumnTransform>
+            column: "UserName"
+          - !<transforms.ValueTransform>
+            value: "SanLeandro"
+    name: "NCRICIsSanLeandro"
+
+  NCRICPartOfSanLeandro:
+    fqn: "ol.partof"
+    entitySetName: "NCRICPartOfSanLeandro"
+    src: "NCRICOfficerInfoSanLeandro"
+    dst: "NCRICPatrollersSanLeandro"
+    propertyDefinitions:
+      ol.id:
+        type: "ol.id"
+        transforms:
+        - !<transforms.ConcatCombineTransform>
+          separator: "_"
+          transforms:
+          - !<com.openlattice.shuttle.transforms.ColumnTransform>
+            column: "UserId"
+          - !<com.openlattice.shuttle.transforms.ColumnTransform>
+            column: "PatrollerId"
+          - !<transforms.ValueTransform>
+            value: "SanLeandro"
+    name: "NCRICPartOfSanLeandro"

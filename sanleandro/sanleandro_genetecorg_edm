@@ -1,0 +1,316 @@
+// Flight
+digraph {
+	graph [splines=curved]
+	node [cellborder=0.5 cellpadding=0.5 cellspacing=1 color=black fontcolor=black fontname=Helvetica fontsize=9 len=5 propertyfontcolor=gray shape=box style=square tableborder=0.5 tablebordercolor=white titlefontcolor=black]
+	NCRICVehiclesSanLeandro [label=<<table border="0.5" bgcolor="None" bordercolor="white" cellborder="0.5" cellspacing="1" cellpadding="0.5">    <tr><td>    <font color="black"><u><b>NCRICVehiclesSanLeandro (ol.vehicle)</b></u></font>    </td></tr>    
+<tr>
+<td>
+<font color="black">
+
+ol.id (Plate)
+
+</font>
+</td>
+</tr>
+
+<tr>
+<td>
+<font color="gray">
+
+vehicle.licensenumber (Plate)
+
+</font>
+</td>
+</tr>
+
+<tr>
+<td>
+<font color="gray">
+
+ol.datasource ()
+
+</font>
+</td>
+</tr>
+    </table>>]
+	node [cellborder=0.5 cellpadding=0.5 cellspacing=1 color=black fontcolor=black fontname=Helvetica fontsize=9 len=5 propertyfontcolor=gray shape=box style=square tableborder=0.5 tablebordercolor=white titlefontcolor=black]
+	NCRICVehicleRecordsSanLeandro [label=<<table border="0.5" bgcolor="None" bordercolor="white" cellborder="0.5" cellspacing="1" cellpadding="0.5">    <tr><td>    <font color="black"><u><b>NCRICVehicleRecordsSanLeandro (ol.vehicle)</b></u></font>    </td></tr>    
+<tr>
+<td>
+<font color="black">
+
+ol.id ()
+
+</font>
+</td>
+</tr>
+
+<tr>
+<td>
+<font color="gray">
+
+vehicle.licensenumber (Plate)
+
+</font>
+</td>
+</tr>
+
+<tr>
+<td>
+<font color="gray">
+
+vehicle.licensestate (State)
+
+</font>
+</td>
+</tr>
+
+<tr>
+<td>
+<font color="gray">
+
+ol.datelogged ()
+
+</font>
+</td>
+</tr>
+
+<tr>
+<td>
+<font color="gray">
+
+ol.locationcoordinates ()
+
+</font>
+</td>
+</tr>
+
+<tr>
+<td>
+<font color="gray">
+
+publicsafety.agencyname ()
+
+</font>
+</td>
+</tr>
+
+<tr>
+<td>
+<font color="gray">
+
+ol.datasource ()
+
+</font>
+</td>
+</tr>
+    </table>>]
+	node [cellborder=0.5 cellpadding=0.5 cellspacing=1 color=black fontcolor=black fontname=Helvetica fontsize=9 len=5 propertyfontcolor=gray shape=box style=square tableborder=0.5 tablebordercolor=white titlefontcolor=black]
+	NCRICAgenciesSanLeandro [label=<<table border="0.5" bgcolor="None" bordercolor="white" cellborder="0.5" cellspacing="1" cellpadding="0.5">    <tr><td>    <font color="black"><u><b>NCRICAgenciesSanLeandro (ol.agency)</b></u></font>    </td></tr>    
+<tr>
+<td>
+<font color="black">
+
+ol.id ()
+
+</font>
+</td>
+</tr>
+
+<tr>
+<td>
+<font color="gray">
+
+ol.name ()
+
+</font>
+</td>
+</tr>
+
+<tr>
+<td>
+<font color="gray">
+
+ol.datasource ()
+
+</font>
+</td>
+</tr>
+    </table>>]
+	node [cellborder=0.5 cellpadding=0.5 cellspacing=1 color=black fontcolor=black fontname=Helvetica fontsize=9 len=5 propertyfontcolor=gray shape=box style=square tableborder=0.5 tablebordercolor=white titlefontcolor=black]
+	NCRICImageSourcesSanLeandro [label=<<table border="0.5" bgcolor="None" bordercolor="white" cellborder="0.5" cellspacing="1" cellpadding="0.5">    <tr><td>    <font color="black"><u><b>NCRICImageSourcesSanLeandro (ol.imagesource)</b></u></font>    </td></tr>    
+<tr>
+<td>
+<font color="black">
+
+ol.id ()
+
+</font>
+</td>
+</tr>
+
+<tr>
+<td>
+<font color="gray">
+
+ol.name (SharpName)
+
+</font>
+</td>
+</tr>
+
+<tr>
+<td>
+<font color="gray">
+
+ol.datasource ()
+
+</font>
+</td>
+</tr>
+    </table>>]
+	node [cellborder=0.5 cellpadding=0.5 cellspacing=1 color=black fontcolor=black fontname=Helvetica fontsize=9 len=5 propertyfontcolor=gray shape=box style=square tableborder=0.5 tablebordercolor=white titlefontcolor=black]
+	NCRICLocationsSanLeandro [label=<<table border="0.5" bgcolor="None" bordercolor="white" cellborder="0.5" cellspacing="1" cellpadding="0.5">    <tr><td>    <font color="black"><u><b>NCRICLocationsSanLeandro (ol.location)</b></u></font>    </td></tr>    
+<tr>
+<td>
+<font color="black">
+
+general.id ()
+
+</font>
+</td>
+</tr>
+
+<tr>
+<td>
+<font color="gray">
+
+ol.locationcoordinates ()
+
+</font>
+</td>
+</tr>
+    </table>>]
+	node [cellborder=0.5 cellpadding=0.5 cellspacing=1 color=black fontcolor=black fontname=Helvetica fontsize=9 len=5 propertyfontcolor=gray shape=box style=square tableborder=0.5 tablebordercolor=white titlefontcolor=black]
+	NCRICNotificationsSanLeandro [label=<<table border="0.5" bgcolor="None" bordercolor="white" cellborder="0.5" cellspacing="1" cellpadding="0.5">    <tr><td>    <font color="black"><u><b>NCRICNotificationsSanLeandro (ol.notification)</b></u></font>    </td></tr>    
+<tr>
+<td>
+<font color="black">
+
+ol.id ()
+
+</font>
+</td>
+</tr>
+
+<tr>
+<td>
+<font color="gray">
+
+general.datetime ()
+
+</font>
+</td>
+</tr>
+
+<tr>
+<td>
+<font color="gray">
+
+ol.datasource ()
+
+</font>
+</td>
+</tr>
+    </table>>]
+	node [cellborder=0.5 cellpadding=0.5 cellspacing=1 color=black fontcolor=black fontname=Helvetica fontsize=9 len=5 propertyfontcolor=gray shape=box style=square tableborder=0.5 tablebordercolor=white titlefontcolor=black]
+	NCRICPatrollersSanLeandro [label=<<table border="0.5" bgcolor="None" bordercolor="white" cellborder="0.5" cellspacing="1" cellpadding="0.5">    <tr><td>    <font color="black"><u><b>NCRICPatrollersSanLeandro (ol.unit)</b></u></font>    </td></tr>    
+<tr>
+<td>
+<font color="black">
+
+ol.id (PatrollerId)
+
+</font>
+</td>
+</tr>
+
+<tr>
+<td>
+<font color="gray">
+
+ol.name (PatrollerName)
+
+</font>
+</td>
+</tr>
+    </table>>]
+	node [cellborder=0.5 cellpadding=0.5 cellspacing=1 color=black fontcolor=black fontname=Helvetica fontsize=9 len=5 propertyfontcolor=gray shape=box style=square tableborder=0.5 tablebordercolor=white titlefontcolor=black]
+	NCRICOfficerInfoSanLeandro [label=<<table border="0.5" bgcolor="None" bordercolor="white" cellborder="0.5" cellspacing="1" cellpadding="0.5">    <tr><td>    <font color="black"><u><b>NCRICOfficerInfoSanLeandro (ol.employee)</b></u></font>    </td></tr>    
+<tr>
+<td>
+<font color="black">
+
+ol.id (UserId)
+
+</font>
+</td>
+</tr>
+
+<tr>
+<td>
+<font color="gray">
+
+publicsafety.employeeid (UserId)
+
+</font>
+</td>
+</tr>
+    </table>>]
+	node [cellborder=0.5 cellpadding=0.5 cellspacing=1 color=black fontcolor=black fontname=Helvetica fontsize=9 len=5 propertyfontcolor=gray shape=box style=square tableborder=0.5 tablebordercolor=white titlefontcolor=black]
+	NCRICOfficersSanLeandro [label=<<table border="0.5" bgcolor="None" bordercolor="white" cellborder="0.5" cellspacing="1" cellpadding="0.5">    <tr><td>    <font color="black"><u><b>NCRICOfficersSanLeandro (general.person)</b></u></font>    </td></tr>    
+<tr>
+<td>
+<font color="black">
+
+nc.SubjectIdentification (UserId)
+
+</font>
+</td>
+</tr>
+
+<tr>
+<td>
+<font color="gray">
+
+general.fullname (UserName)
+
+</font>
+</td>
+</tr>
+    </table>>]
+	node [cellborder=0.5 cellpadding=0.5 cellspacing=1 color="#b6bbc7" concentrate=true fontcolor="#b6bbc7" fontname=Helvetica fontsize=7 fqncolor="595F72" labeldistance=0 len=5 propertyfontcolor=gray shape=box style=square tablebgcolor=white tableborder=0.5 titlefontcolor=black]
+	NCRICVehiclesSanLeandro -> NCRICVehicleRecordsSanLeandro [label=NCRICHasSanLeandro cellborder=0.5 cellpadding=0.5 cellspacing=1 color="#b6bbc7" concentrate=true dir=forward fontcolor="#b6bbc7" fontname=Helvetica fontsize=7 fqncolor="595F72" labeldistance=0 len=5 propertyfontcolor=gray shape=box style=square tablebgcolor=white tableborder=0.5 titlefontcolor=black]
+	node [cellborder=0.5 cellpadding=0.5 cellspacing=1 color="#b6bbc7" concentrate=true fontcolor="#b6bbc7" fontname=Helvetica fontsize=7 fqncolor="595F72" labeldistance=0 len=5 propertyfontcolor=gray shape=box style=square tablebgcolor=white tableborder=0.5 titlefontcolor=black]
+	NCRICVehicleRecordsSanLeandro -> NCRICImageSourcesSanLeandro [label=NCRICRecordedBySanLeandro2 cellborder=0.5 cellpadding=0.5 cellspacing=1 color="#b6bbc7" concentrate=true dir=forward fontcolor="#b6bbc7" fontname=Helvetica fontsize=7 fqncolor="595F72" labeldistance=0 len=5 propertyfontcolor=gray shape=box style=square tablebgcolor=white tableborder=0.5 titlefontcolor=black]
+	node [cellborder=0.5 cellpadding=0.5 cellspacing=1 color="#b6bbc7" concentrate=true fontcolor="#b6bbc7" fontname=Helvetica fontsize=7 fqncolor="595F72" labeldistance=0 len=5 propertyfontcolor=gray shape=box style=square tablebgcolor=white tableborder=0.5 titlefontcolor=black]
+	NCRICVehicleRecordsSanLeandro -> NCRICAgenciesSanLeandro [label=NCRICRecordedBySanLeandro2_2 cellborder=0.5 cellpadding=0.5 cellspacing=1 color="#b6bbc7" concentrate=true dir=forward fontcolor="#b6bbc7" fontname=Helvetica fontsize=7 fqncolor="595F72" labeldistance=0 len=5 propertyfontcolor=gray shape=box style=square tablebgcolor=white tableborder=0.5 titlefontcolor=black]
+	node [cellborder=0.5 cellpadding=0.5 cellspacing=1 color="#b6bbc7" concentrate=true fontcolor="#b6bbc7" fontname=Helvetica fontsize=7 fqncolor="595F72" labeldistance=0 len=5 propertyfontcolor=gray shape=box style=square tablebgcolor=white tableborder=0.5 titlefontcolor=black]
+	NCRICVehicleRecordsSanLeandro -> NCRICLocationsSanLeandro [label=NCRICLocatedAtSanLeandro1_2 cellborder=0.5 cellpadding=0.5 cellspacing=1 color="#b6bbc7" concentrate=true dir=forward fontcolor="#b6bbc7" fontname=Helvetica fontsize=7 fqncolor="595F72" labeldistance=0 len=5 propertyfontcolor=gray shape=box style=square tablebgcolor=white tableborder=0.5 titlefontcolor=black]
+	node [cellborder=0.5 cellpadding=0.5 cellspacing=1 color="#b6bbc7" concentrate=true fontcolor="#b6bbc7" fontname=Helvetica fontsize=7 fqncolor="595F72" labeldistance=0 len=5 propertyfontcolor=gray shape=box style=square tablebgcolor=white tableborder=0.5 titlefontcolor=black]
+	NCRICVehiclesSanLeandro -> NCRICLocationsSanLeandro [label=NCRICLocatedAtSanLeandro2_2 cellborder=0.5 cellpadding=0.5 cellspacing=1 color="#b6bbc7" concentrate=true dir=forward fontcolor="#b6bbc7" fontname=Helvetica fontsize=7 fqncolor="595F72" labeldistance=0 len=5 propertyfontcolor=gray shape=box style=square tablebgcolor=white tableborder=0.5 titlefontcolor=black]
+	node [cellborder=0.5 cellpadding=0.5 cellspacing=1 color="#b6bbc7" concentrate=true fontcolor="#b6bbc7" fontname=Helvetica fontsize=7 fqncolor="595F72" labeldistance=0 len=5 propertyfontcolor=gray shape=box style=square tablebgcolor=white tableborder=0.5 titlefontcolor=black]
+	NCRICImageSourcesSanLeandro -> NCRICLocationsSanLeandro [label=NCRICLocatedAtSanLeandro3_2 cellborder=0.5 cellpadding=0.5 cellspacing=1 color="#b6bbc7" concentrate=true dir=forward fontcolor="#b6bbc7" fontname=Helvetica fontsize=7 fqncolor="595F72" labeldistance=0 len=5 propertyfontcolor=gray shape=box style=square tablebgcolor=white tableborder=0.5 titlefontcolor=black]
+	node [cellborder=0.5 cellpadding=0.5 cellspacing=1 color="#b6bbc7" concentrate=true fontcolor="#b6bbc7" fontname=Helvetica fontsize=7 fqncolor="595F72" labeldistance=0 len=5 propertyfontcolor=gray shape=box style=square tablebgcolor=white tableborder=0.5 titlefontcolor=black]
+	NCRICVehicleRecordsSanLeandro -> NCRICNotificationsSanLeandro [label=NCRICResultsInSanLeandro1_2 cellborder=0.5 cellpadding=0.5 cellspacing=1 color="#b6bbc7" concentrate=true dir=forward fontcolor="#b6bbc7" fontname=Helvetica fontsize=7 fqncolor="595F72" labeldistance=0 len=5 propertyfontcolor=gray shape=box style=square tablebgcolor=white tableborder=0.5 titlefontcolor=black]
+	node [cellborder=0.5 cellpadding=0.5 cellspacing=1 color="#b6bbc7" concentrate=true fontcolor="#b6bbc7" fontname=Helvetica fontsize=7 fqncolor="595F72" labeldistance=0 len=5 propertyfontcolor=gray shape=box style=square tablebgcolor=white tableborder=0.5 titlefontcolor=black]
+	NCRICVehiclesSanLeandro -> NCRICNotificationsSanLeandro [label=NCRICResultsInSanLeandro2_2 cellborder=0.5 cellpadding=0.5 cellspacing=1 color="#b6bbc7" concentrate=true dir=forward fontcolor="#b6bbc7" fontname=Helvetica fontsize=7 fqncolor="595F72" labeldistance=0 len=5 propertyfontcolor=gray shape=box style=square tablebgcolor=white tableborder=0.5 titlefontcolor=black]
+	node [cellborder=0.5 cellpadding=0.5 cellspacing=1 color="#b6bbc7" concentrate=true fontcolor="#b6bbc7" fontname=Helvetica fontsize=7 fqncolor="595F72" labeldistance=0 len=5 propertyfontcolor=gray shape=box style=square tablebgcolor=white tableborder=0.5 titlefontcolor=black]
+	NCRICVehicleRecordsSanLeandro -> NCRICPatrollersSanLeandro [label=NCRICCollectedBySanLeandro cellborder=0.5 cellpadding=0.5 cellspacing=1 color="#b6bbc7" concentrate=true dir=forward fontcolor="#b6bbc7" fontname=Helvetica fontsize=7 fqncolor="595F72" labeldistance=0 len=5 propertyfontcolor=gray shape=box style=square tablebgcolor=white tableborder=0.5 titlefontcolor=black]
+	node [cellborder=0.5 cellpadding=0.5 cellspacing=1 color="#b6bbc7" concentrate=true fontcolor="#b6bbc7" fontname=Helvetica fontsize=7 fqncolor="595F72" labeldistance=0 len=5 propertyfontcolor=gray shape=box style=square tablebgcolor=white tableborder=0.5 titlefontcolor=black]
+	NCRICVehicleRecordsSanLeandro -> NCRICOfficerInfoSanLeandro [label=NCRICCollectedBySanLeandro2 cellborder=0.5 cellpadding=0.5 cellspacing=1 color="#b6bbc7" concentrate=true dir=forward fontcolor="#b6bbc7" fontname=Helvetica fontsize=7 fqncolor="595F72" labeldistance=0 len=5 propertyfontcolor=gray shape=box style=square tablebgcolor=white tableborder=0.5 titlefontcolor=black]
+	node [cellborder=0.5 cellpadding=0.5 cellspacing=1 color="#b6bbc7" concentrate=true fontcolor="#b6bbc7" fontname=Helvetica fontsize=7 fqncolor="595F72" labeldistance=0 len=5 propertyfontcolor=gray shape=box style=square tablebgcolor=white tableborder=0.5 titlefontcolor=black]
+	NCRICOfficersSanLeandro -> NCRICOfficerInfoSanLeandro [label=NCRICIsSanLeandro cellborder=0.5 cellpadding=0.5 cellspacing=1 color="#b6bbc7" concentrate=true dir=forward fontcolor="#b6bbc7" fontname=Helvetica fontsize=7 fqncolor="595F72" labeldistance=0 len=5 propertyfontcolor=gray shape=box style=square tablebgcolor=white tableborder=0.5 titlefontcolor=black]
+	node [cellborder=0.5 cellpadding=0.5 cellspacing=1 color="#b6bbc7" concentrate=true fontcolor="#b6bbc7" fontname=Helvetica fontsize=7 fqncolor="595F72" labeldistance=0 len=5 propertyfontcolor=gray shape=box style=square tablebgcolor=white tableborder=0.5 titlefontcolor=black]
+	NCRICOfficerInfoSanLeandro -> NCRICPatrollersSanLeandro [label=NCRICPartOfSanLeandro cellborder=0.5 cellpadding=0.5 cellspacing=1 color="#b6bbc7" concentrate=true dir=forward fontcolor="#b6bbc7" fontname=Helvetica fontsize=7 fqncolor="595F72" labeldistance=0 len=5 propertyfontcolor=gray shape=box style=square tablebgcolor=white tableborder=0.5 titlefontcolor=black]
+}
