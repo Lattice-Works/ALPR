@@ -1,0 +1,242 @@
+// Flight
+digraph {
+	graph [splines=curved]
+	node [cellborder=0.5 cellpadding=0.5 cellspacing=1 color=black fontcolor=black fontname=Helvetica fontsize=9 len=5 propertyfontcolor=gray shape=box style=square tableborder=0.5 tablebordercolor=white titlefontcolor=black]
+	NCRICVehicles [label=<<table border="0.5" bgcolor="None" bordercolor="white" cellborder="0.5" cellspacing="1" cellpadding="0.5">    <tr><td>    <font color="black"><u><b>NCRICVehicles (ol.vehicle)</b></u></font>    </td></tr>    
+<tr>
+<td>
+<font color="black">
+
+ol.id (Plate)
+
+</font>
+</td>
+</tr>
+
+<tr>
+<td>
+<font color="gray">
+
+vehicle.licensenumber (Plate)
+
+</font>
+</td>
+</tr>
+
+<tr>
+<td>
+<font color="gray">
+
+ol.datasource ()
+
+</font>
+</td>
+</tr>
+    </table>>]
+	node [cellborder=0.5 cellpadding=0.5 cellspacing=1 color=black fontcolor=black fontname=Helvetica fontsize=9 len=5 propertyfontcolor=gray shape=box style=square tableborder=0.5 tablebordercolor=white titlefontcolor=black]
+	NCRICVehicleRecords [label=<<table border="0.5" bgcolor="None" bordercolor="white" cellborder="0.5" cellspacing="1" cellpadding="0.5">    <tr><td>    <font color="black"><u><b>NCRICVehicleRecords (ol.vehicle)</b></u></font>    </td></tr>    
+<tr>
+<td>
+<font color="black">
+
+ol.id ()
+
+</font>
+</td>
+</tr>
+
+<tr>
+<td>
+<font color="gray">
+
+vehicle.licensenumber (Plate)
+
+</font>
+</td>
+</tr>
+
+<tr>
+<td>
+<font color="gray">
+
+vehicle.licensestate (State)
+
+</font>
+</td>
+</tr>
+
+<tr>
+<td>
+<font color="gray">
+
+ol.datelogged ()
+
+</font>
+</td>
+</tr>
+
+<tr>
+<td>
+<font color="gray">
+
+ol.locationcoordinates ()
+
+</font>
+</td>
+</tr>
+
+<tr>
+<td>
+<font color="gray">
+
+publicsafety.agencyname ()
+
+</font>
+</td>
+</tr>
+
+<tr>
+<td>
+<font color="gray">
+
+ol.datasource ()
+
+</font>
+</td>
+</tr>
+    </table>>]
+	node [cellborder=0.5 cellpadding=0.5 cellspacing=1 color=black fontcolor=black fontname=Helvetica fontsize=9 len=5 propertyfontcolor=gray shape=box style=square tableborder=0.5 tablebordercolor=white titlefontcolor=black]
+	NCRICAgencies [label=<<table border="0.5" bgcolor="None" bordercolor="white" cellborder="0.5" cellspacing="1" cellpadding="0.5">    <tr><td>    <font color="black"><u><b>NCRICAgencies (ol.agency)</b></u></font>    </td></tr>    
+<tr>
+<td>
+<font color="black">
+
+ol.id ()
+
+</font>
+</td>
+</tr>
+
+<tr>
+<td>
+<font color="gray">
+
+ol.name ()
+
+</font>
+</td>
+</tr>
+
+<tr>
+<td>
+<font color="gray">
+
+ol.datasource ()
+
+</font>
+</td>
+</tr>
+    </table>>]
+	node [cellborder=0.5 cellpadding=0.5 cellspacing=1 color=black fontcolor=black fontname=Helvetica fontsize=9 len=5 propertyfontcolor=gray shape=box style=square tableborder=0.5 tablebordercolor=white titlefontcolor=black]
+	NCRICImageSources [label=<<table border="0.5" bgcolor="None" bordercolor="white" cellborder="0.5" cellspacing="1" cellpadding="0.5">    <tr><td>    <font color="black"><u><b>NCRICImageSources (ol.imagesource)</b></u></font>    </td></tr>    
+<tr>
+<td>
+<font color="black">
+
+ol.id ()
+
+</font>
+</td>
+</tr>
+
+<tr>
+<td>
+<font color="gray">
+
+ol.name (SharpName)
+
+</font>
+</td>
+</tr>
+
+<tr>
+<td>
+<font color="gray">
+
+ol.datasource ()
+
+</font>
+</td>
+</tr>
+    </table>>]
+	node [cellborder=0.5 cellpadding=0.5 cellspacing=1 color=black fontcolor=black fontname=Helvetica fontsize=9 len=5 propertyfontcolor=gray shape=box style=square tableborder=0.5 tablebordercolor=white titlefontcolor=black]
+	NCRICLocations [label=<<table border="0.5" bgcolor="None" bordercolor="white" cellborder="0.5" cellspacing="1" cellpadding="0.5">    <tr><td>    <font color="black"><u><b>NCRICLocations (ol.location)</b></u></font>    </td></tr>    
+<tr>
+<td>
+<font color="black">
+
+general.id ()
+
+</font>
+</td>
+</tr>
+
+<tr>
+<td>
+<font color="gray">
+
+ol.locationcoordinates ()
+
+</font>
+</td>
+</tr>
+    </table>>]
+	node [cellborder=0.5 cellpadding=0.5 cellspacing=1 color=black fontcolor=black fontname=Helvetica fontsize=9 len=5 propertyfontcolor=gray shape=box style=square tableborder=0.5 tablebordercolor=white titlefontcolor=black]
+	NCRICNotifications [label=<<table border="0.5" bgcolor="None" bordercolor="white" cellborder="0.5" cellspacing="1" cellpadding="0.5">    <tr><td>    <font color="black"><u><b>NCRICNotifications (ol.notification)</b></u></font>    </td></tr>    
+<tr>
+<td>
+<font color="black">
+
+ol.id ()
+
+</font>
+</td>
+</tr>
+
+<tr>
+<td>
+<font color="gray">
+
+general.datetime ()
+
+</font>
+</td>
+</tr>
+
+<tr>
+<td>
+<font color="gray">
+
+ol.datasource ()
+
+</font>
+</td>
+</tr>
+    </table>>]
+	node [cellborder=0.5 cellpadding=0.5 cellspacing=1 color="#b6bbc7" concentrate=true fontcolor="#b6bbc7" fontname=Helvetica fontsize=7 fqncolor="595F72" labeldistance=0 len=5 propertyfontcolor=gray shape=box style=square tablebgcolor=white tableborder=0.5 titlefontcolor=black]
+	NCRICVehicles -> NCRICVehicleRecords [label=NCRICHas cellborder=0.5 cellpadding=0.5 cellspacing=1 color="#b6bbc7" concentrate=true dir=forward fontcolor="#b6bbc7" fontname=Helvetica fontsize=7 fqncolor="595F72" labeldistance=0 len=5 propertyfontcolor=gray shape=box style=square tablebgcolor=white tableborder=0.5 titlefontcolor=black]
+	node [cellborder=0.5 cellpadding=0.5 cellspacing=1 color="#b6bbc7" concentrate=true fontcolor="#b6bbc7" fontname=Helvetica fontsize=7 fqncolor="595F72" labeldistance=0 len=5 propertyfontcolor=gray shape=box style=square tablebgcolor=white tableborder=0.5 titlefontcolor=black]
+	NCRICVehicleRecords -> NCRICImageSources [label=NCRICRecordedBy1 cellborder=0.5 cellpadding=0.5 cellspacing=1 color="#b6bbc7" concentrate=true dir=forward fontcolor="#b6bbc7" fontname=Helvetica fontsize=7 fqncolor="595F72" labeldistance=0 len=5 propertyfontcolor=gray shape=box style=square tablebgcolor=white tableborder=0.5 titlefontcolor=black]
+	node [cellborder=0.5 cellpadding=0.5 cellspacing=1 color="#b6bbc7" concentrate=true fontcolor="#b6bbc7" fontname=Helvetica fontsize=7 fqncolor="595F72" labeldistance=0 len=5 propertyfontcolor=gray shape=box style=square tablebgcolor=white tableborder=0.5 titlefontcolor=black]
+	NCRICVehicleRecords -> NCRICAgencies [label=NCRICRecordedBy2 cellborder=0.5 cellpadding=0.5 cellspacing=1 color="#b6bbc7" concentrate=true dir=forward fontcolor="#b6bbc7" fontname=Helvetica fontsize=7 fqncolor="595F72" labeldistance=0 len=5 propertyfontcolor=gray shape=box style=square tablebgcolor=white tableborder=0.5 titlefontcolor=black]
+	node [cellborder=0.5 cellpadding=0.5 cellspacing=1 color="#b6bbc7" concentrate=true fontcolor="#b6bbc7" fontname=Helvetica fontsize=7 fqncolor="595F72" labeldistance=0 len=5 propertyfontcolor=gray shape=box style=square tablebgcolor=white tableborder=0.5 titlefontcolor=black]
+	NCRICVehicleRecords -> NCRICLocations [label=NCRICLocatedAt1 cellborder=0.5 cellpadding=0.5 cellspacing=1 color="#b6bbc7" concentrate=true dir=forward fontcolor="#b6bbc7" fontname=Helvetica fontsize=7 fqncolor="595F72" labeldistance=0 len=5 propertyfontcolor=gray shape=box style=square tablebgcolor=white tableborder=0.5 titlefontcolor=black]
+	node [cellborder=0.5 cellpadding=0.5 cellspacing=1 color="#b6bbc7" concentrate=true fontcolor="#b6bbc7" fontname=Helvetica fontsize=7 fqncolor="595F72" labeldistance=0 len=5 propertyfontcolor=gray shape=box style=square tablebgcolor=white tableborder=0.5 titlefontcolor=black]
+	NCRICVehicles -> NCRICLocations [label=NCRICLocatedAt2 cellborder=0.5 cellpadding=0.5 cellspacing=1 color="#b6bbc7" concentrate=true dir=forward fontcolor="#b6bbc7" fontname=Helvetica fontsize=7 fqncolor="595F72" labeldistance=0 len=5 propertyfontcolor=gray shape=box style=square tablebgcolor=white tableborder=0.5 titlefontcolor=black]
+	node [cellborder=0.5 cellpadding=0.5 cellspacing=1 color="#b6bbc7" concentrate=true fontcolor="#b6bbc7" fontname=Helvetica fontsize=7 fqncolor="595F72" labeldistance=0 len=5 propertyfontcolor=gray shape=box style=square tablebgcolor=white tableborder=0.5 titlefontcolor=black]
+	NCRICImageSources -> NCRICLocations [label=NCRICLocatedAt3 cellborder=0.5 cellpadding=0.5 cellspacing=1 color="#b6bbc7" concentrate=true dir=forward fontcolor="#b6bbc7" fontname=Helvetica fontsize=7 fqncolor="595F72" labeldistance=0 len=5 propertyfontcolor=gray shape=box style=square tablebgcolor=white tableborder=0.5 titlefontcolor=black]
+	node [cellborder=0.5 cellpadding=0.5 cellspacing=1 color="#b6bbc7" concentrate=true fontcolor="#b6bbc7" fontname=Helvetica fontsize=7 fqncolor="595F72" labeldistance=0 len=5 propertyfontcolor=gray shape=box style=square tablebgcolor=white tableborder=0.5 titlefontcolor=black]
+	NCRICVehicleRecords -> NCRICNotifications [label=NCRICResultsIn1 cellborder=0.5 cellpadding=0.5 cellspacing=1 color="#b6bbc7" concentrate=true dir=forward fontcolor="#b6bbc7" fontname=Helvetica fontsize=7 fqncolor="595F72" labeldistance=0 len=5 propertyfontcolor=gray shape=box style=square tablebgcolor=white tableborder=0.5 titlefontcolor=black]
+	node [cellborder=0.5 cellpadding=0.5 cellspacing=1 color="#b6bbc7" concentrate=true fontcolor="#b6bbc7" fontname=Helvetica fontsize=7 fqncolor="595F72" labeldistance=0 len=5 propertyfontcolor=gray shape=box style=square tablebgcolor=white tableborder=0.5 titlefontcolor=black]
+	NCRICVehicles -> NCRICNotifications [label=NCRICResultsIn2 cellborder=0.5 cellpadding=0.5 cellspacing=1 color="#b6bbc7" concentrate=true dir=forward fontcolor="#b6bbc7" fontname=Helvetica fontsize=7 fqncolor="595F72" labeldistance=0 len=5 propertyfontcolor=gray shape=box style=square tablebgcolor=white tableborder=0.5 titlefontcolor=black]
+}
