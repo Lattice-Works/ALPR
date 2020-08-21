@@ -2,8 +2,8 @@
   # These are added to the entity sets that contain ALL NCRIC data, used by Astrometrics.
   # belong to NCRIC org
 
-# organizationId: "47b646d7-a01a-4232-b25b-15c880ea4046" #NCRIC ORG
-organizationId: 00000000-0000-0001-0000-000000000000 #local testing
+organizationId: "47b646d7-a01a-4232-b25b-15c880ea4046" #NCRIC ORG
+# organizationId: 00000000-0000-0001-0000-000000000000 #local testing
 entityDefinitions:
   NCRICVehicles:
     fqn: "ol.vehicle"
